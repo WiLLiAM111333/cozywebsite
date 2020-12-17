@@ -21,8 +21,13 @@ export class CommandHandler {
 
   public async register(command: Command) {
     try {
-      const hasCommand = await this.db.table(COMMANDS).select('*').where(`id = ${command.id}`);
-      const hasCommandConfig = await this.db.table(COMMAND_CONFIGS).select('*').where(`id = ${command.id}`);
+      const hasCommand = await this.db.table(COMMANDS)
+        .select('*')
+        .where(`id = ${command.id}`);
+
+      const hasCommandConfig = await this.db.table(COMMAND_CONFIGS)
+        .select('*')
+        .where(`id = ${command.id}`);
 
       if(!hasCommand.length) {
         await this.db.table(COMMANDS).insert(command.tableInsertObject);
@@ -40,19 +45,24 @@ export class CommandHandler {
 
   public async unregister(command: Command) {
     try {
-      const hasCFG = await this.db.table(COMMAND_CONFIGS).select('*').where(`id = ${command.id}`);
-      
+      const hasCFG = await this.db.table(COMMAND_CONFIGS)
+        .select('*')
+        .where(`id = ${command.id}`);
+
       if(!hasCFG) {
-        await this.db.table(COMMAND_CONFIGS).delete('*').where(`id = ${command.id}`);
+        await this.db.table(COMMAND_CONFIGS)
+          .delete('*')
+          .where(`id = ${command.id}`);
       }
     } catch (err) {
       this.client.emit('error', err);
     }
   }
 
-  public edit(command: Command) {
+  // TODO: This
+  // public edit(command: Command) {
 
-  }
+  // }
 
   public validate(client: CozyClient, command: Command, message: Message, args: Array<any>): Promise<{ success: boolean, reason?: string }> {
     return new Promise((resolve, reject) => {
