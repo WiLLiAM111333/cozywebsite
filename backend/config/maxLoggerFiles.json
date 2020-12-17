@@ -1,0 +1,9 @@
+{
+  "debug": "1d",
+  "info": "1d",
+  "warn": "2d",
+  "error": "3d",
+  "incoming": "1d",
+  "outgoing": "1d",
+  "extension": "1d"
+}

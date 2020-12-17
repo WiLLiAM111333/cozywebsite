@@ -1,0 +1,8 @@
+**/node_modules
+**/package-lock.json
+**/.eslintcache
+**/.env
+**/logs
+**/jest
+**/dist
+backend/bin
