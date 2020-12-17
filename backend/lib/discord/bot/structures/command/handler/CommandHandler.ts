@@ -39,8 +39,6 @@ export class CommandHandler {
     } catch (err) {
       this.client.emit('error', err);  
     }
-
-    this.db.table(Command)
   }
 
   public async unregister(command: Command) {

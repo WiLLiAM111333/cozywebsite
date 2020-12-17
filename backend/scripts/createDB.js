@@ -1,9 +1,5 @@
 require('dotenv').config();
-const Database = require('../dist/src/db/index');
-/**
- * @type {import('knex')}
- */
-const db = Database.db;
+const { db } = require('../dist/src/db/index');
 const { Constants } = require('../dist/src/utils/constants');
 const chalk = require('chalk');
 
