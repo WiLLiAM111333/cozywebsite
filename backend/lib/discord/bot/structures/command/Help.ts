@@ -3,5 +3,5 @@ export interface CommandHelp {
   description?: string;
   aliases?: Array<string>;
   cooldown?: number;
-  args: [...Array<string>];
+  args: Array<string[]>;
 }

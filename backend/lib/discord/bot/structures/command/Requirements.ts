@@ -1,7 +1,7 @@
-import { PermissionFlags } from "discord.js";
+import { PermissionString } from "discord.js";
 
 export interface CommandRequirements {
   ownerOnly: boolean;
-  userPerms?: Array<PermissionFlags>;
-  clientPerms?: Array<PermissionFlags>;
+  userPerms?: Array<PermissionString>;
+  clientPerms?: Array<PermissionString>;
 }

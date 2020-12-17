@@ -145,6 +145,7 @@ const {
         table.string('name').notNullable();
         table.text('args').notNullable();
         table.text('description').notNullable();
+        table.text('aliases').notNullable();
       });
 
       console.log(chalk.cyan(`Created the table ${COMMANDS}`));

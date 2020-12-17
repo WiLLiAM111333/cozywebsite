@@ -13,6 +13,11 @@ export namespace Constants {
     COMMAND_CONFIGS = 'command_configs'
   }
 
+  export enum EmbedColors {
+    RED = '#ff0000',
+    GREEN = '#00d111'
+  }
+
   export const TOKEN = process.env.TOKEN;
   export const PORT = process.env.PORT;
   export const KNEX_USER = process.env.KNEX_USER;
