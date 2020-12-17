@@ -48,8 +48,7 @@
     "winston-daily-rotate-file": "^4.5.0"
   },
   "scripts": {
-    "setupTest": "node ./scripts/setupTest.js",
-    "test": "npm run setupTest && jest --config ./jest.config.json",
+    "test": "jest --config ./jest.config.json",
     "start": "node ./index.js",
     "startDev": "nodemon ./index.js",
     "startProd": "pm2 start ./index.js"
