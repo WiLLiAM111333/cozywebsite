@@ -11,7 +11,7 @@ Had a change of mind in `backend/lib/auth`, I'll be using discord to sign in to 
   - Configurable automoderation
   - Event options *[read more here...](./backend/docs/dashboard/configurableEvents.md)*
   - Custom text commands
-  - **XP System**
+  - **✨ XP System ✨**
     - When to give which roles
     - Custom level-up message
     - Level-up notification channel
@@ -25,7 +25,7 @@ Had a change of mind in `backend/lib/auth`, I'll be using discord to sign in to 
       - give-level
       - remove-level
       - rank
-  - **Moderation Sytem**
+  - **👮‍♂️ Moderation Sytem 👮‍♂️**
     - Switch to toggle logs of other bots' actions
     - Moderation Events
       - Warn
@@ -35,7 +35,7 @@ Had a change of mind in `backend/lib/auth`, I'll be using discord to sign in to 
       - Gifban
       - External emote ban
       - Report
-    - **Automation**
+    - **🤖 Automation 🤖**
       - Switch to ignore other bots
       - Bad words
       - Repeated text
@@ -48,7 +48,7 @@ Had a change of mind in `backend/lib/auth`, I'll be using discord to sign in to 
       - Spoiler spam
       - Mass-pings
       - Zalgo (T̶h̶i̶s̵ ̷i̷s̴ ̷z̵a̵l̵g̶o̸)
-    - **Commands**
+    - **❗ Commands ❗**
       - warn
       - mute
       - temp-mute
@@ -71,7 +71,7 @@ Had a change of mind in `backend/lib/auth`, I'll be using discord to sign in to 
       - user-info
       - server-info
       - slowmode
-  - **Welcome and Goodbye**
+  - **👋 Welcome and Goodbye 👋**
     - Welcome method (dm, channel, both)
     - Welcome channel
     - Welcome message (with formatting like mee6)
@@ -106,7 +106,7 @@ Had a change of mind in `backend/lib/auth`, I'll be using discord to sign in to 
         - url
         - height
         - width
-  - **Help**
+  - **📄 Help 📄**
     - Dashboard
     - Help Command
-  - **Maybe music**
+  - **🎶 Maybe music 🎶**
