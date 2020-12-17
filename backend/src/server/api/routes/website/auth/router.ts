@@ -17,7 +17,5 @@ export class AuthRouter extends Router {
       router: expressRouter(),
       controller: new AuthController()
     });
-
-    this.router.get('/login', this.controller.registerUser());
   }
 }
