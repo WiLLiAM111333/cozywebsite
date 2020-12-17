@@ -19,7 +19,7 @@ Had a change of mind in `backend/lib/auth`, I'll be using discord to sign in to 
     - XP rate modifier
     - No-XP role (It will stop the user from gaining experience)
     - Leaderboard
-    - Commands
+    - **❗ Commands ❗**
       - give-xp
       - remove-xp
       - give-level
