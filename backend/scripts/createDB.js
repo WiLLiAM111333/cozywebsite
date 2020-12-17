@@ -1,5 +1,9 @@
 require('dotenv').config();
-const { db } = require('../dist/src/db/index');
+const Database = require('../dist/src/db/index');
+/**
+ * @type {import('knex')}
+ */
+const db = Database.db;
 const { Constants } = require('../dist/src/utils/constants');
 const chalk = require('chalk');
 
@@ -14,6 +18,8 @@ const {
   RATELIMITS,
   USERS,
   WEBSITE_BANS,
+  COMMANDS,
+  COMMAND_CONFIGS
 } = TableNames;
 
 (async () => {
@@ -35,6 +41,8 @@ const {
     const hasRateLimits = await db.schema.hasTable(RATELIMITS);
     const hasUsers = await db.schema.hasTable(USERS);
     const hasWebsiteBans = await db.schema.hasTable(WEBSITE_BANS);
+    const hasCommands = await db.schema.hasTable(COMMANDS);
+    const hasCommandCFGS = await db.schema.hasTable(COMMAND_CONFIGS);
     
     if(!hasBans) {
       await db.schema.createTable(DISCORD_BANS, table => {
@@ -129,6 +137,29 @@ const {
       });
 
       console.log(chalk.cyan(`Created the table ${WEBSITE_BANS}`));
+    }
+
+    if(!hasCommands) {
+      await db.schema.createTable(COMMANDS, table => {
+        table.uuid('ID').notNullable();
+        table.string('name').notNullable();
+        table.text('args').notNullable();
+        table.text('description').notNullable();
+      });
+
+      console.log(chalk.cyan(`Created the table ${COMMANDS}`));
+    }
+
+    if(!hasCommandCFGS) {
+      await db.schema.createTable(COMMAND_CONFIGS, table => {
+        table.uuid('ID').notNullable();
+        table.integer('cooldown').notNullable();
+        table.boolean('ownerOnly').notNullable();
+        table.text('clientPerms').notNullable();
+        table.text('userPerms').notNullable();
+      });
+
+      console.log(chalk.cyan(`Created the table ${COMMAND_CONFIGS}`));
     }
   } catch (err) {
     console.log(err);
