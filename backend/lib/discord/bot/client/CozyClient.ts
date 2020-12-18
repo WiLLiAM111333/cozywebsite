@@ -14,7 +14,7 @@ export class CozyClient extends Client {
 
     this.eventPath = options.eventPath;
     this.owners = owners;
-    this.commandHandler = new CommandHandler();
+    this.commandHandler = new CommandHandler(this);
   }
 
   private async loadEvents(): Promise<void> {

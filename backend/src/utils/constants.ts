@@ -1,3 +1,5 @@
+import { IOAuthEndpoints } from "../../lib/discord/oauth2/IOAuthEndpoints";
+
 export namespace Constants {
   export enum TableNames {
     RATELIMITS = 'ratelimits',
@@ -18,7 +20,17 @@ export namespace Constants {
     GREEN = '#00d111'
   }
 
+  export const OAuthEndpoints: IOAuthEndpoints = {
+    authorize: 'https://discord.com/api/oauth2/authorize',
+    token: 'https://discord.com/api/oauth2/token',
+    token_revoke: 'https://discord.com/api/oauth2/token/revoke'
+  }
+  
+  export const OAUTH_REDIRECT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000';
+  export const DEFAULT_ZALGO_THRESHOLD = 0.55;
   export const TOKEN = process.env.TOKEN;
+  export const CLIENT_ID = process.env.CLIENT_ID;
+  export const CLIENT_SECRET = process.env.CLIENT_SECRET;
   export const PORT = process.env.PORT;
   export const KNEX_USER = process.env.KNEX_USER;
   export const KNEX_PASSWORD = process.env.KNEX_PASSWORD;
