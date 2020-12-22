@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { Constants } from '../../../../../../src/utils/constants';
+import { Constants } from '../../../../../../../src/utils/constants';
 
 const { RED } = Constants.EmbedColors;
 

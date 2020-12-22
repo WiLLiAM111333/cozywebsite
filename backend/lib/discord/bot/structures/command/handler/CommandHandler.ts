@@ -51,7 +51,7 @@ export class CommandHandler {
   }
 
   // TODO: This
-  // public edit(command: Command) {
+  // public async edit(command: Command) {
 
   // }
 
