@@ -54,10 +54,10 @@ export class InternalMath {
     }
 
     // interpolated percentile -- using Estimation method
-    const int_part = i | 0
-    const fract = i - int_part
+    const intPart = i | 0
+    const fract = i - intPart
     
-    return (1 - fract) * vals[int_part] + fract * vals[Math.min(int_part + 1, vals.length - 1)]
+    return (1 - fract) * vals[intPart] + fract * vals[Math.min(intPart + 1, vals.length - 1)]
   }
 }
 

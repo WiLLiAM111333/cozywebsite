@@ -1,17 +1,30 @@
-import { Snowflake, User } from "discord.js";
+import { Request, Response } from "express";
 import { DiscordController } from "../../../../../../lib/discord/controller/DiscordController";
-import { IDiscordController } from "../../../../../../lib/discord/controller/IDiscordController";
 
-export class UserController extends DiscordController implements IDiscordController {
+export class UserController extends DiscordController {
   public constructor() {
     super();
   }
 
-  public getByID(id: Snowflake): User {
-    return this.client.users.cache.get(id);
+  public getByID(): (req: Request, res: Response) => void {
+    return (req, res) => {
+      const id = req.params.id;
+      const user = this.client.users.cache.get(id);
+
+      if(!user) {
+        res.status(404).json({
+          message: 'No user found',
+          givenID: id
+        });
+      } else {
+        res.status(200).json({ user })
+      }
+    }
   }
 
-  public getAll(): Array<User> {
-    return this.client.users.cache.array();
+  public getAll(): (req: Request, res: Response) => void {
+    return (req, res) => {
+      res.status(200).json(this.client.users.cache.array());
+    }
   }
 }

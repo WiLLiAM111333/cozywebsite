@@ -3,10 +3,9 @@ import { db } from '../../../../../src/db/index';
 import { CommandCFGTableInsertObject } from "./CommandCFGTableInsertObject";
 import { CommandConstructor } from "./CommandConstructor";
 import { CommandOptions } from "./CommandOptions";
-import { CommandTableInsertOject } from "./CommandTableInsertOject";
-import { CommandHelp } from "./Help";
+import { CommandHelp } from "./CommandHelp";
 import { ICommand } from "./ICommand";
-import { CommandRequirements } from "./Requirements";
+import { CommandRequirements } from "./CommandRequirements";
 
 export class Command implements ICommand {
   protected db: Knex;
@@ -37,14 +36,12 @@ export class Command implements ICommand {
         'EMBED_LINKS',
         'MANAGE_MESSAGES',
       ],
-      userPerms: userPerms.length 
-        ? userPerms
-        : [
-          'SEND_MESSAGES',
-          'VIEW_CHANNEL',
-          'ATTACH_FILES',
-          'EMBED_LINKS'
-        ],
+      userPerms: userPerms || [
+        'SEND_MESSAGES',
+        'VIEW_CHANNEL',
+        'ATTACH_FILES',
+        'EMBED_LINKS'
+      ],
     };
     this.options = { ignoreBots: ignoreBots || true }
 
@@ -57,23 +54,6 @@ export class Command implements ICommand {
     }
 
     this.db = db;
-  }
-
-  public get tableInsertObject(): CommandTableInsertOject {
-    const id = this.id;
-    const description = this.help.description;
-    const name = this.help.name;
-
-    const args = this.help.args.length
-      ? this.help.args.join(', ')
-      : 'No arguments'
-
-    return {
-      id,
-      args,
-      description,
-      name
-    };
   }
 
   public get configTableInsertObject(): CommandCFGTableInsertObject {

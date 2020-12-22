@@ -7,12 +7,13 @@ import { Constants } from '../../../../../../src/utils/constants';
 
 const { EmbedColors, TableNames } = Constants;
 const { RED } = EmbedColors
-const { COMMANDS, COMMAND_CONFIGS } = TableNames;
+const { COMMAND_CONFIGS } = TableNames;
 
 export class CommandHandler {
   private db: Knex;
   private client: CozyClient;
   public onCooldown: Set<string>;
+  public commands: Map<string, Command>;
 
   public constructor(client: CozyClient) {
     this.db = db;
@@ -21,17 +22,9 @@ export class CommandHandler {
 
   public async register(command: Command) {
     try {
-      const hasCommand = await this.db.table(COMMANDS)
-        .select('*')
-        .where(`id = ${command.id}`);
-
       const hasCommandConfig = await this.db.table(COMMAND_CONFIGS)
         .select('*')
-        .where(`id = ${command.id}`);
-
-      if(!hasCommand.length) {
-        await this.db.table(COMMANDS).insert(command.tableInsertObject);
-      }
+        .where('id', command.id);
 
       if(!hasCommandConfig) {
         await this.db.table(COMMAND_CONFIGS).insert(command.configTableInsertObject);
@@ -45,12 +38,12 @@ export class CommandHandler {
     try {
       const hasCFG = await this.db.table(COMMAND_CONFIGS)
         .select('*')
-        .where(`id = ${command.id}`);
+        .where('id', command.id);
 
       if(!hasCFG) {
         await this.db.table(COMMAND_CONFIGS)
           .delete('*')
-          .where(`id = ${command.id}`);
+          .where('id', command.id);
       }
     } catch (err) {
       this.client.emit('error', err);

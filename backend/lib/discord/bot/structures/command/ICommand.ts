@@ -1,7 +1,5 @@
-import { Message } from "discord.js";
-import { CozyClient } from "../../client/CozyClient";
-import { CommandHelp } from "./Help";
-import { CommandRequirements } from "./Requirements";
+import { CommandHelp } from "./CommandHelp";
+import { CommandRequirements } from "./CommandRequirements";
 
 export interface ICommand {
   requirements: CommandRequirements;

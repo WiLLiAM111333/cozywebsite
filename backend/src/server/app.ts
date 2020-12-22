@@ -3,7 +3,7 @@ import { Constants } from '../utils/constants';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';  
-import { AuthRouter } from './api/routes/index';
+import { APIRouter } from './api/routes/index';
 
 const app = express();
 
@@ -16,9 +16,9 @@ app.use(cors({
 
 app.use(morgan('dev'));
 
-const authRouter = new AuthRouter(app);
+const apiRouter = new APIRouter(app);
 
-app.use(authRouter.route, authRouter.router);
+app.use(apiRouter.route, apiRouter.router);
 
 app.get('/', (req, res) => res.status(200).json({ message: Constants.API_MESSAGE }));
 

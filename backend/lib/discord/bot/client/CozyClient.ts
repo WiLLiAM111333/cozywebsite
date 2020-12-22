@@ -3,11 +3,13 @@ import { join } from 'path';
 import { readdir } from 'fs/promises';
 import { CommandHandler } from "../structures/command/handler/CommandHandler";
 import owners from '../../../../config/owners.json';
+import { AutoModerator } from "../structures/moderation/autoMod/AutoModerator";
 
 export class CozyClient extends Client {
   private eventPath: string;
   public commandHandler: CommandHandler;
   public owners: Array<Snowflake>;
+  public autoModerator: AutoModerator;
 
   public constructor(options?: ClientOptions) {
     super(options);
@@ -15,6 +17,7 @@ export class CozyClient extends Client {
     this.eventPath = options.eventPath;
     this.owners = owners;
     this.commandHandler = new CommandHandler(this);
+    this.autoModerator = new AutoModerator();
   }
 
   private async loadEvents(): Promise<void> {
