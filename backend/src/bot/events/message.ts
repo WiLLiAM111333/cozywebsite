@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 import { CozyClient } from "../../../lib/discord/bot/client/CozyClient";
 import { CapsSpamEmbed } from "../../../lib/discord/bot/structures/moderation/autoMod/embeds/CapsSpamEmbed";
+import { EmoteSpamEmbed } from "../../../lib/discord/bot/structures/moderation/autoMod/embeds/EmoteSpamEmbed";
 import { ExternalLinkEmbed } from "../../../lib/discord/bot/structures/moderation/autoMod/embeds/ExternalLinkEmbed";
 import { MassPingEmbed } from "../../../lib/discord/bot/structures/moderation/autoMod/embeds/MassPingEmbed";
 import { ProfanityEmbed } from "../../../lib/discord/bot/structures/moderation/autoMod/embeds/ProfanityEmbed";
@@ -66,5 +67,14 @@ export const event = (client: CozyClient, message: Message): void => {
 
     message.channel.send(`${message.author.toString()},`, { embed });
     client.autoMod.emit('massPings', message.author);
+  }
+
+  if(client.autoMod.isEmoteSpam(message)) {
+    message.delete();
+
+    const embed = new EmoteSpamEmbed();
+
+    message.channel.send(`${message.author.toString()},`, { embed });
+    client.autoMod.emit('emoteSpam', message.author);
   }
 }

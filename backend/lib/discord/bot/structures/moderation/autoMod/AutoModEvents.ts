@@ -7,7 +7,7 @@ export interface AutoModEvents extends ModerationEvents {
   externalLink: [string, User];
   repeatedText: [string, User];
   capsSpam: [User];
-  emojiSpam: [User];
+  emoteSpam: [User];
   spoilerSpam: [User];
   massPings: [User];
   inviteCreate: [Invite];
