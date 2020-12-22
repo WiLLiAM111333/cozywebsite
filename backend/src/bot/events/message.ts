@@ -1,5 +1,6 @@
 import { Message } from "discord.js";
 import { CozyClient } from "../../../lib/discord/bot/client/CozyClient";
+import { BlacklistLinkEmbed } from "../../../lib/discord/bot/structures/moderation/autoMod/embeds/BlacklistedLinkEmbed";
 import { CapsSpamEmbed } from "../../../lib/discord/bot/structures/moderation/autoMod/embeds/CapsSpamEmbed";
 import { EmoteSpamEmbed } from "../../../lib/discord/bot/structures/moderation/autoMod/embeds/EmoteSpamEmbed";
 import { ExternalLinkEmbed } from "../../../lib/discord/bot/structures/moderation/autoMod/embeds/ExternalLinkEmbed";
@@ -76,5 +77,14 @@ export const event = (client: CozyClient, message: Message): void => {
 
     message.channel.send(`${message.author.toString()},`, { embed });
     client.autoMod.emit('emoteSpam', message.author);
+  }
+
+  if(client.autoMod.isBlacklistedLink(message)) {
+    message.delete();
+
+    const embed = new BlacklistLinkEmbed();
+
+    message.channel.send(`${message.author.toString()},`, { embed });
+    client.autoMod.emit('blacklistedLink', message.author);
   }
 }

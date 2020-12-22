@@ -12,4 +12,5 @@ export interface AutoModEvents extends ModerationEvents {
   massPings: [User];
   inviteCreate: [Invite];
   inviteDelete: [Invite];
+  blacklistedLink: [User];
 }
