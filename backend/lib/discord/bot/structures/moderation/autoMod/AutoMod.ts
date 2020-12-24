@@ -1,54 +1,52 @@
-import { Message, Snowflake } from "discord.js";
+import { Channel, GuildMember, Message, Snowflake } from "discord.js";
 import { Zalgo } from "../zalgo";
+import { AutoModActionsManager } from "./AutoModActionsManager";
+import { AutoModConfig } from "./AutoModConfig";
+import { AutoModConfigManager } from "./AutoModConfigManager";
 import { AutoModEventHandler } from "./AutoModEventHandler";
 
 // Very basic, will keep working on this
 
 export class AutoMod extends AutoModEventHandler {
-  private ignoredRoles: Array<Snowflake>;
-  private ignoredChannels: Array<Snowflake>;
-  private profanities: Array<RegExp>;
-  private blacklistedLinks: Set<string>;
-  private enabled: boolean;
-  private useProfanityFilter: boolean;
-  private useZalgoFilter: boolean;
-  private useCapsSpamFilter: boolean;
-  private useLinkFilter: boolean;
-  private useSpoilerSpamFilter: boolean;
-  private useMassPingFilter: boolean;
-  private useEmoteSpamFilter: boolean;
-  private useBlacklistedLinkFilter: boolean;
+  private actionsManager: AutoModActionsManager;
+  private configManager: AutoModConfigManager;
+  private config: AutoModConfig;
 
   public constructor() {
     super();
     
-    // Make sure all of this comes from a config table later.
-    // A static creation of empty data like this will cause resets
-    // in the config when the bot restarts or whatever.
-    this.ignoredRoles = [];
-    this.ignoredChannels = [];
-    this.profanities = [];
-    this.blacklistedLinks = new Set();
-    this.enabled = true;
-    this.useProfanityFilter = true;
-    this.useZalgoFilter = true;
-    this.useCapsSpamFilter = true;
-    this.useLinkFilter = true;
-    this.useSpoilerSpamFilter = true;
-    this.useMassPingFilter = true;
-    this.useEmoteSpamFilter = true;
-    this.useBlacklistedLinkFilter = true;
+    this.actionsManager = new AutoModActionsManager();
+    this.configManager = new AutoModConfigManager();
+
+    this.configManager.getConfig()
+      .then(cfg => {
+        this.config = cfg;
+        console.log(this);
+        // Noop function to do literally nothing
+      }).catch(() => {});
+  }
+
+  private verify(member: GuildMember, channel: Channel): boolean {
+    if(!this.config.enabled) {
+      return false;
+    }
+
+    for(const id of this.config.ignoredRoles) {
+      if(member.roles.cache.has(id)) {
+        return false;
+      }
+    }
+
+    if(this.config.ignoredChannels.includes(channel.id)) {
+      return false;
+    }        
+
+    return true;
   }
 
   public isProfanity(message: Message) {
-    if(this.enabled && this.useProfanityFilter && this.ignoredChannels.includes(message.channel.id)) {
-      for(const role of this.ignoredRoles) {
-        if(message.member.roles.cache.has(role)) {
-          return false;
-        }
-      }
-  
-      for(const profanity of this.profanities) {
+    if(this.verify(message.member, message.channel) && this.config.useProfanityFilter) {
+      for(const profanity of this.config.profanities) {
         if(message.content.toLowerCase().match(profanity)) {
           return true;
         }
@@ -60,7 +58,7 @@ export class AutoMod extends AutoModEventHandler {
 
   public getProfanity(args: Array<string>): string {
     for(const word of args) {
-      for(const profanity of this.profanities) {
+      for(const profanity of this.config.profanities) {
         if(word.match(profanity)) {
           return word;
         }
@@ -68,16 +66,9 @@ export class AutoMod extends AutoModEventHandler {
     }
   }
 
-  public isZalgo(message: Message) {
-    if(this.enabled && this.useZalgoFilter && !this.ignoredChannels.includes(message.channel.id)) {
+  public isZalgo(message: Message): boolean {
+    if(this.verify(message.member, message.channel) && this.config.useZalgoFilter) {
       const content = message.content;
-  
-      for(const role of this.ignoredRoles) {
-        if(message.member.roles.cache.has(role)) {
-          return false;
-        }
-      }
-  
       return new Zalgo(content).isZalgo();
     }
 
@@ -85,13 +76,7 @@ export class AutoMod extends AutoModEventHandler {
   }
 
   public isCapsSpam(message: Message): boolean {
-    if(this.enabled && this.useCapsSpamFilter && !this.ignoredChannels.includes(message.channel.id)) {
-      for(const role of this.ignoredRoles) {
-        if(message.member.roles.cache.has(role)) {
-          return false;
-        }
-      }
-
+    if(this.verify(message.member, message.channel) && this.config.useCapsSpamFilter) {
       if(message.content.length < 10) {
         return false;
       }
@@ -130,13 +115,7 @@ export class AutoMod extends AutoModEventHandler {
   }
 
   public isExternalLink(message: Message): boolean {
-    if(this.enabled && this.useLinkFilter && !this.ignoredChannels.includes(message.channel.id)) {
-      for(const role of this.ignoredRoles) {
-        if(message.member.roles.cache.has(role)) {
-          return false;
-        }
-      }
-
+    if(this.verify(message.member, message.channel) && this.config.useLinkFilter) {
       const link = message.content.match(/https:\/\//);
       
       if(link && link.input) {
@@ -149,14 +128,16 @@ export class AutoMod extends AutoModEventHandler {
     return false;
   }
 
+  public isInviteLink(message: Message): boolean {
+    if(this.verify(message.member, message.channel) && this.config.useInviteLinkFilter) {
+      return /https:\/\/discord\.gg\/[A-Za-z0-9]+/.test(message.content);
+    }
+
+    return false;
+  }
+
   public isSpoilerSpam(message: Message) {
-    if(this.enabled && this.useSpoilerSpamFilter && !this.ignoredChannels.includes(message.channel.id)) {
-      for(const role of this.ignoredRoles) {
-        if(message.member.roles.cache.has(role)) {
-          return false;
-        }
-      }
-  
+    if(this.verify(message.member, message.channel) && this.config.useSpoilerSpamFilter) {
       const spoilerMatch = message.content
         .replace(/\s+/, ' ')
         .match(/\|\|\s?.+\s?\|\|/);
@@ -170,13 +151,7 @@ export class AutoMod extends AutoModEventHandler {
   }
 
   public isMassPing(message: Message): boolean {
-    if(this.enabled && this.useMassPingFilter && !this.ignoredChannels.includes(message.channel.id)) {
-      for(const role of this.ignoredRoles) {
-        if(message.member.roles.cache.has(role)) {
-          return false;
-        }
-      }
-
+    if(this.verify(message.member, message.channel) && this.config.useMassPingFilter) {
       const limit = 4;
   
       return (
@@ -190,24 +165,18 @@ export class AutoMod extends AutoModEventHandler {
   }
 
   public isEmoteSpam(message: Message): boolean {
-    if(this.enabled && this.useEmoteSpamFilter && !this.ignoredChannels.includes(message.channel.id)) {
-      for(const role of this.ignoredRoles) {
-        if(message.member.roles.cache.has(role)) {
-          return false;
-        }
-      }
-
+    if(this.verify(message.member, message.channel) && this.config.useEmoteSpamFilter) {
       const emoteMatch = message.content.match(/<a?:(\w+):(\d+)>/g);  
-      return (emoteMatch && emoteMatch.map(emote => emote.replace(/<a?|:|>|\d/g, '')).length > 4);
+      return (emoteMatch && emoteMatch.length > 4);
     }
 
     return false;
   }
 
   public isBlacklistedLink(message: Message) {
-    if(this.enabled && this.useBlacklistedLinkFilter && !this.ignoredRoles.includes(message.channel.id)) {
+    if(this.verify(message.member, message.channel) && this.config.useBlacklistedLinkFilter) {
       for(const arg of message.content.split(/ +/)) {
-        if(this.blacklistedLinks.has(arg)) {
+        if(this.config.blacklistedLinks.includes(arg)) {
           return true;
         }
       }

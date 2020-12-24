@@ -1,5 +1,9 @@
 require('dotenv').config();
-const { db } = require('../dist/src/db/index');
+const Database = require('../dist/src/db/index');
+/**
+ * @type {import('knex')}
+ */
+const db = Database.db
 const { Constants } = require('../dist/src/utils/constants');
 const chalk = require('chalk');
 
@@ -14,8 +18,11 @@ const {
   RATELIMITS,
   USERS,
   WEBSITE_BANS,
-  COMMANDS,
-  COMMAND_CONFIGS
+  AUTOMOD_CONFIG,
+  AUTOMOD_IGNORED_ROLES,
+  AUTOMOD_IGNORED_CHANNELS,
+  AUTOMOD_BLACKLISTED_LINKS,
+  AUTOMOD_PROFANITIES
 } = TableNames;
 
 (async () => {
@@ -27,7 +34,7 @@ const {
       console.log(chalk.cyan(`Created the database ${KNEX_DB}`));
     }
 
-    await db.raw(`USE ${KNEX_DB}`)
+    await db.raw(`USE ${KNEX_DB}`);
 
     const hasBans = await db.schema.hasTable(DISCORD_BANS);
     const hasKicks = await db.schema.hasTable(DISCORD_KICKS);
@@ -37,9 +44,12 @@ const {
     const hasRateLimits = await db.schema.hasTable(RATELIMITS);
     const hasUsers = await db.schema.hasTable(USERS);
     const hasWebsiteBans = await db.schema.hasTable(WEBSITE_BANS);
-    const hasCommands = await db.schema.hasTable(COMMANDS);
-    const hasCommandCFGS = await db.schema.hasTable(COMMAND_CONFIGS);
-    
+    const hasAutoModCFG = await db.schema.hasTable(AUTOMOD_CONFIG);
+    const hasAutoModIgnoredRoles = await db.schema.hasTable(AUTOMOD_IGNORED_ROLES);
+    const hasAutoModIgnoredChannels = await db.schema.hasTable(AUTOMOD_IGNORED_CHANNELS);
+    const hasAutoModBlacklistedLinks = await db.schema.hasTable(AUTOMOD_BLACKLISTED_LINKS);
+    const hasAutoModProfanities = await db.schema.hasTable(AUTOMOD_PROFANITIES);
+
     if(!hasBans) {
       await db.schema.createTable(DISCORD_BANS, table => {
         table.string('discordUserID').notNullable();
@@ -135,29 +145,55 @@ const {
       console.log(chalk.cyan(`Created the table ${WEBSITE_BANS}`));
     }
 
-    if(!hasCommands) {
-      await db.schema.createTable(COMMANDS, table => {
-        table.uuid('ID').notNullable();
-        table.string('name').notNullable();
-        table.text('args').notNullable();
-        table.text('description').notNullable();
-        table.text('aliases').notNullable();
+    if(!hasAutoModCFG) {
+      await db.schema.createTable(AUTOMOD_CONFIG, table => {
+        table.boolean('enabled').notNullable().defaultTo(false);
+        table.boolean('useProfanityFilter').notNullable().defaultTo(false);
+        table.boolean('useZalgoFilter').notNullable().defaultTo(false);
+        table.boolean('useCapsSpamFilter').notNullable().defaultTo(false);
+        table.boolean('useLinkFilter').notNullable().defaultTo(false);
+        table.boolean('useSpoilerSpamFilter').notNullable().defaultTo(false);
+        table.boolean('useMassPingFilter').notNullable().defaultTo(false);
+        table.boolean('useEmoteSpamFilter').notNullable().defaultTo(false);
+        table.boolean('useBlacklistedLinkFilter').notNullable().defaultTo(false);
+        table.boolean('useInviteLinkFilter').notNullable().defaultTo(false);
       });
 
-      console.log(chalk.cyan(`Created the table ${COMMANDS}`));
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_CONFIG}`));
     }
 
-    if(!hasCommandCFGS) {
-      await db.schema.createTable(COMMAND_CONFIGS, table => {
-        table.uuid('ID').notNullable();
-        table.integer('cooldown').notNullable();
-        table.boolean('ownerOnly').notNullable();
-        table.text('clientPerms').notNullable();
-        table.text('userPerms').notNullable();
+    if(!hasAutoModIgnoredRoles) {
+      await db.schema.createTable(AUTOMOD_IGNORED_ROLES, table => {
+        table.string('id').notNullable();
       });
 
-      console.log(chalk.cyan(`Created the table ${COMMAND_CONFIGS}`));
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_IGNORED_ROLES}`));
     }
+
+    if(!hasAutoModIgnoredChannels) {
+      await db.schema.createTable(AUTOMOD_IGNORED_CHANNELS, table => {
+        table.string('id').notNullable();
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_IGNORED_CHANNELS}`));
+    }
+
+    if(!hasAutoModBlacklistedLinks) {
+      await db.schema.createTable(AUTOMOD_BLACKLISTED_LINKS, table => {
+        table.string('link').notNullable();
+        table.text('reason').notNullable().defaultTo('No reason set');
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_BLACKLISTED_LINKS}`));
+    }
+
+    if(!hasAutoModProfanities) {
+      await db.schema.createTable(AUTOMOD_PROFANITIES, table => {
+        table.string('regex').notNullable();
+      });
+    }
+
+    console.log(chalk.cyan(`Created the table ${AUTOMOD_PROFANITIES}`));
   } catch (err) {
     console.log(err);
   } finally {

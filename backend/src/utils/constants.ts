@@ -7,12 +7,17 @@ export namespace Constants {
     DISCORD_BANS = 'discord_bans',
     DISCORD_KICKS = 'discord_kicks',
     DISCORD_MUTES = 'discord_mutes',
-    DISCORD_WARNS = 'discord_xwarns',
+    DISCORD_WARNS = 'discord_warns',
     WEBSITE_BANS = 'website_bans',
     SHARED_MOD_LOG = 'shared_mod_log',
     USERS = 'users',
     COMMANDS = 'commands',
-    COMMAND_CONFIGS = 'command_configs'
+    COMMAND_CONFIGS = 'command_configs',
+    AUTOMOD_CONFIG = 'automod_config',
+    AUTOMOD_IGNORED_ROLES = 'automod_ignored_roles',
+    AUTOMOD_IGNORED_CHANNELS = 'automod_ignored_channels',
+    AUTOMOD_BLACKLISTED_LINKS = 'automod_blacklisted_links',
+    AUTOMOD_PROFANITIES = 'automod_profanities'
   }
 
   export enum EmbedColors {
