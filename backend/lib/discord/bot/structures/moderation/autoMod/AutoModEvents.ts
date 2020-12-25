@@ -1,7 +1,7 @@
 import { Invite, User } from "discord.js";
-import { ModerationEvents } from "../ModerationEvents";
+import { AutoModConfig } from "./AutoModConfig";
 
-export interface AutoModEvents extends ModerationEvents {
+export interface AutoModEvents { 
   zalgo: [string, User];
   profanity: [string, User];
   externalLink: [string, User];
@@ -13,4 +13,6 @@ export interface AutoModEvents extends ModerationEvents {
   inviteCreate: [Invite];
   inviteDelete: [Invite];
   blacklistedLink: [User];
+  configCreate: [AutoModConfig];
+  configUpdate: [AutoModConfig];
 }

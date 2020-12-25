@@ -1,4 +1,4 @@
-import { Channel, GuildMember, Message, Snowflake } from "discord.js";
+import { Channel, GuildMember, Message } from "discord.js";
 import { Zalgo } from "../zalgo";
 import { AutoModActionsManager } from "./AutoModActionsManager";
 import { AutoModConfig } from "./AutoModConfig";
@@ -6,6 +6,7 @@ import { AutoModConfigManager } from "./AutoModConfigManager";
 import { AutoModEventHandler } from "./AutoModEventHandler";
 
 // Very basic, will keep working on this
+// configManager is only for internal use and communicates with this class through 2 events
 
 export class AutoMod extends AutoModEventHandler {
   private actionsManager: AutoModActionsManager;
@@ -16,14 +17,10 @@ export class AutoMod extends AutoModEventHandler {
     super();
     
     this.actionsManager = new AutoModActionsManager();
-    this.configManager = new AutoModConfigManager();
+    this.configManager = new AutoModConfigManager(this);
 
-    this.configManager.getConfig()
-      .then(cfg => {
-        this.config = cfg;
-        console.log(this);
-        // Noop function to do literally nothing
-      }).catch(() => {});
+    this.on('configCreate', config => this.config = config);
+    this.on('configUpdate', config => this.config = config);
   }
 
   private verify(member: GuildMember, channel: Channel): boolean {
