@@ -16,8 +16,8 @@ export class AutoMod extends AutoModEventHandler {
   public constructor() {
     super();
     
-    this.actionsManager = new AutoModActionsManager();
     this.configManager = new AutoModConfigManager(this);
+    this.actionsManager = new AutoModActionsManager(this);
 
     this.on('configCreate', config => this.config = config);
     this.on('configUpdate', config => this.config = config);

@@ -22,7 +22,7 @@ export const event = (client: CozyClient, message: Message): void => {
     const embed = new ProfanityEmbed(profanity);
 
     message.channel.send(`${message.author.toString()},`, { embed });
-    client.autoMod.emit('profanity', message.content, message.author);
+    client.autoMod.emit('profanity', message.content, message.member);
   }
 
   if(client.autoMod.isZalgo(message)) {
@@ -31,7 +31,7 @@ export const event = (client: CozyClient, message: Message): void => {
     const embed = new ZalgoEmbed();
 
     message.channel.send(`${message.author.toString()},`, { embed });
-    client.autoMod.emit('zalgo', message.content, message.author);
+    client.autoMod.emit('zalgo', message.content, message.member);
   }
 
   if(client.autoMod.isCapsSpam(message)) {
@@ -40,7 +40,7 @@ export const event = (client: CozyClient, message: Message): void => {
     const embed = new CapsSpamEmbed();
 
     message.channel.send(`${message.author.toString()},`, { embed });
-    client.autoMod.emit('capsSpam', message.author);
+    client.autoMod.emit('capsSpam', message.member);
   }
 
   if(client.autoMod.isExternalLink(message)) {
@@ -49,7 +49,7 @@ export const event = (client: CozyClient, message: Message): void => {
     const embed = new ExternalLinkEmbed();
 
     message.channel.send(`${message.author.toString()},`, { embed });
-    client.autoMod.emit('externalLink', message.content, message.author);
+    client.autoMod.emit('externalLink', message.content, message.member);
   }
 
   if(client.autoMod.isSpoilerSpam(message)) {
@@ -58,7 +58,7 @@ export const event = (client: CozyClient, message: Message): void => {
     const embed = new SpoilerSpamEmbed()
 
     message.channel.send(`${message.author.toString()},`, { embed });
-    client.autoMod.emit('spoilerSpam', message.author);
+    client.autoMod.emit('spoilerSpam', message.member);
   }
 
   if(client.autoMod.isMassPing(message)) {
@@ -67,7 +67,7 @@ export const event = (client: CozyClient, message: Message): void => {
     const embed = new MassPingEmbed();
 
     message.channel.send(`${message.author.toString()},`, { embed });
-    client.autoMod.emit('massPings', message.author);
+    client.autoMod.emit('massPings', message.member);
   }
 
   if(client.autoMod.isEmoteSpam(message)) {
@@ -76,7 +76,7 @@ export const event = (client: CozyClient, message: Message): void => {
     const embed = new EmoteSpamEmbed();
 
     message.channel.send(`${message.author.toString()},`, { embed });
-    client.autoMod.emit('emoteSpam', message.author);
+    client.autoMod.emit('emoteSpam', message.member);
   }
 
   if(client.autoMod.isBlacklistedLink(message)) {
@@ -85,6 +85,6 @@ export const event = (client: CozyClient, message: Message): void => {
     const embed = new BlacklistLinkEmbed();
 
     message.channel.send(`${message.author.toString()},`, { embed });
-    client.autoMod.emit('blacklistedLink', message.author);
+    client.autoMod.emit('blacklistedLink', message.member);
   }
 }

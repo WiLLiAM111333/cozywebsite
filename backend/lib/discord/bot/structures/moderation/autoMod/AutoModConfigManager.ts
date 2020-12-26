@@ -15,6 +15,12 @@ const {
 // I'm not sure how im gonna call updateConfig() yet, but we'll see when I implement it later
 // I'll probably implement it when I have a front-end to the dashboard which will control this
 // That will take several weeks if not a month or 2 of work
+// This will control the configuration of AutoModActionsManager aswell
+/* 
+   This will be a trickier job than the base AutoMod class becuase of how 
+   many different things it has to take into consideration. The room for 
+   error is also ZERO, it cannot ban members because of an internal mistake
+*/
 
 export class AutoModConfigManager {
   private autoMod: AutoMod;
@@ -27,17 +33,25 @@ export class AutoModConfigManager {
     this.init();
   }
 
+  private get config() {
+    return this._config;
+  }
+
+  private set config(config: AutoModConfig) {
+    this._config = config;
+  }
+
   private init() {
     (async () => {
       try {
-        await this.createConfig();
+        await this.createAutoModConfig();
       } catch (err) {
         this.handleError(err);
       }
     })();
   }
 
-  private async createConfig(): Promise<AutoModConfig> {
+  private async createAutoModConfig(): Promise<AutoModConfig> {
     try {
       const mainConfig = await db.table(AUTOMOD_CONFIG);
       const ignoredRoles = await db.table(AUTOMOD_IGNORED_ROLES);
@@ -72,15 +86,7 @@ export class AutoModConfigManager {
     }
   }
 
-  private get config() {
-    return this._config;
-  }
-
-  private set config(config: AutoModConfig) {
-    this._config = config;
-  }
-
-  private async updateConfig<T extends keyof typeof Constants.TableNames>(table: T, whereObj: object, newConfig: object): Promise<void> {
+  private async updateAutoModConfig<T extends keyof typeof Constants.TableNames>(table: T, whereObj: object, newConfig: object): Promise<void> {
     try {
       this.config = await db.table(table.toLowerCase())
         .where(whereObj)

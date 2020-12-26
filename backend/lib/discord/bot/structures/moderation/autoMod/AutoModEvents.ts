@@ -1,18 +1,18 @@
-import { Invite, User } from "discord.js";
+import { Invite, GuildMember } from "discord.js";
 import { AutoModConfig } from "./AutoModConfig";
 
 export interface AutoModEvents { 
-  zalgo: [string, User];
-  profanity: [string, User];
-  externalLink: [string, User];
-  repeatedText: [string, User];
-  capsSpam: [User];
-  emoteSpam: [User];
-  spoilerSpam: [User];
-  massPings: [User];
+  zalgo: [string, GuildMember];
+  profanity: [string, GuildMember];
+  externalLink: [string, GuildMember];
+  repeatedText: [string, GuildMember];
+  capsSpam: [GuildMember];
+  emoteSpam: [GuildMember];
+  spoilerSpam: [GuildMember];
+  massPings: [GuildMember];
   inviteCreate: [Invite];
   inviteDelete: [Invite];
-  blacklistedLink: [User];
+  blacklistedLink: [GuildMember];
   configCreate: [AutoModConfig];
   configUpdate: [AutoModConfig];
 }
