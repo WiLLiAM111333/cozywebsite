@@ -2,13 +2,23 @@ import { AutoModConfig } from "./AutoModConfig";
 import { db } from '../../../../../../src/db/index';
 import { Constants } from '../../../../../../src/utils/constants';
 import { AutoMod } from "./AutoMod";
+import { AutoModActionsConfig } from "./AutoModActionsConfig";
 
 const {
   AUTOMOD_CONFIG,
   AUTOMOD_BLACKLISTED_LINKS,
   AUTOMOD_IGNORED_CHANNELS,
   AUTOMOD_IGNORED_ROLES,
-  AUTOMOD_PROFANITIES
+  AUTOMOD_PROFANITIES,
+  AUTOMOD_ACTION_BLACKLISTED_LINK,
+  AUTOMOD_ACTION_ZALGO,
+  AUTOMOD_ACTION_SPOILER_SPAM,
+  AUTOMOD_ACTION_REPEATED_TEXT,
+  AUTOMOD_ACTION_PROFANITY,
+  AUTOMOD_ACTION_MASS_PINGS,
+  AUTOMOD_ACTION_EXTERNAL_LINK,
+  AUTOMOD_ACTION_EMOTE_SPAM,
+  AUTOMOD_ACTION_CAPS_SPAM
 } = Constants.TableNames;
 
 // Everything is private as it is intended to be used for internal use only
@@ -25,6 +35,7 @@ const {
 export class AutoModConfigManager {
   private autoMod: AutoMod;
   private _config: AutoModConfig;
+  private _actionsConfig: AutoModActionsConfig;
 
   public constructor(autoMod: AutoMod) {
     this.autoMod = autoMod;
@@ -41,33 +52,53 @@ export class AutoModConfigManager {
     this._config = config;
   }
 
+  private get actionsConfig() {
+    return this._actionsConfig;
+  }
+
+  private set actionsConfig(config: AutoModActionsConfig) {
+    this._actionsConfig = config;
+  }
+
   private init() {
     (async () => {
       try {
-        await this.createAutoModConfig();
+        this.config = await this.getAutoModConfig();
+        this.actionsConfig = await this.getActionsConfig();
       } catch (err) {
         this.handleError(err);
       }
     })();
   }
 
-  private async createAutoModConfig(): Promise<AutoModConfig> {
+  private async getAutoModConfig(): Promise<AutoModConfig> {
     try {
-      const mainConfig = await db.table(AUTOMOD_CONFIG);
-      const ignoredRoles = await db.table(AUTOMOD_IGNORED_ROLES);
-      const ignoredChannels = await db.table(AUTOMOD_IGNORED_CHANNELS);
-      const profanityData = await db.table(AUTOMOD_PROFANITIES);
-      const blacklistedLinks = await db.table(AUTOMOD_BLACKLISTED_LINKS);
+      const mainConfig = await db.table(AUTOMOD_CONFIG)
+        .select('*')
 
-      const profanities: Array<RegExp> = profanityData.map(data => {
-        const str: string = data.regex;
+      const ignoredRoles = (await db.table(AUTOMOD_IGNORED_ROLES)
+        .select('id'))
+        .map(data => data.id);
+      
+      const ignoredChannels = (await db.table(AUTOMOD_IGNORED_CHANNELS)
+        .select('id'))
+        .map(data => data.id);
 
-        const lastSlash = str.lastIndexOf('/');
-        const pattern = str.slice(1, lastSlash);
-        const flags = str.slice(lastSlash + 1);
-        
-        return new RegExp(pattern, flags);
-      });
+      const blacklistedLinks = (await db.table(AUTOMOD_BLACKLISTED_LINKS)
+        .select('link'))
+        .map(data => data.link);
+
+      const profanities = (await db.table(AUTOMOD_PROFANITIES)
+        .select('regex'))
+        .map(data => {
+          const str: string = data.regex;
+  
+          const lastSlash = str.lastIndexOf('/');
+          const pattern = str.slice(1, lastSlash);
+          const flags = str.slice(lastSlash + 1);
+          
+          return new RegExp(pattern, flags);
+        });
 
       const config: AutoModConfig = {
         ...mainConfig[0],
@@ -78,7 +109,6 @@ export class AutoModConfigManager {
       }
 
       this.autoMod.emit('configCreate', config);
-      this.config = config;
       
       return config;
     } catch (err) {
@@ -86,13 +116,51 @@ export class AutoModConfigManager {
     }
   }
 
-  private async updateAutoModConfig<T extends keyof typeof Constants.TableNames>(table: T, whereObj: object, newConfig: object): Promise<void> {
+  private async getActionsConfig(): Promise<AutoModActionsConfig> {
     try {
-      this.config = await db.table(table.toLowerCase())
-        .where(whereObj)
-        .update(newConfig)
+      const blackListedLink = await db.table(AUTOMOD_ACTION_BLACKLISTED_LINK);
+      const capsSpam = await db.table(AUTOMOD_ACTION_CAPS_SPAM);
+      const emoteSpam = await db.table(AUTOMOD_ACTION_EMOTE_SPAM);
+      const externalLink = await db.table(AUTOMOD_ACTION_EXTERNAL_LINK);
+      const massPings = await db.table(AUTOMOD_ACTION_MASS_PINGS);
+      const repeatedText = await db.table(AUTOMOD_ACTION_REPEATED_TEXT);
+      const profanity = await db.table(AUTOMOD_ACTION_PROFANITY);
+      const spoilerSpam = await db.table(AUTOMOD_ACTION_SPOILER_SPAM);
+      const zalgo = await db.table(AUTOMOD_ACTION_ZALGO);
 
-      this.autoMod.emit('configUpdate', this.config);
+      const config: AutoModActionsConfig = {
+        blacklistedLink: {
+          ...blackListedLink[0],
+        },
+        capsSpam: {
+          ...capsSpam[0],
+        },
+        emoteSpam: {
+          ...emoteSpam[0],
+        },
+        externalLink: {
+          ...externalLink[0],
+        },
+        massPings: {
+          ...massPings[0],
+        },
+        profanity: {
+          ...profanity[0],
+        },
+        repeatedText: {
+          ...repeatedText[0],
+        },
+        spoilerSpam: {
+          ...spoilerSpam[0],
+        },
+        zalgo: {
+          ...zalgo[0]
+        }
+      }
+
+      this.autoMod.emit('actionsConfigCreate', config);
+
+      return config;
     } catch (err) {
       this.handleError(err);
     }

@@ -1,4 +1,5 @@
 import { Invite, GuildMember } from "discord.js";
+import { AutoModActionsConfig } from "./AutoModActionsConfig";
 import { AutoModConfig } from "./AutoModConfig";
 
 export interface AutoModEvents { 
@@ -15,4 +16,6 @@ export interface AutoModEvents {
   blacklistedLink: [GuildMember];
   configCreate: [AutoModConfig];
   configUpdate: [AutoModConfig];
+  actionsConfigCreate: [AutoModActionsConfig];
+  actionsConfigUpdate: [AutoModActionsConfig];
 }

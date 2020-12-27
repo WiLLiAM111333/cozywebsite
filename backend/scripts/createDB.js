@@ -1,6 +1,7 @@
 require('dotenv').config();
 const Database = require('../dist/src/db/index');
 /**
+ * Temporary for development so I can get type casting and autocomplete
  * @type {import('knex')}
  */
 const db = Database.db
@@ -10,6 +11,20 @@ const chalk = require('chalk');
 const { KNEX_DB, TableNames } = Constants;
 
 const {
+  AUTOMOD_ACTION_BLACKLISTED_LINK,
+  AUTOMOD_ACTION_CAPS_SPAM,
+  AUTOMOD_ACTION_EMOTE_SPAM,
+  AUTOMOD_ACTION_EXTERNAL_LINK,
+  AUTOMOD_ACTION_MASS_PINGS,
+  AUTOMOD_ACTION_PROFANITY,
+  AUTOMOD_ACTION_REPEATED_TEXT,
+  AUTOMOD_ACTION_SPOILER_SPAM,
+  AUTOMOD_ACTION_ZALGO,
+  AUTOMOD_BLACKLISTED_LINKS,
+  AUTOMOD_CONFIG,
+  AUTOMOD_IGNORED_CHANNELS,
+  AUTOMOD_IGNORED_ROLES,
+  AUTOMOD_PROFANITIES,
   DISCORD_BANS,
   DISCORD_KICKS,
   DISCORD_MUTES,
@@ -17,23 +32,11 @@ const {
   DISCORD_WARNS,
   RATELIMITS,
   USERS,
-  WEBSITE_BANS,
-  AUTOMOD_CONFIG,
-  AUTOMOD_IGNORED_ROLES,
-  AUTOMOD_IGNORED_CHANNELS,
-  AUTOMOD_BLACKLISTED_LINKS,
-  AUTOMOD_PROFANITIES
+  WEBSITE_BANS
 } = TableNames;
 
 (async () => {
   try {
-    const exists = await db.raw(`SHOW DATABASES LIKE '${KNEX_DB}'`);
-
-    if(!exists[0].length) {
-      await db.raw(`CREATE DATABASE ${KNEX_DB}`);
-      console.log(chalk.cyan(`Created the database ${KNEX_DB}`));
-    }
-
     await db.raw(`USE ${KNEX_DB}`);
 
     const hasBans = await db.schema.hasTable(DISCORD_BANS);
@@ -49,6 +52,15 @@ const {
     const hasAutoModIgnoredChannels = await db.schema.hasTable(AUTOMOD_IGNORED_CHANNELS);
     const hasAutoModBlacklistedLinks = await db.schema.hasTable(AUTOMOD_BLACKLISTED_LINKS);
     const hasAutoModProfanities = await db.schema.hasTable(AUTOMOD_PROFANITIES);
+    const hasBlackListedLinkAction = await db.schema.hasTable(AUTOMOD_ACTION_BLACKLISTED_LINK);
+    const hasCapsSpamAction = await db.schema.hasTable(AUTOMOD_ACTION_CAPS_SPAM);
+    const hasEmoteSpamAction = await db.schema.hasTable(AUTOMOD_ACTION_EMOTE_SPAM);
+    const hasExternalLinkAction = await db.schema.hasTable(AUTOMOD_ACTION_EXTERNAL_LINK);
+    const hasMassPingsAction = await db.schema.hasTable(AUTOMOD_ACTION_MASS_PINGS);
+    const hasProfanityAction = await db.schema.hasTable(AUTOMOD_ACTION_PROFANITY);
+    const hasRepeatedTextAction = await db.schema.hasTable(AUTOMOD_ACTION_REPEATED_TEXT);
+    const hasSpoilerSpamAction = await db.schema.hasTable(AUTOMOD_ACTION_SPOILER_SPAM);
+    const hasZalgoAction = await db.schema.hasTable(AUTOMOD_ACTION_ZALGO);
 
     if(!hasBans) {
       await db.schema.createTable(DISCORD_BANS, table => {
@@ -162,6 +174,123 @@ const {
       console.log(chalk.cyan(`Created the table ${AUTOMOD_CONFIG}`));
     }
 
+    if(!hasBlackListedLinkAction) {
+      await db.schema.createTable(AUTOMOD_ACTION_BLACKLISTED_LINK, table => {
+        table.boolean('ban').notNullable().defaultTo(false);
+        table.boolean('kick').notNullable().defaultTo(false);
+        table.boolean('mute').notNullable().defaultTo(false);
+        table.boolean('gifban').notNullable().defaultTo(false);
+        table.boolean('externalEmoteBan').notNullable().defaultTo(false);
+        table.boolean('report').notNullable().defaultTo(false);
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_BLACKLISTED_LINK}`));
+    }
+
+    if(!hasCapsSpamAction) {
+      await db.schema.createTable(AUTOMOD_ACTION_CAPS_SPAM, table => {
+        table.boolean('ban').notNullable().defaultTo(false);
+        table.boolean('kick').notNullable().defaultTo(false);
+        table.boolean('mute').notNullable().defaultTo(false);
+        table.boolean('gifban').notNullable().defaultTo(false);
+        table.boolean('externalEmoteBan').notNullable().defaultTo(false);
+        table.boolean('report').notNullable().defaultTo(false);
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_CAPS_SPAM}`));
+    }
+
+    if(!hasEmoteSpamAction) {
+      await db.schema.createTable(AUTOMOD_ACTION_EMOTE_SPAM, table => {
+        table.boolean('ban').notNullable().defaultTo(false);
+        table.boolean('kick').notNullable().defaultTo(false);
+        table.boolean('mute').notNullable().defaultTo(false);
+        table.boolean('gifban').notNullable().defaultTo(false);
+        table.boolean('externalEmoteBan').notNullable().defaultTo(false);
+        table.boolean('report').notNullable().defaultTo(false);
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_EMOTE_SPAM}`));
+    }
+
+    if(!hasExternalLinkAction) {
+      await db.schema.createTable(AUTOMOD_ACTION_EXTERNAL_LINK, table => {
+        table.boolean('ban').notNullable().defaultTo(false);
+        table.boolean('kick').notNullable().defaultTo(false);
+        table.boolean('mute').notNullable().defaultTo(false);
+        table.boolean('gifban').notNullable().defaultTo(false);
+        table.boolean('externalEmoteBan').notNullable().defaultTo(false);
+        table.boolean('report').notNullable().defaultTo(false);
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_EXTERNAL_LINK}`));
+    }
+
+    if(!hasMassPingsAction) {
+      await db.schema.createTable(AUTOMOD_ACTION_MASS_PINGS, table => {
+        table.boolean('ban').notNullable().defaultTo(false);
+        table.boolean('kick').notNullable().defaultTo(false);
+        table.boolean('mute').notNullable().defaultTo(false);
+        table.boolean('gifban').notNullable().defaultTo(false);
+        table.boolean('externalEmoteBan').notNullable().defaultTo(false);
+        table.boolean('report').notNullable().defaultTo(false);
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_MASS_PINGS}`));
+    }
+
+    if(!hasProfanityAction) {
+      await db.schema.createTable(AUTOMOD_ACTION_PROFANITY, table => {
+        table.boolean('ban').notNullable().defaultTo(false);
+        table.boolean('kick').notNullable().defaultTo(false);
+        table.boolean('mute').notNullable().defaultTo(false);
+        table.boolean('gifban').notNullable().defaultTo(false);
+        table.boolean('externalEmoteBan').notNullable().defaultTo(false);
+        table.boolean('report').notNullable().defaultTo(false);
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_PROFANITY}`));
+    }
+    
+    if(!hasRepeatedTextAction) {
+      await db.schema.createTable(AUTOMOD_ACTION_REPEATED_TEXT, table => {
+        table.boolean('ban').notNullable().defaultTo(false);
+        table.boolean('kick').notNullable().defaultTo(false);
+        table.boolean('mute').notNullable().defaultTo(false);
+        table.boolean('gifban').notNullable().defaultTo(false);
+        table.boolean('externalEmoteBan').notNullable().defaultTo(false);
+        table.boolean('report').notNullable().defaultTo(false);
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_REPEATED_TEXT}`));
+    }
+
+    if(!hasSpoilerSpamAction) {
+      await db.schema.createTable(AUTOMOD_ACTION_SPOILER_SPAM, table => {
+        table.boolean('ban').notNullable().defaultTo(false);
+        table.boolean('kick').notNullable().defaultTo(false);
+        table.boolean('mute').notNullable().defaultTo(false);
+        table.boolean('gifban').notNullable().defaultTo(false);
+        table.boolean('externalEmoteBan').notNullable().defaultTo(false);
+        table.boolean('report').notNullable().defaultTo(false);
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_SPOILER_SPAM}`));
+    }
+
+    if(!hasZalgoAction) {
+      await db.schema.createTable(AUTOMOD_ACTION_ZALGO, table => {
+        table.boolean('ban').notNullable().defaultTo(false);
+        table.boolean('kick').notNullable().defaultTo(false);
+        table.boolean('mute').notNullable().defaultTo(false);
+        table.boolean('gifban').notNullable().defaultTo(false);
+        table.boolean('externalEmoteBan').notNullable().defaultTo(false);
+        table.boolean('report').notNullable().defaultTo(false);
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_ZALGO}`));
+    }
+
     if(!hasAutoModIgnoredRoles) {
       await db.schema.createTable(AUTOMOD_IGNORED_ROLES, table => {
         table.string('id').notNullable();
@@ -181,7 +310,7 @@ const {
     if(!hasAutoModBlacklistedLinks) {
       await db.schema.createTable(AUTOMOD_BLACKLISTED_LINKS, table => {
         table.string('link').notNullable();
-        table.text('reason').notNullable().defaultTo('No reason set');
+        table.text('reason').notNullable();
       });
 
       console.log(chalk.cyan(`Created the table ${AUTOMOD_BLACKLISTED_LINKS}`));
@@ -191,9 +320,9 @@ const {
       await db.schema.createTable(AUTOMOD_PROFANITIES, table => {
         table.string('regex').notNullable();
       });
+      
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_PROFANITIES}`));
     }
-
-    console.log(chalk.cyan(`Created the table ${AUTOMOD_PROFANITIES}`));
   } catch (err) {
     console.log(err);
   } finally {

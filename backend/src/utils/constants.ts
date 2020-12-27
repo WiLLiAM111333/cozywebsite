@@ -11,13 +11,21 @@ export namespace Constants {
     WEBSITE_BANS = 'website_bans',
     SHARED_MOD_LOG = 'shared_mod_log',
     USERS = 'users',
-    COMMANDS = 'commands',
     COMMAND_CONFIGS = 'command_configs',
     AUTOMOD_CONFIG = 'automod_config',
     AUTOMOD_IGNORED_ROLES = 'automod_ignored_roles',
     AUTOMOD_IGNORED_CHANNELS = 'automod_ignored_channels',
     AUTOMOD_BLACKLISTED_LINKS = 'automod_blacklisted_links',
-    AUTOMOD_PROFANITIES = 'automod_profanities'
+    AUTOMOD_PROFANITIES = 'automod_profanities',
+    AUTOMOD_ACTION_ZALGO = 'automod_action_zalgo',
+    AUTOMOD_ACTION_PROFANITY = 'automod_action_profanity',
+    AUTOMOD_ACTION_EXTERNAL_LINK = 'automod_action_external_link',
+    AUTOMOD_ACTION_REPEATED_TEXT = 'automod_action_repeated_text',
+    AUTOMOD_ACTION_CAPS_SPAM = 'automod_action_caps_spam',
+    AUTOMOD_ACTION_EMOTE_SPAM = 'automod_action_emote_spam',
+    AUTOMOD_ACTION_SPOILER_SPAM = 'automod_action_spoiler_spam',
+    AUTOMOD_ACTION_MASS_PINGS = 'automod_action_mass_pings',
+    AUTOMOD_ACTION_BLACKLISTED_LINK = 'automod_action_blacklisted_link',
   }
 
   export enum EmbedColors {
