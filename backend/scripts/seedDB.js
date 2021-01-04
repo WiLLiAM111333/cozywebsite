@@ -1,3 +1,13 @@
+/*
+
+
+
+This file is only for development and will be deleted and replaced by a CLI tool later on
+
+
+
+*/
+
 require('dotenv').config();
 const { cyan } = require('chalk');
 const Database = require('../dist/src/db/index');
