@@ -1,3 +1,7 @@
+import { Guild } from "discord.js";
+import { GuildMember } from "discord.js";
+import { Guild } from "discord.js";
+
 declare module 'discord.js' {
   interface ClientEvents {
     channelCreate: [Channel];
@@ -13,6 +17,8 @@ declare module 'discord.js' {
     emojiUpdate: [GuildEmoji, GuildEmoji];
     guildBanAdd: [Guild, User];
     guildBanRemove: [Guild, User];
+    guildKickAdd: [GuildMember];
+    guildKickRemove: [GuildMember];
     guildCreate: [Guild];
     guildDelete: [Guild];
     guildUnavailable: [Guild];

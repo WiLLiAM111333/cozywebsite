@@ -1,4 +1,4 @@
-import { User } from "discord.js";
+import { GuildMember, User } from "discord.js";
 import { EconomyManager } from "./economy/EconomyManager";
 import { XPManager } from "./xp/XPManager";
 
@@ -14,12 +14,14 @@ import { XPManager } from "./xp/XPManager";
 */
 
 export class Profile {
-  public xp: XPManager;
-  public economy: EconomyManager;
-  public user: User
+  public xpManager: XPManager;
+  public economyManager: EconomyManager;
+  public member: GuildMember
 
-  public constructor(xp: XPManager, economy: EconomyManager) {
-    this.xp = xp;
-    this.economy = economy;
+  public constructor(member: GuildMember) {
+    this.member = member;
+    
+    this.xpManager = new XPManager(member);
+    this.economyManager = new EconomyManager(member);
   }
 }

@@ -32,7 +32,11 @@ const {
   DISCORD_WARNS,
   RATELIMITS,
   USERS,
-  WEBSITE_BANS
+  WEBSITE_BANS,
+  DISCORD_PROFILES,
+  LEVEL_REWARDS,
+  AUTOMOD_ACTION_HOIST_USERNAME,
+  AUTOMOD_ACTION_HOIST_NICKNAME
 } = TableNames;
 
 (async () => {
@@ -61,6 +65,10 @@ const {
     const hasRepeatedTextAction = await db.schema.hasTable(AUTOMOD_ACTION_REPEATED_TEXT);
     const hasSpoilerSpamAction = await db.schema.hasTable(AUTOMOD_ACTION_SPOILER_SPAM);
     const hasZalgoAction = await db.schema.hasTable(AUTOMOD_ACTION_ZALGO);
+    const hasHoistUsernameAction = await db.schema.hasTable(AUTOMOD_ACTION_HOIST_USERNAME);
+    const hasHoistNicknameAction = await db.schema.hasTable(AUTOMOD_ACTION_HOIST_NICKNAME);
+    const hasProfiles = await db.schema.hasTable(DISCORD_PROFILES);
+    const hasLevelRewards = await db.schema.hasTable(LEVEL_REWARDS);
 
     if(!hasBans) {
       await db.schema.createTable(DISCORD_BANS, table => {
@@ -176,12 +184,14 @@ const {
 
     if(!hasBlackListedLinkAction) {
       await db.schema.createTable(AUTOMOD_ACTION_BLACKLISTED_LINK, table => {
+        table.boolean('enabled').notNullable().defaultTo(false);
         table.boolean('ban').notNullable().defaultTo(false);
         table.boolean('kick').notNullable().defaultTo(false);
         table.boolean('mute').notNullable().defaultTo(false);
         table.boolean('gifban').notNullable().defaultTo(false);
         table.boolean('externalEmoteBan').notNullable().defaultTo(false);
         table.boolean('report').notNullable().defaultTo(false);
+        table.boolean('deleteMessage').notNullable().defaultTo(false);
       });
 
       console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_BLACKLISTED_LINK}`));
@@ -189,12 +199,14 @@ const {
 
     if(!hasCapsSpamAction) {
       await db.schema.createTable(AUTOMOD_ACTION_CAPS_SPAM, table => {
+        table.boolean('enabled').notNullable().defaultTo(false);
         table.boolean('ban').notNullable().defaultTo(false);
         table.boolean('kick').notNullable().defaultTo(false);
         table.boolean('mute').notNullable().defaultTo(false);
         table.boolean('gifban').notNullable().defaultTo(false);
         table.boolean('externalEmoteBan').notNullable().defaultTo(false);
         table.boolean('report').notNullable().defaultTo(false);
+        table.boolean('deleteMessage').notNullable().defaultTo(false);
       });
 
       console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_CAPS_SPAM}`));
@@ -202,12 +214,14 @@ const {
 
     if(!hasEmoteSpamAction) {
       await db.schema.createTable(AUTOMOD_ACTION_EMOTE_SPAM, table => {
+        table.boolean('enabled').notNullable().defaultTo(false);
         table.boolean('ban').notNullable().defaultTo(false);
         table.boolean('kick').notNullable().defaultTo(false);
         table.boolean('mute').notNullable().defaultTo(false);
         table.boolean('gifban').notNullable().defaultTo(false);
         table.boolean('externalEmoteBan').notNullable().defaultTo(false);
         table.boolean('report').notNullable().defaultTo(false);
+        table.boolean('deleteMessage').notNullable().defaultTo(false);
       });
 
       console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_EMOTE_SPAM}`));
@@ -215,12 +229,14 @@ const {
 
     if(!hasExternalLinkAction) {
       await db.schema.createTable(AUTOMOD_ACTION_EXTERNAL_LINK, table => {
+        table.boolean('enabled').notNullable().defaultTo(false);
         table.boolean('ban').notNullable().defaultTo(false);
         table.boolean('kick').notNullable().defaultTo(false);
         table.boolean('mute').notNullable().defaultTo(false);
         table.boolean('gifban').notNullable().defaultTo(false);
         table.boolean('externalEmoteBan').notNullable().defaultTo(false);
         table.boolean('report').notNullable().defaultTo(false);
+        table.boolean('deleteMessage').notNullable().defaultTo(false);
       });
 
       console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_EXTERNAL_LINK}`));
@@ -228,12 +244,14 @@ const {
 
     if(!hasMassPingsAction) {
       await db.schema.createTable(AUTOMOD_ACTION_MASS_PINGS, table => {
+        table.boolean('enabled').notNullable().defaultTo(false);
         table.boolean('ban').notNullable().defaultTo(false);
         table.boolean('kick').notNullable().defaultTo(false);
         table.boolean('mute').notNullable().defaultTo(false);
         table.boolean('gifban').notNullable().defaultTo(false);
         table.boolean('externalEmoteBan').notNullable().defaultTo(false);
         table.boolean('report').notNullable().defaultTo(false);
+        table.boolean('deleteMessage').notNullable().defaultTo(false);
       });
 
       console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_MASS_PINGS}`));
@@ -241,12 +259,14 @@ const {
 
     if(!hasProfanityAction) {
       await db.schema.createTable(AUTOMOD_ACTION_PROFANITY, table => {
+        table.boolean('enabled').notNullable().defaultTo(false);
         table.boolean('ban').notNullable().defaultTo(false);
         table.boolean('kick').notNullable().defaultTo(false);
         table.boolean('mute').notNullable().defaultTo(false);
         table.boolean('gifban').notNullable().defaultTo(false);
         table.boolean('externalEmoteBan').notNullable().defaultTo(false);
         table.boolean('report').notNullable().defaultTo(false);
+        table.boolean('deleteMessage').notNullable().defaultTo(false);
       });
 
       console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_PROFANITY}`));
@@ -254,12 +274,14 @@ const {
     
     if(!hasRepeatedTextAction) {
       await db.schema.createTable(AUTOMOD_ACTION_REPEATED_TEXT, table => {
+        table.boolean('enabled').notNullable().defaultTo(false);
         table.boolean('ban').notNullable().defaultTo(false);
         table.boolean('kick').notNullable().defaultTo(false);
         table.boolean('mute').notNullable().defaultTo(false);
         table.boolean('gifban').notNullable().defaultTo(false);
         table.boolean('externalEmoteBan').notNullable().defaultTo(false);
         table.boolean('report').notNullable().defaultTo(false);
+        table.boolean('deleteMessage').notNullable().defaultTo(false);
       });
 
       console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_REPEATED_TEXT}`));
@@ -267,12 +289,14 @@ const {
 
     if(!hasSpoilerSpamAction) {
       await db.schema.createTable(AUTOMOD_ACTION_SPOILER_SPAM, table => {
+        table.boolean('enabled').notNullable().defaultTo(false);
         table.boolean('ban').notNullable().defaultTo(false);
         table.boolean('kick').notNullable().defaultTo(false);
         table.boolean('mute').notNullable().defaultTo(false);
         table.boolean('gifban').notNullable().defaultTo(false);
         table.boolean('externalEmoteBan').notNullable().defaultTo(false);
         table.boolean('report').notNullable().defaultTo(false);
+        table.boolean('deleteMessage').notNullable().defaultTo(false);
       });
 
       console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_SPOILER_SPAM}`));
@@ -280,15 +304,37 @@ const {
 
     if(!hasZalgoAction) {
       await db.schema.createTable(AUTOMOD_ACTION_ZALGO, table => {
+        table.boolean('enabled').notNullable().defaultTo(false);
         table.boolean('ban').notNullable().defaultTo(false);
         table.boolean('kick').notNullable().defaultTo(false);
         table.boolean('mute').notNullable().defaultTo(false);
         table.boolean('gifban').notNullable().defaultTo(false);
         table.boolean('externalEmoteBan').notNullable().defaultTo(false);
         table.boolean('report').notNullable().defaultTo(false);
+        table.boolean('deleteMessage').notNullable().defaultTo(false);
       });
 
       console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_ZALGO}`));
+    }
+
+    if(!hasHoistNicknameAction) {
+      await db.schema.createTable(AUTOMOD_ACTION_HOIST_NICKNAME, table => {
+        table.boolean('enabled').notNullable().defaultTo(false);
+        table.boolean('changeNickname').notNullable().defaultTo(false);
+        table.boolean('report').notNullable().defaultTo(false);
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_HOIST_NICKNAME}`));
+    }
+
+    if(!hasHoistUsernameAction) {
+      await db.schema.createTable(AUTOMOD_ACTION_HOIST_USERNAME, table => {
+        table.boolean('enabled').notNullable().defaultTo(false);
+        table.boolean('setNickname').notNullable().defaultTo(false);
+        table.boolean('report').notNullable().defaultTo(false);
+      });
+
+      console.log(chalk.cyan(`Created the table ${AUTOMOD_ACTION_HOIST_USERNAME}`));
     }
 
     if(!hasAutoModIgnoredRoles) {
@@ -322,6 +368,28 @@ const {
       });
       
       console.log(chalk.cyan(`Created the table ${AUTOMOD_PROFANITIES}`));
+    }
+
+    if(!hasProfiles) {
+      await db.schema.createTable(DISCORD_PROFILES, table => {
+        table.string('memberID').primary().notNullable();
+        table.integer('coins').notNullable().defaultTo(0);
+        table.integer('xp').notNullable().defaultTo(0);
+        table.integer('level').notNullable().defaultTo(1);
+      });
+
+      console.log(chalk.cyan(`Created the table ${DISCORD_PROFILES}`));
+    }
+
+    if(!hasLevelRewards) {
+      await db.schema.createTable(LEVEL_REWARDS, table => {
+        table.string('memberID').primary();
+        table.string('type').notNullable();
+        table.string('key').notNullable();
+        table.integer('requiredLevel').notNullable();
+      });
+
+      console.log(chalk.cyan(`Created the table ${LEVEL_REWARDS}`));
     }
   } catch (err) {
     console.log(err);

@@ -52,7 +52,9 @@
     "test": "jest --config ./jest.config.json",
     "start": "node ./index.js",
     "startDev": "nodemon ./index.js",
-    "startProd": "pm2 start ./index.js"
+    "startProd": "pm2 start ./index.js",
+    "createDB": "node ./scripts/createDB.js",
+    "seedDB": "node ./scripts/seedDB.js"
   },
   "bin": "./bin/index.js"
 }
