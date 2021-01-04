@@ -9,7 +9,7 @@ export class ExternalLinkEmbed extends MessageEmbed {
 
     this
       .setColor(RED)
-      .setColor('External link warning')
+      .setAuthor('External link warning')
       .setDescription('External links are not allowed here!');
   }
 }
