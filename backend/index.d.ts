@@ -1,7 +1,3 @@
-import { Guild } from "discord.js";
-import { GuildMember } from "discord.js";
-import { Guild } from "discord.js";
-
 declare module 'discord.js' {
   interface ClientEvents {
     channelCreate: [Channel];

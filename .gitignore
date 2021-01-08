@@ -7,3 +7,4 @@
 **/dist
 backend/bin
 backend/test.js
+**/db.md

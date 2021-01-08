@@ -4,6 +4,11 @@ Had a change of mind in `backend/lib/auth`, I'll be using discord to sign in to 
 
 ---
 
+I've already deviated heavily from the plan below on Moderation and AutoModeration, so they are just a referance to get a rough expectation of what to expect.
+Please do not use this as a set in stone plan of what will and wont be on the bot and dashboard!
+
+---
+
 # Plans for the website
 
 * **Dashboard And Bot**

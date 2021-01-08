@@ -3,6 +3,7 @@ import { AutoModActionsManager } from "./actions/AutoModActionsManager";
 import { AutoModConfig } from "./config/AutoModConfig";
 import { AutoModConfigManager } from "./config/AutoModConfigManager";
 import { AutoModEventHandler } from "./AutoModEventHandler";
+import { BoxDrawing } from "./boxDrawing";
 import { 
   Channel, 
   DMChannel, 
@@ -32,8 +33,12 @@ export class AutoMod extends AutoModEventHandler {
     this.on('configUpdate', config => this.config = config);
   }
 
-  private verify(member: GuildMember, channel: Channel): boolean {
+  private verify(member: GuildMember, channel?: Channel): boolean {
     if(!this.config.enabled) {
+      return false;
+    }
+
+    if(channel && this.config.ignoredChannels.includes(channel.id)) {
       return false;
     }
 
@@ -42,10 +47,6 @@ export class AutoMod extends AutoModEventHandler {
         return false;
       }
     }
-
-    if(this.config.ignoredChannels.includes(channel.id)) {
-      return false;
-    }        
 
     return true;
   }
@@ -183,6 +184,15 @@ export class AutoMod extends AutoModEventHandler {
 
     return false;
   }
+
+  // Enable the commentented out config option once its created
+  private isBoxDrawing(message: Message) {
+    return (
+      this.verify(message.member, message.channel) 
+        && this.config.useBoxDrawingFilter
+        && new BoxDrawing().isBoxDrawing(message.content)
+    )
+  }
   
   // Not sure what to think of this so far, might change in the future
   private async notifyMember(member: GuildMember, msg: string): Promise<void> {
@@ -216,13 +226,11 @@ export class AutoMod extends AutoModEventHandler {
       const zalgo = new Zalgo(member.nickname);
   
       if(zalgo.isZalgo()) {
-        member.setNickname('Change nickname');
-        this.notifyMember(member, 'Please change your nickname! It includes Zalgo');
+        this.emit('zalgoNickname', member);
       }
 
       if(member.nickname[0].match(this.hoistRegex)) {
-        member.setNickname('Change nickname');
-        this.notifyMember(member, 'Please change your nickname! It includes a hoisting character');
+        this.emit('hoistNickname', member);
       }
     }
   }
@@ -232,18 +240,20 @@ export class AutoMod extends AutoModEventHandler {
     const zalgo = new Zalgo(username);
   
     if(zalgo.isZalgo()) {
-      member.setNickname('Change nickname');
-      this.notifyMember(member, 'Please change your nickname! It includes Zalgo');
+      this.emit('zalgoUsername', member);
     }
 
     if(username[0].match(this.hoistRegex)) {
-      member.setNickname('Change nickname');
-      this.notifyMember(member, 'Please change your nickname! It includes a hoisting character');
+      this.emit('hoistUsername', member)
     }
   }
 
 
   public handleMessage(message: Message): void {
+    if(this.isBoxDrawing(message)) {
+      this.emit('boxDrawing', message.member);
+    }
+
     if(this.isProfanity(message)) {
       this.emit('profanity', message.member);
     }
@@ -279,9 +289,6 @@ export class AutoMod extends AutoModEventHandler {
 
   // Integrate AutoModActionsManager like above
   public handleGuildMemberAdd(member: GuildMember): void {
-    const username = member.user.username;
-    const zalgo = new Zalgo(username);
-
     this.checkNickname(member);
     this.checkUsername(member);
   }

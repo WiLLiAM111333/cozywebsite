@@ -40,10 +40,10 @@ export class ProfileManager {
       await profile.xpManager.addXP(xp);
       await profile.economyManager.addCoins(coins);
 
-      console.log(message.author.tag);
-      console.log(`XP: ${await profile.xpManager.getXP()}`);
-      console.log(`Level: ${await profile.xpManager.getLevel()}`);
-      console.log(`Coins: ${await profile.economyManager.getCoins()}\n---\n`);
+      // console.log(message.author.tag);
+      // console.log(`XP: ${await profile.xpManager.getXP()}`);
+      // console.log(`Level: ${await profile.xpManager.getLevel()}`);
+      // console.log(`Coins: ${await profile.economyManager.getCoins()}\n---\n`);
     } catch(err) {
       console.log(err);
     }

@@ -83,7 +83,12 @@ const {
       useMassPingFilter: true,
       useEmoteSpamFilter: true,
       useBlacklistedLinkFilter: true,
-      useInviteLinkFilter: true
+      useInviteLinkFilter: true,
+      useBoxDrawingFilter: true,
+      useHoistNicknameFilter: true,
+      useHoistUsernameFilter: true,
+      useZalgoUsernameFilter: true,
+      useZalgoNicknameFilter: true
     });
 
     console.log(cyan(`Seeded ${AUTOMOD_CONFIG}`));

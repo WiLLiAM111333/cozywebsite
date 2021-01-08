@@ -72,10 +72,11 @@ const {
 
     if(!hasBans) {
       await db.schema.createTable(DISCORD_BANS, table => {
+        table.string('websiteUserID');
         table.string('discordUserID').notNullable();
-        table.string('websiteUserID').notNullable();
-        table.text('reason').notNullable()
-        table.date('bannedAt').notNullable()
+        table.string('banID').notNullable();
+        table.text('reason').notNullable();
+        table.date('bannedAt').notNullable();
       });
 
       console.log(chalk.cyan(`Created the table ${DISCORD_BANS}`));
@@ -83,10 +84,12 @@ const {
 
     if(!hasKicks) {
       await db.schema.createTable(DISCORD_KICKS, table => {
+        table.string('websiteUserID');
         table.string('discordUserID').notNullable();
-        table.string('websiteUserID').notNullable();
-        table.text('reason').notNullable()
-        table.date('kickedAt').notNullable()
+        table.string('guildID').notNullable();
+        table.string('kickID').notNullable();
+        table.text('reason').notNullable();
+        table.date('kickedAt').notNullable();
       });
 
       console.log(chalk.cyan(`Created the table ${DISCORD_KICKS}`));
@@ -94,12 +97,14 @@ const {
 
     if(!hasMutes) {
       await db.schema.createTable(DISCORD_MUTES, table => {
+        table.string('websiteUserID');
+        table.string('muterWebsiteID');
+        table.string('guildID').notNullable();
         table.string('discordUserID').notNullable();
-        table.string('websiteUserID').notNullable();
-        table.string('muterDiscordID').notNullable();
-        table.string('muterWebsiteID').notNullable();
-        table.text('reason').notNullable()
-        table.date('mutedAt').notNullable()
+        table.string('muterDiscordUserID').notNullable();
+        table.string('muteID').notNullable();
+        table.text('reason').notNullable();
+        table.date('mutedAt').notNullable();
       });
 
       console.log(chalk.cyan(`Created the table ${DISCORD_MUTES}`));
@@ -107,12 +112,14 @@ const {
 
     if(!hasReports) {
       await db.schema.createTable(DISCORD_REPORTS, table => {
+        table.string('websiteUserID');
+        table.string('reporterWebsiteUserID');
         table.string('discordUserID').notNullable();
-        table.string('websiteUserID').notNullable();
-        table.string('reporterDiscordID').notNullable();
-        table.string('reporterWebsiteID').notNullable();
-        table.text('reason').notNullable()
-        table.date('reportedAt').notNullable()
+        table.string('reporterDiscordUserID').notNullable();
+        table.string('reportID').notNullable();
+        table.string('guildID').notNullable();
+        table.text('reason').notNullable();
+        table.date('reportedAt').notNullable();
       });
 
       console.log(chalk.cyan(`Created the table ${DISCORD_REPORTS}`));
@@ -120,12 +127,14 @@ const {
 
     if(!hasWarns) {
       await db.schema.createTable(DISCORD_WARNS, table => {
+        table.string('websiteUserID');
+        table.string('warnerWebsiteID');
         table.string('discordUserID').notNullable();
-        table.string('websiteUserID').notNullable();
+        table.string('warnerDiscordUserID').notNullable();
+        table.string('guildID').notNullable();
+        table.string('warnID').notNullable();
         table.text('reason').notNullable()
-        table.string('warnerDiscordID').notNullable();
-        table.string('warnerWebsiteID').notNullable();
-        table.date('warnedAt').notNullable()
+        table.date('warnedAt').notNullable();
       });
 
       console.log(chalk.cyan(`Created the table ${DISCORD_WARNS}`));
@@ -134,9 +143,9 @@ const {
     if(!hasRateLimits) {
       // Keep working on this
       await db.schema.createTable(RATELIMITS, table => {
+        table.string('websiteUserID');
         table.string('discordUserID').notNullable();
-        table.string('websiteUserID').notNullable();
-        table.date('rateLimitedAt').notNullable()
+        table.date('rateLimitedAt').notNullable();
         table.integer('requestAmount').notNullable();
       });
       
@@ -146,9 +155,9 @@ const {
     if(!hasUsers) {
       await db.schema.createTable(USERS, table => {
         // Keep working on this
-        table.string('websiteUserID').notNullable();
+        table.string('websiteUserID');
         table.string('discordUserID').notNullable();
-        table.date('createdAt').notNullable()
+        table.date('createdAt').notNullable();
       });
 
       console.log(chalk.cyan(`Created the table ${USERS}`));
@@ -156,10 +165,10 @@ const {
 
     if(!hasWebsiteBans) {
       await db.schema.createTable(WEBSITE_BANS, table => {
-        table.string('websiteUserID').notNullable();
+        table.string('websiteUserID');
         table.string('discordUserID').notNullable();
-        table.date('bannedAt').notNullable()
-        table.text('reason').notNullable()
+        table.date('bannedAt').notNullable();
+        table.text('reason').notNullable();
       });
 
       console.log(chalk.cyan(`Created the table ${WEBSITE_BANS}`));
@@ -177,6 +186,11 @@ const {
         table.boolean('useEmoteSpamFilter').notNullable().defaultTo(false);
         table.boolean('useBlacklistedLinkFilter').notNullable().defaultTo(false);
         table.boolean('useInviteLinkFilter').notNullable().defaultTo(false);
+        table.boolean('useBoxDrawingFilter').notNullable().defaultTo(false);
+        table.boolean('useHoistNicknameFilter').notNullable().defaultTo(false);
+        table.boolean('useHoistUsernameFilter').notNullable().defaultTo(false);
+        table.boolean('useZalgoUsernameFilter').notNullable().defaultTo(false);
+        table.boolean('useZalgoNicknameFilter').notNullable().defaultTo(false);
       });
 
       console.log(chalk.cyan(`Created the table ${AUTOMOD_CONFIG}`));

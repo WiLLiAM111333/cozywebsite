@@ -1,5 +1,4 @@
 import { CozyClient } from "../../client/CozyClient";
-import { db } from '../../../../../src/db/index';
 import { GuildMember, Snowflake } from "discord.js";
 import { Constants } from '../../../../../src/utils/constants';
 
@@ -11,6 +10,12 @@ const {
   DISCORD_REPORTS
 } = Constants.TableNames;
 
+/*
+  I will start creating the DiscordBanManager, DiscordKickManager etc classes in the lib folder before I keep 
+  working on this as it needs these classes to manage the tables properly
+*/
+
+// Wont keep working on this until the Manager classes for all the moderation is done
 export class Moderation {
   private client: CozyClient;
   private gifBanRole: Snowflake;
@@ -69,9 +74,5 @@ export class Moderation {
     if(!hasRole) {
       member.roles.add(role);
     }
-  }
-
-  public warn(member: GuildMember): void {
-    
   }
 }

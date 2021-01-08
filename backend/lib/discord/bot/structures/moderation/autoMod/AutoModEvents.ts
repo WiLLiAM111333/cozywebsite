@@ -16,6 +16,9 @@ export interface AutoModEvents {
   blacklistedLink: [GuildMember];
   hoistUsername: [GuildMember];
   hoistNickname: [GuildMember];
+  zalgoUsername: [GuildMember];
+  zalgoNickname: [GuildMember];
+  boxDrawing: [GuildMember];
   configCreate: [AutoModConfig];
   configUpdate: [AutoModConfig];
   actionsConfigCreate: [AutoModActionsConfig];

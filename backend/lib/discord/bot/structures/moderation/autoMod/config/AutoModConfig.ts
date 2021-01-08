@@ -13,4 +13,9 @@ export interface AutoModConfig {
   useEmoteSpamFilter: boolean;
   useBlacklistedLinkFilter: boolean;
   useInviteLinkFilter: boolean;
+  useBoxDrawingFilter: boolean;
+  useHoistNicknameFilter: boolean;
+  useHoistUsernameFilter: boolean;
+  useZalgoUsernameFilter: boolean;
+  useZalgoNicknameFilter: boolean;
 }
