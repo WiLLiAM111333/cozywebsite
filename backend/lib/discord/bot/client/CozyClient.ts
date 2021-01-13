@@ -17,9 +17,13 @@ export class CozyClient extends Client {
     this.eventPath = options.eventPath;
     this.owners = owners;
     this.commandHandler = new CommandHandler(this);
-    this.autoMod = new AutoMod();
+    this.autoMod = new AutoMod(this);
   }
 
+  /**
+   * # Remove this
+   * Move it to an event handler later
+   */
   private async loadEvents(): Promise<void> {
     try {
       const files = await readdir(this.eventPath);
@@ -41,7 +45,6 @@ export class CozyClient extends Client {
 
   public async login(token: string): Promise<string> {
     await this.loadEvents();
-
     return super.login(token);
   }
 }

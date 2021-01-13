@@ -1,4 +1,4 @@
-import { Router } from '../../../../lib/router/Router';
+import { Router } from '../../../../lib/server/router/Router';
 import { DiscordAPIRouter } from './discord/index';
 import { AuthRouter } from './website/auth/router';
 import { Application, Router as expressRouter } from 'express';

@@ -1,4 +1,4 @@
-import { Router } from '../../../../../lib/router/Router';
+import { Router } from '../../../../../lib/server/router/Router';
 import { Application, Router as expressRouter } from 'express';
 import { UserRouter } from './user/router';
 import { GuildRouter } from './guild/router';

@@ -50,11 +50,6 @@ export class CommandHandler {
     }
   }
 
-  // TODO: This
-  // public async edit(command: Command) {
-
-  // }
-
   public validate(client: CozyClient, command: Command, message: Message, args: Array<any>): Promise<{ success: boolean, reason?: string }> {
     return new Promise((resolve, reject) => {
       const member = message.member;

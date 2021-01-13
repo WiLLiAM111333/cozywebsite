@@ -1,24 +1,24 @@
-import { Invite, GuildMember } from "discord.js";
-import { AutoModActionsConfig } from "./actions/AutoModActionsConfig";
+import { Invite, GuildMember, Message } from "discord.js";
+import { AutoModActionsConfig } from "./config/AutoModActionsConfig";
 import { AutoModConfig } from "./config/AutoModConfig";
 
 export interface AutoModEvents { 
-  zalgo: [GuildMember];
-  profanity: [GuildMember];
-  externalLink: [GuildMember];
-  repeatedText: [GuildMember];
-  capsSpam: [GuildMember];
-  emoteSpam: [GuildMember];
-  spoilerSpam: [GuildMember];
-  massPings: [GuildMember];
+  zalgo: [GuildMember, Message];
+  profanity: [GuildMember, Message];
+  externalLink: [GuildMember, Message];
+  repeatedText: [GuildMember, Message];
+  capsSpam: [GuildMember, Message];
+  emoteSpam: [GuildMember, Message];
+  spoilerSpam: [GuildMember, Message];
+  massPings: [GuildMember, Message];
+  blacklistedLink: [GuildMember, Message];
+  boxDrawing: [GuildMember, Message];
   inviteCreate: [Invite];
   inviteDelete: [Invite];
-  blacklistedLink: [GuildMember];
   hoistUsername: [GuildMember];
   hoistNickname: [GuildMember];
   zalgoUsername: [GuildMember];
   zalgoNickname: [GuildMember];
-  boxDrawing: [GuildMember];
   configCreate: [AutoModConfig];
   configUpdate: [AutoModConfig];
   actionsConfigCreate: [AutoModActionsConfig];

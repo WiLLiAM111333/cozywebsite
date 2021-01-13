@@ -1,4 +1,4 @@
-import { Router } from "../../../../../../lib/router/Router";
+import { Router } from "../../../../../../lib/server/router/Router";
 import { AuthController } from "./controller";
 import {
   Application,

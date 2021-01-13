@@ -28,6 +28,8 @@ export namespace Constants {
     AUTOMOD_ACTION_BLACKLISTED_LINK = 'automod_action_blacklisted_link',
     AUTOMOD_ACTION_HOIST_USERNAME = 'automod_action_hoist_username',
     AUTOMOD_ACTION_HOIST_NICKNAME = 'automod_action_hoist_nickname',
+    AUTOMOD_ACTION_ZALGO_USERNAME = 'automod_action_zalgo_username',
+    AUTOMOD_ACTION_ZALGO_NICKNAME = 'automod_action_zalgo_nickname',
     DISCORD_PROFILES = 'discord_profiles',
     LEVEL_REWARDS = 'level_rewards'
   }
@@ -63,7 +65,7 @@ export namespace Constants {
   }
   
   export const OAUTH_REDIRECT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000';
-  export const DEFAULT_ZALGO_THRESHOLD = 0.5;
+  export const DEFAULT_ZALGO_THRESHOLD = 0.55;
   export const TOKEN = process.env.TOKEN;
   export const CLIENT_ID = process.env.CLIENT_ID;
   export const CLIENT_SECRET = process.env.CLIENT_SECRET;

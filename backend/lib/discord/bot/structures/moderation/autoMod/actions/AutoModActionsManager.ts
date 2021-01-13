@@ -1,11 +1,24 @@
+import { CozyClient } from "../../../../client/CozyClient";
+import { Moderation } from "../../Moderation";
 import { AutoMod } from "../AutoMod";
-import { AutoModActionsConfig, AutoModActionsConfigOptions } from "./AutoModActionsConfig";
+import { AutoModActionsConfig, AutoModActionsConfigOptions } from "../config/AutoModActionsConfig";
+import { GuildMember, Message } from "discord.js";
 
+
+/**
+ * TODO
+ * * Integrate moderation
+ * * Test
+ * * Hope for the best
+ */
 export class AutoModActionsManager {
   private autoMod: AutoMod;
   private config: AutoModActionsConfig | {};
+  private moderation: Moderation;
 
-  public constructor(autoMod: AutoMod) {
+  public constructor(autoMod: AutoMod, client: CozyClient) {
+    this.moderation = new Moderation(client);
+
     this.autoMod = autoMod;
     this.config = {}
 
@@ -28,34 +41,47 @@ export class AutoModActionsManager {
       'zalgo',
       'hoistUsername',
       'hoistNickname'
-    ];
+    ]; 
 
     for(const event of eventArr) {
-      this.autoMod.on<ActionStrings>(event, member => {
+      this.autoMod.on<ActionStrings>(event, (member: GuildMember, message?: Message) => {
         const eventConfig: AutoModActionsConfigOptions = this.config[event];
+        console.log(event);
 
+        if(eventConfig && eventConfig.notify) {
+          console.log('Member is supposed to be notified');
+        }
+        
         if(eventConfig && eventConfig.enabled) {
-          if(eventConfig.deleteMessage) {
-            console.log('Message should be deleted');
+          if('deleteMessage' in eventConfig && eventConfig.deleteMessage) {
+            message.delete();
           }
 
-          if(eventConfig.ban) {
+          if('ban' in eventConfig && eventConfig.ban) {
             console.log('Member is supposed to be banned');
-          } else if(eventConfig.kick) {
+          } else if('kick' in eventConfig && eventConfig.kick) {
             console.log('Member is supposed to be kicked');
-          } else if(eventConfig.emoteBan) {
+          } else if('emoteBan' in eventConfig && eventConfig.emoteBan) {
             console.log('Member is supposed to get emote-banned');
-          } 
+          }
+
+          if('changeNickname' in eventConfig && eventConfig.changeNickname) {
+            console.log('Supposed to change the members\' nickname');
+          }
+
+          if('setNickname' in eventConfig && eventConfig.setNickname) {
+            console.log('Supposed to set a nickname on the member');
+          }
           
-          if(eventConfig.gifBan) {
+          if('gifBan' in eventConfig && eventConfig.gifBan) {
             console.log('Member is supposed to be gif-banned');
           } 
           
-          if(eventConfig.mute) {
+          if('mute' in eventConfig && eventConfig.mute) {
             console.log('Member is supposed to be muted');
           } 
           
-          if(eventConfig.report) {
+          if('report' in eventConfig && eventConfig.report) {
             console.log('Member is supposed to be reported');
           }
         }

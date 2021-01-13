@@ -4,14 +4,18 @@ Had a change of mind in `backend/lib/auth`, I'll be using discord to sign in to 
 
 ---
 
+There has been a problem with my domain provider, so I will be doing reduntant stuff until I know this even matters 😢 
+
+---
+
 I've already deviated heavily from the plan below on Moderation and AutoModeration, so they are just a referance to get a rough expectation of what to expect.
 Please do not use this as a set in stone plan of what will and wont be on the bot and dashboard!
 
 ---
 
 Near future plans:
-  - Finnish the AutoModActionManager class
-  - Finnish moderation as a whole
+  - Finnish the AutoModActionManager class 👮 
+  - Finnish moderation as a whole 👮 
 
 ---
 
@@ -19,7 +23,7 @@ Near future plans:
 
 * **Dashboard And Bot**
   - Configurable commands
-  - Configurable automoderation
+  - Configurable automoderation 👮 
   - Event options *[read more here...](./backend/docs/dashboard/configurableEvents.md)*
   - Custom text commands
   - **✨ XP System ✨**

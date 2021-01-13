@@ -3,15 +3,9 @@ import { AutoModActionsManager } from "./actions/AutoModActionsManager";
 import { AutoModConfig } from "./config/AutoModConfig";
 import { AutoModConfigManager } from "./config/AutoModConfigManager";
 import { AutoModEventHandler } from "./AutoModEventHandler";
-import { BoxDrawing } from "./boxDrawing";
-import { 
-  Channel, 
-  DMChannel, 
-  GuildMember, 
-  Message, 
-  MessageEmbed, 
-  TextChannel
-} from "discord.js";
+import { BoxDrawing } from "../boxDrawing";
+import { Channel, GuildMember, Message } from "discord.js";
+import { CozyClient } from "../../../client/CozyClient";
 
 // Very basic, will keep working on this
 // configManager is only for internal use and communicates with this class through 2 events
@@ -20,14 +14,14 @@ import {
 export class AutoMod extends AutoModEventHandler {
   private config: AutoModConfig;
   private hoistRegex: RegExp;
-
-  public constructor() {
+  
+  public constructor(client: CozyClient) {
     super();
 
     this.hoistRegex = /\?|!|#|%|&|\/|\(|\)|=|`|`|@|\[|\]|\\|<|>|,|\.|-|_|'|\*|\^/
-
+    
     new AutoModConfigManager(this);
-    new AutoModActionsManager(this);
+    new AutoModActionsManager(this, client);
 
     this.on('configCreate', config => this.config = config);
     this.on('configUpdate', config => this.config = config);
@@ -63,21 +57,10 @@ export class AutoMod extends AutoModEventHandler {
     return false;
   }
 
-  // Unused for now
-  private getProfanity(args: Array<string>): string {
-    for(const word of args) {
-      for(const profanity of this.config.profanities) {
-        if(word.match(profanity)) {
-          return word;
-        }
-      }
-    }
-  }
-
   private isZalgo(message: Message): boolean {
     if(this.verify(message.member, message.channel) && this.config.useZalgoFilter) {
       const content = message.content;
-      return new Zalgo(content).isZalgo();
+      return new Zalgo(content).isZalgo()
     }
 
     return false;
@@ -193,33 +176,6 @@ export class AutoMod extends AutoModEventHandler {
         && new BoxDrawing().isBoxDrawing(message.content)
     )
   }
-  
-  // Not sure what to think of this so far, might change in the future
-  private async notifyMember(member: GuildMember, msg: string): Promise<void> {
-    let channel: DMChannel | TextChannel;
-  
-    const embed = new MessageEmbed()
-      .setAuthor(member.user.tag, member.user.avatarURL({ dynamic: true || false }))
-      .setDescription(`Hello, ${member.user.username}! I have been tasked with sending you this message:\n${msg}`)
-      .setColor('#00d111')
-      .setThumbnail(member.guild.iconURL({ dynamic: true || false }))
-  
-    try {
-      channel = await member.createDM(true);
-      await channel.send(embed)
-    } catch (err) {
-      if(err.code === 50007) {
-        try {
-          channel = member.guild.systemChannel;
-          await channel.send(member.user.toString(), { embed });
-        } catch (err) {
-          console.log(err);
-        }
-      } else {
-        console.log(err);
-      }
-    }
-  }
 
   private checkNickname(member: GuildMember): void {
     if(member.nickname) {
@@ -251,49 +207,47 @@ export class AutoMod extends AutoModEventHandler {
 
   public handleMessage(message: Message): void {
     if(this.isBoxDrawing(message)) {
-      this.emit('boxDrawing', message.member);
+      this.emit('boxDrawing', message.member, message);
     }
 
     if(this.isProfanity(message)) {
-      this.emit('profanity', message.member);
+      this.emit('profanity', message.member, message);
     }
   
     if(this.isZalgo(message)) {
-      this.emit('zalgo', message.member);
+      this.emit('zalgo', message.member, message);
     }
   
     if(this.isCapsSpam(message)) {
-      this.emit('capsSpam', message.member);
+      this.emit('capsSpam', message.member, message);
     }
   
     if(this.isExternalLink(message)) {
-      this.emit('externalLink', message.member);
+      this.emit('externalLink', message.member, message);
     }
   
     if(this.isSpoilerSpam(message)) {
-      this.emit('spoilerSpam', message.member);
+      this.emit('spoilerSpam', message.member, message);
     }
   
     if(this.isMassPing(message)) {
-      this.emit('massPings', message.member);
+      this.emit('massPings', message.member, message);
     }
   
     if(this.isEmoteSpam(message)) {
-      this.emit('emoteSpam', message.member);
+      this.emit('emoteSpam', message.member, message);
     }
   
     if(this.isBlacklistedLink(message)) {
-      this.emit('blacklistedLink', message.member);
+      this.emit('blacklistedLink', message.member, message);
     }
   }
 
-  // Integrate AutoModActionsManager like above
   public handleGuildMemberAdd(member: GuildMember): void {
     this.checkNickname(member);
     this.checkUsername(member);
   }
 
-  // Integrate AutoModActionsManager like in the handleMessage method
   public handleGuildMemberUpdate(oldMember: GuildMember, newMember: GuildMember): void {
     const oldUser = oldMember.user;
     const newUser = newMember.user;

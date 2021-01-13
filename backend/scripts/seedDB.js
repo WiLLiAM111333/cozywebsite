@@ -3,7 +3,7 @@
 
 
 This file is only for development and will be deleted and replaced by a CLI tool later on
-
+(this is why it's made with miminal effort)
 
 
 */
@@ -28,12 +28,14 @@ const {
   AUTOMOD_ACTION_ZALGO,
   AUTOMOD_ACTION_HOIST_USERNAME,
   AUTOMOD_ACTION_HOIST_NICKNAME,
+  AUTOMOD_ACTION_ZALGO_USERNAME,
+  AUTOMOD_ACTION_ZALGO_NICKNAME,
   AUTOMOD_BLACKLISTED_LINKS,
   AUTOMOD_CONFIG,
   AUTOMOD_IGNORED_CHANNELS,
   AUTOMOD_IGNORED_ROLES,
   AUTOMOD_PROFANITIES,
-  DISCORD_PROFILES
+  DISCORD_PROFILES,
 } = Constants.TableNames;
 
 (async () => {
@@ -171,6 +173,22 @@ const {
     });
 
     console.log(cyan(`Seeded ${AUTOMOD_ACTION_HOIST_USERNAME}`));
+
+    await db.table(AUTOMOD_ACTION_ZALGO_NICKNAME).insert({
+      enabled: true,
+      changeNickname: true,
+      report: true
+    });
+
+    console.log(cyan(`Seeded ${AUTOMOD_ACTION_ZALGO_NICKNAME}`));
+
+    await db.table(AUTOMOD_ACTION_ZALGO_USERNAME).insert({
+      enabled: true,
+      setNickname: true,
+      report: true
+    });
+
+    console.log(cyan(`Seeded ${AUTOMOD_ACTION_ZALGO_USERNAME}`));
   } catch (err) {
     console.log(err);
   } finally {

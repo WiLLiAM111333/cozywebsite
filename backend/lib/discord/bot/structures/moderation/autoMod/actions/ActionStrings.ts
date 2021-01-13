@@ -1,3 +1,6 @@
+/**
+ * All the events the `AutoModActionsManager` class uses
+ */
 type ActionStrings = 'blacklistedLink'
   | 'capsSpam'
   | 'emoteSpam'
@@ -9,3 +12,6 @@ type ActionStrings = 'blacklistedLink'
   | 'zalgo'
   | 'hoistUsername'
   | 'hoistNickname'
+  | 'zalgoUsername'
+  | 'zalgoNickname'
+  | 'boxDrawing'

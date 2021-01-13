@@ -18,6 +18,6 @@ export abstract class BaseManager<T extends ManagerTypes> implements IManager<T>
   public abstract delete(id: string): Promise<boolean>;
 
   protected handleError(err: unknown): void {
-    console.log(err);
-  }
+    console.log(err); // TODO: Error handling
+   }
 }

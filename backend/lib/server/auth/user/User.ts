@@ -1,6 +1,6 @@
 import { IUser } from './IUser';
 import { Snowflake } from 'discord.js';
-import { Base } from '../../';
+import { Base } from '../../..';
 
 export class User extends Base implements IUser {
   public discordUserID: Snowflake;

@@ -20,8 +20,4 @@ export class WebSiteBan extends Base implements IWebSiteBan {
     this.reason = data.reason || 'No reason set';
     this.bannedAt = new Date().toLocaleString();
   }
-
-  public static async seed(options: WebSiteBanConstructor): Promise<void> {
-    await super.db.table(WEBSITE_BANS).insert(options);
-  }
 }

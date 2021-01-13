@@ -1,40 +1,47 @@
 import { Constants } from '../../src/utils/constants';
 const { HEX_VALUES } = Constants;
 
+/**
+ * The internal class to handle stuff the Math class from the base JS library cant 
+ * @exports
+ * @class
+ */
 export class InternalMath {
-  private round(number: number): number {
-    const firstDecimal = Number(number.toFixed(1).slice(2));
-    const newNumber = (number - Number(`0.${firstDecimal}`));
-  
-    return firstDecimal <= 5
-      ? newNumber - 1
-      : newNumber + 1;
-  }
-
+  /**
+   * Sorts the array of numbers from smallest to highest number
+   * @private
+   * @method
+   * @param {Array<Number>} vals
+   * @returns {Array<Number>}
+   */
   private nsort(vals: Array<number>): Array<number> {
     return vals.sort((a: number, b: number) => a - b);
   }
 
-  private isNumber(val: unknown) {
+  /**
+   * Boolean check to see if the provided data is a number
+   * @private
+   * @method
+   * @param {unknown} data
+   * @returns {Boolean}
+   */
+  private isNumber(data: unknown): boolean {
     let num: any;
-    
-    if(typeof num === 'number' || Number.isInteger(num)) {
-      return true;
+
+    if(!isNaN(Number(data))) {
+      num = Number(data);
     }
 
-    if(typeof Number(val) === 'number' && !isNaN(Number(val))) {
-      num = Number(val);
-    } else if(typeof val === 'string' && val.match(/^\d+$/)) {
-      num = parseInt(val, 10);
-    }
-
-    if(isNaN(num)) {
-      return false;
-    }
-
-    return true
+    return (typeof num === 'number' || Number.isInteger(num))
   }
 
+  /**
+   * Take an array or tuple of any type and size, then returns all the numbers in it in a new array
+   * @private
+   * @method
+   * @param {Array<unknown>} vals 
+   * @returns {Array<Number>}
+   */
   private numbers(vals: Array<unknown>): Array<number> {
     const nums: Array<number> = []
 
@@ -47,6 +54,14 @@ export class InternalMath {
     return nums
   }
 
+  /**
+   * Uses the Estimation method to return an interpolated percentage number
+   * @public
+   * @method
+   * @param {Array<Number>} vals 
+   * @param {Number} ptile 
+   * @returns {Number}
+   */
   public percentile(vals: Array<number>, ptile: number): number {
     vals = this.numbers(vals);
 
@@ -72,6 +87,13 @@ export class InternalMath {
     return (1 - fract) * vals[intPart] + fract * vals[Math.min(intPart + 1, vals.length - 1)]
   }
 
+  /**
+   * Converts a hexadecimal number in string form to a decimal number
+   * @public
+   * @method
+   * @param {String} hex
+   * @returns {Number} 
+   */
   public hexToDecimal(hex: string): number {
     if(hex.indexOf('0x') !== -1) return Number(hex);
 
@@ -86,7 +108,14 @@ export class InternalMath {
     return resultsArr.reduce((prev, curr) => prev + curr, 0);
   }
 
-  public binaryToDecimal(binary: string) {
+  /**
+   * Converts a binary number in string form to a decimal number
+   * @public
+   * @method
+   * @param {String} binary
+   * @returns {Number} 
+   */
+  public binaryToDecimal(binary: string): number {
     binary = binary.indexOf('0b') !== -1
       ? binary.slice(2)
       : binary;

@@ -1,3 +1,8 @@
+/**
+ * The configuration object for the classes `Automod` and `AutoModConfigMangaer` to use
+ * @exports
+ * @interface
+ */
 export interface AutoModConfig {
   ignoredRoles: Array<string>;
   ignoredChannels: Array<string>;

@@ -2,7 +2,7 @@ import { AutoModConfig } from "./AutoModConfig";
 import { db } from '../../../../../../../src/db/index';
 import { Constants } from '../../../../../../../src/utils/constants';
 import { AutoMod } from "../AutoMod";
-import { AutoModActionsConfig } from "../actions/AutoModActionsConfig";
+import { AutoModActionsConfig } from "./AutoModActionsConfig";
 
 const {
   AUTOMOD_CONFIG,
@@ -20,7 +20,9 @@ const {
   AUTOMOD_ACTION_EMOTE_SPAM,
   AUTOMOD_ACTION_CAPS_SPAM,
   AUTOMOD_ACTION_HOIST_NICKNAME,
-  AUTOMOD_ACTION_HOIST_USERNAME
+  AUTOMOD_ACTION_HOIST_USERNAME,
+  AUTOMOD_ACTION_ZALGO_NICKNAME,
+  AUTOMOD_ACTION_ZALGO_USERNAME
 } = Constants.TableNames;
 
 // Everything is private as it is intended to be used for internal use only
@@ -100,9 +102,9 @@ export class AutoModConfigManager {
 
       const config: AutoModConfig = {
         ...mainConfig[0],
+        ignoredRoles,
         blacklistedLinks,
         ignoredChannels,
-        ignoredRoles,
         profanities
       }
 
@@ -125,8 +127,10 @@ export class AutoModConfigManager {
       const profanity = await db.table(AUTOMOD_ACTION_PROFANITY);
       const spoilerSpam = await db.table(AUTOMOD_ACTION_SPOILER_SPAM);
       const zalgo = await db.table(AUTOMOD_ACTION_ZALGO);
-      const hoistNickname = await db.table(AUTOMOD_ACTION_HOIST_NICKNAME);
       const hoistUsername = await db.table(AUTOMOD_ACTION_HOIST_USERNAME);
+      const hoistNickname = await db.table(AUTOMOD_ACTION_HOIST_NICKNAME);
+      const zalgoUsername = await db.table(AUTOMOD_ACTION_ZALGO_USERNAME);
+      const zalgoNickname = await db.table(AUTOMOD_ACTION_ZALGO_NICKNAME); 
 
       const config: AutoModActionsConfig = {
         blacklistedLink: { ...blackListedLink[0] },
@@ -139,7 +143,9 @@ export class AutoModConfigManager {
         spoilerSpam: { ...spoilerSpam[0] },
         zalgo: { ...zalgo[0] },
         hoistNickname: { ...hoistNickname[0] },
-        hoistUsername: { ...hoistUsername[0] }
+        hoistUsername: { ...hoistUsername[0] },
+        zalgoNickname: { ...zalgoNickname[0] },
+        zalgoUsername: { ...zalgoUsername[0] }
       }
 
       this.autoMod.emit('actionsConfigCreate', config);

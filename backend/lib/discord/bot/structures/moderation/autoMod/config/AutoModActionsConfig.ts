@@ -1,12 +1,17 @@
+// This file is not cool and im changing it **eventually** lul
+
 export interface AutoModActionsConfigOptions {
   enabled: boolean;
-  ban: boolean;
-  kick: boolean;
-  mute: boolean;
-  gifBan: boolean;
-  emoteBan: boolean;
+  ban?: boolean;
+  kick?: boolean;
+  mute?: boolean;
+  gifBan?: boolean;
+  emoteBan?: boolean;
   report: boolean; 
-  deleteMessage: boolean;
+  deleteMessage?: boolean;
+  changeNickname?: boolean;
+  setNickname?: boolean;
+  notify?: boolean;
 }
 
 export interface AutoModActionsConfig {
@@ -21,4 +26,6 @@ export interface AutoModActionsConfig {
   blacklistedLink: AutoModActionsConfigOptions;
   hoistUsername: AutoModActionsConfigOptions;
   hoistNickname: AutoModActionsConfigOptions;
+  zalgoUsername: AutoModActionsConfigOptions;
+  zalgoNickname: AutoModActionsConfigOptions;
 }

@@ -1,4 +1,4 @@
-import { Controller } from "../../../../../../lib/controller/Controller";
+import { Controller } from "../../../../../../lib/server/controller/Controller";
 import { Request, Response } from 'express';
 import { OAuth2 } from '../../../../../../lib/discord/oauth2/OAuth2';
 import { Constants } from '../../../../../utils/constants';

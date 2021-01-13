@@ -1,4 +1,4 @@
-import { Controller } from "../../controller/Controller";
+import { Controller } from "../../server/controller/Controller";
 import { client } from '../../../src/bot';
 import { CozyClient } from "../bot/client/CozyClient";
 
