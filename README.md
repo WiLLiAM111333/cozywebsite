@@ -6,6 +6,8 @@ Had a change of mind in `backend/lib/auth`, I'll be using discord to sign in to 
 
 There has been a problem with my domain provider, so I will be doing reduntant stuff until I know this even matters 😢 
 
+RESOLVED ✔
+
 ---
 
 I've already deviated heavily from the plan below on Moderation and AutoModeration, so they are just a referance to get a rough expectation of what to expect.
