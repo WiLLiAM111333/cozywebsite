@@ -15,12 +15,6 @@ Please do not use this as a set in stone plan of what will and wont be on the bo
 
 ---
 
-Near future plans:
-  - Finnish the AutoModActionManager class 👮 
-  - Finnish moderation as a whole 👮 
-
----
-
 # Plans for the website
 
 * **Dashboard And Bot**
