@@ -12,7 +12,10 @@
     "experimentalDecorators": true,        
     "emitDecoratorMetadata": true,
     "preserveConstEnums": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "generateCpuProfile": "profile.cpuprofile",
+    "extendedDiagnostics": true,
+    "listFiles": true
   },
   "include": ["src/**/*", "lib/**/*", "typings/**/*", "index.d.ts"],
   "exclude": [

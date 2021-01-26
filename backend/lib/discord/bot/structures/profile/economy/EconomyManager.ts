@@ -1,14 +1,27 @@
 import { GuildMember } from "discord.js";
 import { db } from '../../../../../../src/db/index';
 import { Constants } from '../../../../../../src/utils/constants';
+import { InternalMath } from '../../../../../math/index';
+import { EconomyEventHandler } from './EconomyEventHandler';
 
 const { DISCORD_PROFILES } = Constants.TableNames;
 
-export class EconomyManager {
+export class EconomyManager extends EconomyEventHandler{
   private member: GuildMember;
+  private math: InternalMath;
 
   public constructor(member: GuildMember) {
+    super();
+
     this.member = member;
+    this.math = new InternalMath();
+
+    this.attachListeners();
+  }
+
+  private attachListeners() {
+    this.on('levelUp', (level) => this.addCoins(this.math.random(30, 75)));
+    this.on('resetCoins', () => this.resetCoins());
   }
 
   public async getCoins(): Promise<number> {
@@ -19,7 +32,7 @@ export class EconomyManager {
       
       return coins;
     } catch (err) {
-      console.log(err);
+      this.handleError(err);
     }
   }
 
@@ -30,8 +43,9 @@ export class EconomyManager {
       await db.table(DISCORD_PROFILES)
         .where('memberID', this.member.id)
         .update({ coins: coins + amount });
+
     } catch (err) {
-      console.log(err);
+      this.handleError(err);
     }
   }
 
@@ -43,7 +57,21 @@ export class EconomyManager {
         .where('memberID', this.member.id)
         .update({ coins: coins - amount });
     } catch (err) {
-      console.log(err);
+      this.handleError(err);
     }
+  }
+
+  private async resetCoins(): Promise<void> {
+    try {
+      await db.table(DISCORD_PROFILES)
+        .where('memberID', this.member.id)
+        .update({ coins: 0 })
+    } catch (err) {
+      this.handleError(err);
+    }
+  }
+
+  private handleError(err: any): void {
+    this.handleError(err);
   }
 }

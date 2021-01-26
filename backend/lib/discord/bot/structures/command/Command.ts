@@ -1,13 +1,14 @@
 import Knex from "knex";
 import { db } from '../../../../../src/db/index';
-import { CommandCFGTableInsertObject } from "./CommandCFGTableInsertObject";
 import { CommandConstructor } from "./CommandConstructor";
 import { CommandOptions } from "./CommandOptions";
 import { CommandHelp } from "./CommandHelp";
 import { ICommand } from "./ICommand";
 import { CommandRequirements } from "./CommandRequirements";
+import { CozyClient } from "../../client/CozyClient";
+import { Message } from "discord.js";
 
-export class Command implements ICommand {
+export abstract class Command implements ICommand {
   protected db: Knex;
   public id: string;
   public requirements: CommandRequirements;
@@ -29,14 +30,14 @@ export class Command implements ICommand {
 
     this.requirements = {
       ownerOnly: ownerOnly || true,
-      clientPerms: clientPerms || [
+      clientPerms: clientPerms ? clientPerms : [
         'SEND_MESSAGES',
         'VIEW_CHANNEL',
         'ATTACH_FILES',
         'EMBED_LINKS',
         'MANAGE_MESSAGES',
       ],
-      userPerms: userPerms || [
+      userPerms: userPerms ? userPerms : [
         'SEND_MESSAGES',
         'VIEW_CHANNEL',
         'ATTACH_FILES',
@@ -46,29 +47,15 @@ export class Command implements ICommand {
     this.options = { ignoreBots: ignoreBots || true }
 
     this.help = {
-      args: args || [],
+      args: args ? args : [],
       name,
-      aliases: aliases || [],
-      cooldown: cooldown || 0,
-      description: description || 'No description set'
+      aliases: aliases ? aliases : [],
+      cooldown: cooldown ? cooldown : 0,
+      description: description ? description : 'No description set'
     }
 
     this.db = db;
   }
 
-  public get configTableInsertObject(): CommandCFGTableInsertObject {
-    const id = this.id;
-    const cooldown = this.help.cooldown;
-    const ownerOnly = this.requirements.ownerOnly ? 1 : 0;
-    const clientPerms = this.requirements.clientPerms.join(', ');
-    const userPerms = this.requirements.userPerms.join(', ');
-
-    return {
-      id,
-      cooldown,
-      ownerOnly,
-      clientPerms,
-      userPerms    
-    }
-  }
+  public abstract run(client: CozyClient, message: Message, args: Array<string>): void | Promise<void>;
 }

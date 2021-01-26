@@ -1,5 +1,5 @@
-import { Constants } from '../../src/utils/constants';
-const { HEX_VALUES } = Constants;
+import { Constants } from "../../src/utils/constants";
+const { HEX_VALUES } = Constants
 
 /**
  * The internal class to handle stuff the Math class from the base JS library cant 
@@ -131,6 +131,44 @@ export class InternalMath {
       pos++
     }
 
-    return resultsArr.reduce((prev, curr) => prev + curr, 0)
+    return resultsArr.reduce((accumulator, curr) => accumulator + curr, 0)
+  }
+
+  /**
+   * Returns a random integer between the 2 numbers provided.
+   * @public
+   * @method
+   * @param {Number} min 
+   * @param {Number} max
+   * @returns {Number} 
+   */
+  public random(min: number, max: number): number {
+    return Math.floor(Math.random() * max) + min;
+  }
+
+  /**
+   * Calculates the average number in the provided array 
+   * @public
+   * @method
+   * @param {Array<Number>} numbers 
+   * @returns {Number}
+   */
+  public average(numbers: Array<number>): number {
+    return (numbers.reduce((accumulator, value) => accumulator += value, 0) / numbers.length)
+  }
+
+  /**
+   * Calculates the median value of the provided numbers
+   * @public
+   * @method 
+   * @param {Number} numbers
+   * @returns {Number} 
+   */
+  public median(numbers: Array<number>): number {
+    const middle = numbers.length / 2;
+
+    return (numbers.sort((a, b) => a -b).length % 2) === 0
+      ? (numbers[middle - 1] + numbers[middle]) / 2
+      : numbers[Math.round(middle) - 1]
   }
 }

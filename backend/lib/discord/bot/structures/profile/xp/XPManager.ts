@@ -191,6 +191,7 @@ export class XPManager extends XPEventHandler {
   }
 
   // Currently only supports roles
+  // Make it check for the correct reward, cause it currently gives all rewards (easy)
   private async giveLevelReward(level: number): Promise<void> {
     try {
       const hasLevelReward = await this.hasLevelReward(level);

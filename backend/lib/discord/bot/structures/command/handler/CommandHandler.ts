@@ -1,56 +1,43 @@
-import Knex from "knex";
 import { Message, PermissionString, MessageEmbed, GuildMember } from "discord.js";
 import { db } from '../../../../../../src/db/index';
 import { CozyClient } from "../../../client/CozyClient";
 import { Command } from "../Command";
+import { join } from 'path';
+import { readdir, lstat } from 'fs/promises';
 import { Constants } from '../../../../../../src/utils/constants';
 
 const { EmbedColors, TableNames } = Constants;
 const { RED } = EmbedColors
-const { COMMAND_CONFIGS } = TableNames;
 
 export class CommandHandler {
-  private db: Knex;
   private client: CozyClient;
+  private commandPath: string;
   public onCooldown: Set<string>;
   public commands: Map<string, Command>;
+  public prefix: string;
 
   public constructor(client: CozyClient) {
-    this.db = db;
     this.client = client;
+    this.onCooldown = new Set();
+    this.commands = new Map();
+    this.prefix = '.,.';
+    this.commandPath = join(
+      __dirname,
+      '..',
+      '..',
+      '..',
+      '..',
+      '..',
+      '..',
+      'src',
+      'bot',
+      'commands'
+    );
+
+    this.loadCommands();
   }
 
-  public async register(command: Command) {
-    try {
-      const hasCommandConfig = await this.db.table(COMMAND_CONFIGS)
-        .select('*')
-        .where('id', command.id);
-
-      if(!hasCommandConfig) {
-        await this.db.table(COMMAND_CONFIGS).insert(command.configTableInsertObject);
-      }
-    } catch (err) {
-      this.client.emit('error', err);  
-    }
-  }
-
-  public async unregister(command: Command) {
-    try {
-      const hasCFG = await this.db.table(COMMAND_CONFIGS)
-        .select('*')
-        .where('id', command.id);
-
-      if(!hasCFG) {
-        await this.db.table(COMMAND_CONFIGS)
-          .delete('*')
-          .where('id', command.id);
-      }
-    } catch (err) {
-      this.client.emit('error', err);
-    }
-  }
-
-  public validate(client: CozyClient, command: Command, message: Message, args: Array<any>): Promise<{ success: boolean, reason?: string }> {
+  public validate(client: CozyClient, command: Command, message: Message): Promise<{ success: boolean, reason?: string }> {
     return new Promise((resolve, reject) => {
       const member = message.member;
       const clientMember = message.guild.me;
@@ -123,5 +110,52 @@ export class CommandHandler {
       .setColor(RED);
 
     return embed;
+  }
+
+  public setPrefix(prefix: string): void {
+    this.prefix = prefix;
+  }
+
+  public hasCommand(command: string): boolean {
+    return this.commands.has(command);
+  }
+
+  public execute(command: string, message: Message, args: Array<string>): void {
+    const cmd = this.commands.get(command);
+    
+    if(this.validate(this.client, cmd, message)) {
+      cmd.run(this.client, message, args)
+    }
+  }
+
+  public loadCommands() {
+    const run = async (dir: string, client: CozyClient): Promise<void> => {
+      readdir(dir).then(files => {
+        for(const file of files) {
+          const next = join(dir, file);
+         
+          lstat(next).then(data => {
+            if(data.isDirectory()) {
+              run(next, client);
+            } else {
+              const Command = require(next).default;
+              const command = new Command()
+
+              client.commandHandler.commands.set(command.help.name, command);
+            }
+          }).catch(err => {
+            this.handleError(err);
+          });
+        }
+      }).catch(err => {
+        this.handleError(err);
+      });
+    }
+
+    run(this.commandPath, this.client);
+  }
+
+  private handleError(error: unknown): void {
+    console.log(error);
   }
 }

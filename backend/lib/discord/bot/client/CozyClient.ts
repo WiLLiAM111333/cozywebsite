@@ -1,15 +1,19 @@
-import { Client, ClientEvents, ClientOptions, Snowflake } from "discord.js";
+import owners from '../../../../config/owners.json';
+import { Client, ClientEvents, ClientOptions, Message, Snowflake, User } from "discord.js";
 import { join } from 'path';
 import { readdir } from 'fs/promises';
 import { CommandHandler } from "../structures/command/handler/CommandHandler";
 import { AutoMod } from "../structures/moderation/autoMod/AutoMod";
-import owners from '../../../../config/owners.json';
+import { AnimalManager } from "../../../animal/AnimalManager";
 
 export class CozyClient extends Client {
   private eventPath: string;
   public commandHandler: CommandHandler;
+  public animalManager: AnimalManager
   public owners: Array<Snowflake>;
   public autoMod: AutoMod;
+  public editSnipes: Map<Snowflake, { oldContent: string; newContent: string }>
+  public snipes: Map<Snowflake, { content: string, author: User }>;
 
   public constructor(options?: ClientOptions) {
     super(options);
@@ -18,6 +22,9 @@ export class CozyClient extends Client {
     this.owners = owners;
     this.commandHandler = new CommandHandler(this);
     this.autoMod = new AutoMod(this);
+    this.animalManager = new AnimalManager();
+    this.editSnipes = new Map();
+    this.snipes = new Map();
   }
 
   /**

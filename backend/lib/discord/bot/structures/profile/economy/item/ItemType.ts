@@ -1,0 +1,1 @@
+type ItemType = 'role'

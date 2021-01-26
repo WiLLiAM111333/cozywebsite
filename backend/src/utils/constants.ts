@@ -58,6 +58,25 @@ export namespace Constants {
     'F': 15
   }
 
+  export const ANIMAL_API_ENDPOINTS = {
+    FACTS: {
+      BIRD: 'https://some-random-api.ml/facts/bird',
+      CAT: 'https://some-random-api.ml/facts/cat',
+      DOG: 'https://some-random-api.ml/facts/dog',
+      FOX: 'https://some-random-api.ml/facts/fox',
+      KOALA: 'https://some-random-api.ml/facts/koala',
+      PANDA: 'https://some-random-api.ml/facts/panda'
+    },
+    IMAGE: {
+      BIRD: 'https://some-random-api.ml/img/birb',
+      CAT: 'https://some-random-api.ml/img/cat',
+      DOG: 'https://some-random-api.ml/img/dog',
+      FOX: 'https://some-random-api.ml/img/fox',
+      KOALA: 'https://some-random-api.ml/img/koala',
+      PANDA: 'https://some-random-api.ml/img/panda'
+    }
+  }
+
   export const OAuthEndpoints: IOAuthEndpoints = {
     authorize: 'https://discord.com/api/oauth2/authorize',
     token: 'https://discord.com/api/oauth2/token',

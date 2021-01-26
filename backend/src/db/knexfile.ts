@@ -1,4 +1,4 @@
-import { Constants } from './utils/constants';
+import { Constants } from '../utils/constants';
 const { KNEX_USER, KNEX_PASSWORD, KNEX_DB, KNEX_TEST_DB } = Constants;
 
 export = {
