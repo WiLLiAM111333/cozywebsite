@@ -1,4 +1,4 @@
-export interface IRandomQuoteResponse {
+export interface IQuoteResponse {
   _id: string;
   tags: Array<string>;
   contents: string;

@@ -1,7 +1,6 @@
 import { CozyClient } from "../../client/CozyClient";
 import { Constants } from '../../../../../src/utils/constants';
 import { 
-  DiscordAPIError, 
   DMChannel, 
   GuildMember, 
   MessageEmbed, 
