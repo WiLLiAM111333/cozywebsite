@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import { CozyClient } from "../../../../lib/discord/bot/client/CozyClient";
 import { Command } from "../../../../lib/discord/bot/structures/command/Command";
-import { MemeManager } from "../../../../lib/fun/memes/MemesManager";
+import { MemeManager } from "../../../../lib/memes/MemesManager";
 
 export default class extends Command {
   private memeManager: MemeManager;

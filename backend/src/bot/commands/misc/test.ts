@@ -1,7 +1,7 @@
 import { Message, MessageEmbed } from "discord.js";
 import { CozyClient } from "../../../../lib/discord/bot/client/CozyClient";
 import { Command } from "../../../../lib/discord/bot/structures/command/Command";
-import { MemeManager } from "../../../../lib/fun/memes/MemesManager";
+import { MemeManager } from "../../../../lib/memes/MemesManager";
 
 export default class extends Command {
   private memeManager: MemeManager;
@@ -23,7 +23,6 @@ export default class extends Command {
 
   public run(client: CozyClient, message: Message, args: Array<string>): void {
     this.memeManager.randomMemeEmbed(message.author).then(embed => {
-      console.log(embed);
       message.channel.send(embed);
     });
   }

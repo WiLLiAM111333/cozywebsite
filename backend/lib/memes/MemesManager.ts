@@ -17,7 +17,7 @@ export class MemeManager {
     this.dadJokeURL = 'https://icanhazdadjoke.com/slack';
   }
 
-  private async getRedditMeme(subreddit: 'memes' | 'me_irl' | 'dankmemes'): Promise<IRedditMemeData> {
+  public async getRedditMeme(subreddit: 'memes' | 'me_irl' | 'dankmemes'): Promise<IRedditMemeData> {
     const url = this.gimmeMemeURL.replace(
       /\/\{sub_reddit\}/,
       subreddit ? `/${subreddit}` : ''
@@ -33,7 +33,7 @@ export class MemeManager {
     }
   }
 
-  private async getRandomAPIMeme(): Promise<IRandomAPIMeme> {
+  public async getRandomAPIMeme(): Promise<IRandomAPIMeme> {
     try {
       const res = await fetch(this.randomAPIMemeURL);
       const json: IRandomAPIMeme = await res.json();
@@ -44,7 +44,7 @@ export class MemeManager {
     }
   }
 
-  private async getDadJoke() {
+  public async getDadJoke() {
     try {
       const res = await fetch(this.dadJokeURL);
       const json: IDadJokeResponse = await res.json();

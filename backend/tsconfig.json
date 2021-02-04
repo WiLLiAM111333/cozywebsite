@@ -17,7 +17,12 @@
     "extendedDiagnostics": true,
     "listFiles": true
   },
-  "include": ["src/**/*", "lib/**/*", "typings/**/*", "index.d.ts"],
+  "include": [
+    "./src/**/*", 
+    "./lib/**/*", 
+    "./typings/**/*", 
+    "./index.d.ts"
+  ],
   "exclude": [
     "package.json", 
     "package-lock.json",
