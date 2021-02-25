@@ -41,7 +41,6 @@ const { setupSimulations   } = require('./simulations');
 const { removeResources    } = require('./resources');
 const { deleteData         } = require('./data');
 const { removeAllDocs      } = require('./docs');
-const { removeJest         } = require('./jest');
 const { setUpLogDirectory  } = require('./logs');
 const {
   unlinkSync,
@@ -79,7 +78,6 @@ exec('npm install', (err, stdout, stderr) => {
         removeResources(),
         deleteData(),
         removeAllDocs(),
-        removeJest(),
         setupSimulations(),
         setUpLogDirectory()
       ]);
