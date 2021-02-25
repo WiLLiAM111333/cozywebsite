@@ -6,7 +6,7 @@ module.exports.setupSimulations = async () => {
     const basePath = join(__dirname, '..', '..', 'simulations');
 
     await mkdir(join(basePath, 'results'));
-    await writeFile(join(basePath, 'dumpfile.log'));
+    await writeFile(join(basePath, 'dumpfile.log'), '');
   } catch (err) {
     // Throws it up the chain to the other catch block in `index.js`
     throw err;
