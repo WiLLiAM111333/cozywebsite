@@ -44,12 +44,6 @@ const { removeAllDocs      } = require('./docs');
 const { setUpLogDirectory  } = require('./logs');
 const { deleteConfigFiles  } = require('./configFiles');
 const {
-  cyan,
-  yellowBright,
-  red,
-  green
-} = require('chalk');
-const {
   unlinkSync,
   writeFileSync
 } = require('fs');
