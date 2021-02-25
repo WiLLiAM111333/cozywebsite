@@ -1,3 +1,13 @@
+import 'discord.js';
+import 'express-session';
+import { User } from './lib/server/auth/user/User';
+
+declare module "express-session" {
+  interface SessionData {
+    user: User
+  }
+}
+
 declare module 'discord.js' {
   interface ClientEvents {
     channelCreate: [Channel];

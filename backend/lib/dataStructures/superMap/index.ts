@@ -1,3 +1,20 @@
+/*
+
+
+
+
+
+
+WORK IN PROGRESS
+
+
+
+
+
+
+
+*/
+
 export class SuperMap<K, V> extends Map<K, V> {
   private _array: Array<V>;
   private _keyArray: Array<K>;
@@ -20,7 +37,7 @@ export class SuperMap<K, V> extends Map<K, V> {
     return this.entries().next().value;
   }
 
-  public array(): Array<V> {
+  public toArray(): Array<V> {
     if(!this._array || this._array.length !== this.size) {
       const arr = [];
       let count = 0;
@@ -37,7 +54,7 @@ export class SuperMap<K, V> extends Map<K, V> {
     return this._array;
   }
 
-  public keyArray(): Array<K> {
+  public toKeyArray(): Array<K> {
     if(!this._keyArray || this._keyArray.length !== this.size) {
       const arr = [];
       let count = 0;
@@ -54,7 +71,7 @@ export class SuperMap<K, V> extends Map<K, V> {
     return this._keyArray;
   }
 
-  public entryArray(): Array<[K, V]> {
+  public toEntryArray(): Array<[K, V]> {
     if(!this._entryArray || this._entryArray.length !== this.size) {
       const arr = [];
       let count = 0;
@@ -72,27 +89,27 @@ export class SuperMap<K, V> extends Map<K, V> {
   }
 
   public last(): V | undefined {
-    return this.array()[this.size - 1];
+    return this.toArray()[this.size - 1];
   }
 
   public lastKey(): K | undefined {
-    return this.keyArray()[this.size - 1];
+    return this.toKeyArray()[this.size - 1];
   }
 
   public lastEntry(): [K, V] | undefined {
-    return this.entryArray()[this.size - 1];
+    return this.toEntryArray()[this.size - 1];
   }
 
   public random(): V | undefined {
-    return this.array()[Math.floor(Math.random() * this.size)];
+    return this.toArray()[Math.floor(Math.random() * this.size)];
   }
 
   public randomKey(): K | undefined {
-    return this.keyArray()[Math.floor(Math.random() * this.size)];
+    return this.toKeyArray()[Math.floor(Math.random() * this.size)];
   }
 
   public randomEntry(): [K, V] | undefined {
-    return this.entryArray()[Math.floor(Math.random() * this.size)];
+    return this.toEntryArray()[Math.floor(Math.random() * this.size)];
   }
 
   public shift(): V | undefined {

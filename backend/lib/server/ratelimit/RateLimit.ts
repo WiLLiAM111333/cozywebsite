@@ -1,5 +1,5 @@
 import { Snowflake } from "discord.js";
-import { Base } from "../..";
+import { Base } from "../../Base";
 import { IRateLimit } from "./IRateLimit";
 import { RateLimitConstructor } from "./RateLimitConstructor";
 

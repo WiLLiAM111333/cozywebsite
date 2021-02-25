@@ -1,5 +1,3 @@
-import { SubredditStrings } from "./SubredditStrings";
-
 export interface IRedditMemeData {
   postLink: string;
   subreddit: SubredditStrings;

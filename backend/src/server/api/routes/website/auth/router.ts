@@ -1,11 +1,6 @@
 import { Router } from "../../../../../../lib/server/router/Router";
 import { AuthController } from "./controller";
-import {
-  Application,
-  Request,
-  Response,
-  Router as expressRouter
-} from "express";
+import { Application, Router as expressRouter } from "express";
 
 export class AuthRouter extends Router {
   protected controller: AuthController;

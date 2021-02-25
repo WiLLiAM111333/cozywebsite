@@ -1,7 +1,7 @@
 import { Snowflake } from "discord.js";
 import { IWebSiteBan } from "./IWebSiteBan";
 import { WebSiteBanConstructor } from "./WebSiteBanConstructor";
-import { Base } from '../index';
+import { Base } from '../Base';
 import { Constants } from '../../src/utils/constants';
 
 const { WEBSITE_BANS } = Constants.TableNames;

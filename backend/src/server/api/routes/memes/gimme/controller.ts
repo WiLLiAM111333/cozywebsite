@@ -1,7 +1,6 @@
 import { Controller } from "../../../../../../lib/server/controller/Controller";
 import { Request, Response } from 'express';
 import { MemeManager } from "../../../../../../lib/memes/MemesManager";
-import { SubredditStrings } from "../../../../../../lib/memes/reddit/SubredditStrings";
 
 export class GimmeController extends Controller {
   private memeManager: MemeManager;

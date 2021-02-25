@@ -3,7 +3,7 @@ import { IRouter } from './IRouter';
 import { db } from '../../../src/db/index';
 import { Controller } from '../controller/Controller';
 import { RouterConstructor } from './RouterConstructor';
-import { Base } from '../..';
+import { Base } from '../../Base';
 
 /**
  * Abstract base class for Router classes to extend from. This is used to create express Routers.

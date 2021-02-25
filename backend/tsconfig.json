@@ -15,13 +15,18 @@
     "resolveJsonModule": true,
     "generateCpuProfile": "profile.cpuprofile",
     "extendedDiagnostics": true,
-    "listFiles": true
+    "listFiles": true,
+    "typeRoots": ["./typings", "./node_modules/@types"],
+    "baseUrl": ".",
+    "paths": {
+      "lib": ["./lib/index.ts"]
+    }
   },
   "include": [
     "./src/**/*", 
     "./lib/**/*", 
     "./typings/**/*", 
-    "./index.d.ts"
+    "index.d.ts",
   ],
   "exclude": [
     "package.json", 

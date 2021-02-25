@@ -207,4 +207,4 @@ type LocaleString = 'af-ZA'
   | 'zh-MO'
   | 'zh-SG'
   | 'zh-TW'
-  | 'zu-ZA'
+  | 'zu-ZA';

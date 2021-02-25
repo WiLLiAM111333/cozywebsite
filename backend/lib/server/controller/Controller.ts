@@ -1,4 +1,4 @@
-import { Base } from '../../index';
+import { Base } from '../../Base';
 
 /**
  * Empty class other than extending the `Base` class. 

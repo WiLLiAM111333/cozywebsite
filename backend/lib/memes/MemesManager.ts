@@ -4,7 +4,6 @@ import { IDadJokeResponse } from './dadJoke/IDadJokeResponse';
 import { IRandomAPIMeme } from './randomAPI/IRandomAPIMeme';
 import { IRedditMemeData } from './reddit/IRedditMemeData';
 import { IRedditResponse } from "./reddit/IRedditResponse";
-import { SubredditStrings } from './reddit/SubredditStrings';
 
 export class MemeManager {
   private randomAPIMemeURL: string;

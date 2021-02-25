@@ -29,4 +29,14 @@ export class OAuth2 {
     this.scope = scopes.join(' ');
     this.endpoints = OAuthEndpoints;
   }
+
+  private get encodedScopes(): string {
+    return this.scope.replace(/\s/g, '%20');
+  }
+
+  private get encodedRedirectURI(): string {
+    return this.scope
+      .replace(/\//g, '%2F')
+      .replace(/:/g, '%3A')
+  }
 }

@@ -1,0 +1,1 @@
+type CoinSide = 'heads' | 'tails';

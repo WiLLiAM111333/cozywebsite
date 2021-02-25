@@ -1,10 +1,10 @@
 import { Message, MessageEmbed } from "discord.js";
+import { Coinflip } from "../../../../lib/games/coinflip";
 import { CozyClient } from "../../../../lib/discord/bot/client/CozyClient";
 import { Command } from "../../../../lib/discord/bot/structures/command/Command";
-import { MemeManager } from "../../../../lib/memes/MemesManager";
 
 export default class extends Command {
-  private memeManager: MemeManager;
+  private coinflip: Coinflip;
 
   public constructor() {
     super({
@@ -18,12 +18,10 @@ export default class extends Command {
       userPerms: [],
     });
 
-    this.memeManager = new MemeManager();
+    this.coinflip = new Coinflip();
   }
 
   public run(client: CozyClient, message: Message, args: Array<string>): void {
-    this.memeManager.randomMemeEmbed(message.author).then(embed => {
-      message.channel.send(embed);
-    });
+    this.coinflip.play(message);
   }
 }

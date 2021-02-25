@@ -17,6 +17,4 @@ type Scope = 'bot'
   | 'relationships.read'
   | 'activities.read'
   | 'activities.write'
-  | 'applications.commands.update'
-  
-  
+  | 'applications.commands.update';

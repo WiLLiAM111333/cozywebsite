@@ -3,4 +3,4 @@ type AnimalStrings = 'bird'
   | 'dog'
   | 'fox'
   | 'koala'
-  | 'panda'
+  | 'panda';
