@@ -9,11 +9,11 @@ module.exports.deleteConfigFiles = async () => {
       rm(join(rootPath, '.eslintrc')),
       rm(join(rootPath, 'jest.config.json')),
       rm(join(rootPath, 'tsconfig.json')),
-      rm(rootPath, '..', '.editorconfig'),
-      rm(rootPath, '..', '.gitignore'),
-      rm(rootPath, '..', 'Contributing.md'),
-      rm(rootPath, '..', 'LICENSE'),
-      rm(rootPath, '..', 'README.md')
+      rm(join(rootPath, '..', '.editorconfig')),
+      rm(join(rootPath, '..', '.gitignore')),
+      rm(join(rootPath, '..', 'Contributing.md')),
+      rm(join(rootPath, '..', 'LICENSE')),
+      rm(join(rootPath, '..', 'README.md'))
     ]);
   } catch (err) {
     // Throws it up the chain to the other catch block in `index.js`
