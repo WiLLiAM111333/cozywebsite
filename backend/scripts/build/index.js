@@ -42,6 +42,13 @@ const { removeResources    } = require('./resources');
 const { deleteData         } = require('./data');
 const { removeAllDocs      } = require('./docs');
 const { setUpLogDirectory  } = require('./logs');
+const { deleteConfigFiles  } = require('./configFiles');
+const {
+  cyan,
+  yellowBright,
+  red,
+  green
+} = require('chalk');
 const {
   unlinkSync,
   writeFileSync
@@ -56,35 +63,74 @@ delete packageJSON.devDependencies;
 // Replace the current package.json with a new one that doesnt have its devDepdendencies
 // Then install the dependencies so we dont install stuff we dont need
 
-unlinkSync(packageJSONPath);
-writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
+try {
+  unlinkSync(packageJSONPath);
+  writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
 
-exec('npm install', (err, stdout, stderr) => {
-   if(err) {
-     return console.error(err);
-   }
+  console.log(green('Replaced package.json'))
 
-   if(stdout) {
-     console.log(stdout);
-   }
+  exec('npm install', (err, stdout, stderr) => {
+    console.log(cyan('Installing production dependencies...'));
 
-   if(stderr) {
-     console.error(stderr);
-   }
+    if(err) {
+      return console.error(err);
+    }
+  
+    if(stdout) {
+      console.log(stdout);
+    }
+  
+    if(stderr) {
+      console.error(stderr);
+    }
+  
+    (async () => {
+      try {
+        exec('npm run compile', (err, stdout, stderr) => {
+          if(err) {
+            throw new Error(err);
+          }
+        
+          if(stdout) {
+            console.log(stdout);
+          }
+        
+          if(stderr) {
+            throw new Error(stderr);
+          }
+        
+          (async () => {
+            console.log(cyan('Removing unnecessary files and adding new ones we need...'));
 
-   (async () => {
-     try {
-      await Promise.all([
-        removeResources(),
-        deleteData(),
-        removeAllDocs(),
-        setupSimulations(),
-        setUpLogDirectory()
-      ]);
-     } catch (error) {
-       console.error(error);
-     } finally {
-       process.exit(0);
-     }
-   })();
-});
+            try {
+             await Promise.all([
+               removeResources(),
+               deleteData(),
+               deleteConfigFiles(),
+               removeAllDocs(),
+               setupSimulations(),
+               setUpLogDirectory()
+             ]);
+             
+             console.log(
+               green('Everything has been built and prepared for production,'),
+               yellow('Except for environment variables!')
+             );
+  
+             process.exit(0);
+            } catch (error) {
+              console.error(red('Failed to build project, aborting script!'), error);
+              process.exit(1);
+            }
+          })();
+        }); 
+      } catch (error) {
+        console.error(red('Failed to compile project, aborting script!'), error);
+        process.exit(1);
+      }
+    })();
+  });
+} catch (err) {
+  console.log(red('Failed to replace package.json, aborting script!'))
+  process.exit(1);
+}
