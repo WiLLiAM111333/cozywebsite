@@ -80,7 +80,7 @@ try {
   
     (async () => {
       try {
-        exec('npm run compile', (cErr, cSTDOut, cSTDErr) => {
+        exec('tsc', (cErr, cSTDOut, cSTDErr) => {
           if(err) {
             throw new Error(cErr);
           }
