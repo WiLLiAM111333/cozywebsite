@@ -61,7 +61,7 @@ try {
   unlinkSync(packageJSONPath);
   writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
 
-  console.log('Replaced package.json')
+  console.log('Removed dev dependencies')
   console.log('Installing production dependencies...');
 
   exec('npm install', (err, stdout, stderr) => {
@@ -86,7 +86,7 @@ try {
             return console.error('Failed to compile, aborting script!', cErr);
           }
         
-          if(stdout) {
+          if(cSTDOut) {
             console.log(cSTDOut);
           }
         
