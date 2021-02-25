@@ -79,17 +79,19 @@ try {
   
     (async () => {
       try {
+        console.log('Compiling TypeScript down to JavaScript in ./dist')
+
         exec('tsc', (cErr, cSTDOut, cSTDErr) => {
           if(cErr) {
-            throw cErr;
+            return console.error('Failed to compile, aborting script!', cErr);
           }
         
           if(stdout) {
             console.log(cSTDOut);
           }
         
-          if(stderr) {
-            throw cSTDErr;
+          if(cSTDerr) {
+            return console.error('Failed to compile, aborting script!', cSTDErr);
           }
         
           (async () => {
