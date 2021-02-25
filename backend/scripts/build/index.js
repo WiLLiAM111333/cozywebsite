@@ -86,17 +86,17 @@ try {
   
     (async () => {
       try {
-        exec('npm run compile', (err, stdout, stderr) => {
+        exec('npm run compile', (cErr, cSTDOut, cSTDErr) => {
           if(err) {
-            throw new Error(err);
+            throw new Error(cErr);
           }
         
           if(stdout) {
-            console.log(stdout);
+            console.log(cSTDOut);
           }
         
           if(stderr) {
-            throw new Error(stderr);
+            throw new Error(cSTDErr);
           }
         
           (async () => {
@@ -131,6 +131,6 @@ try {
     })();
   });
 } catch (err) {
-  console.log(red('Failed to replace package.json, aborting script!'))
+  console.log(red('Failed to replace package.json, aborting script!'), err)
   process.exit(1);
 }
