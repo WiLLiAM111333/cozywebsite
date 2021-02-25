@@ -67,10 +67,10 @@ try {
   unlinkSync(packageJSONPath);
   writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
 
-  console.log(green('Replaced package.json'))
+  console.log('Replaced package.json')
 
   exec('npm install', (err, stdout, stderr) => {
-    console.log(cyan('Installing production dependencies...'));
+    console.log('Installing production dependencies...');
 
     if(err) {
       return console.error(err);
@@ -100,7 +100,7 @@ try {
           }
         
           (async () => {
-            console.log(cyan('Removing unnecessary files and adding new ones we need...'));
+            console.log('Removing unnecessary files and adding new ones we need...');
 
             try {
              await Promise.all([
@@ -112,25 +112,22 @@ try {
                setUpLogDirectory()
              ]);
              
-             console.log(
-               green('Everything has been built and prepared for production,'),
-               yellow('Except for environment variables!')
-             );
+             console.log('Everything has been built and prepared for production, except for environment variables!');
   
              process.exit(0);
             } catch (error) {
-              console.error(red('Failed to build project, aborting script!'), error);
+              console.error('Failed to build project, aborting script!', error);
               process.exit(1);
             }
           })();
         }); 
       } catch (error) {
-        console.error(red('Failed to compile project, aborting script!'), error);
+        console.error('Failed to compile project, aborting script!', error);
         process.exit(1);
       }
     })();
   });
 } catch (err) {
-  console.log(red('Failed to replace package.json, aborting script!'), err)
+  console.log('Failed to replace package.json, aborting script!', err)
   process.exit(1);
 }
