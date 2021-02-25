@@ -62,10 +62,9 @@ try {
   writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
 
   console.log('Replaced package.json')
+  console.log('Installing production dependencies...');
 
   exec('npm install', (err, stdout, stderr) => {
-    console.log('Installing production dependencies...');
-
     if(err) {
       return console.error(err);
     }
@@ -81,8 +80,8 @@ try {
     (async () => {
       try {
         exec('tsc', (cErr, cSTDOut, cSTDErr) => {
-          if(err) {
-            throw new Error(cErr);
+          if(cErr) {
+            throw cErr;
           }
         
           if(stdout) {
@@ -90,7 +89,7 @@ try {
           }
         
           if(stderr) {
-            throw new Error(cSTDErr);
+            throw cSTDErr;
           }
         
           (async () => {
