@@ -25,7 +25,8 @@
   "include": [
     "./src/**/*", 
     "./lib/**/*", 
-    "./typings/**/*", 
+    "./typings/**/*",
+    "./test/**/*", 
     "index.d.ts",
   ],
   "exclude": [

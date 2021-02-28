@@ -1,68 +1,68 @@
-import * as AnimalPayloads from './animal/payloads';
-import { Base                        } from './Base';
-import { AnimalManager               } from './animal/AnimalManager';
-import { ASCII                       } from './ascii';
-import { IWebSiteBan                 } from './ban/IWebSiteBan';
-import { WebSiteBan                  } from './ban/WebSiteBan';
-import { WebSiteBanConstructor       } from './ban/WebSiteBanConstructor';
-import { ICoinflipUser               } from './games/coinflip/ICoinflipUser';
-import { CoinflipUser                } from './games/coinflip/CoinflipUser';
-import { Coinflip                    } from './games/coinflip';
-import { TicTacToeManager            } from './games/ticTacToe/index';
-import { SuperArray                  } from './dataStructures/superArray';
-import { SuperMap                    } from './dataStructures/superMap';
-import { CozyClient                  } from './discord/bot/client/CozyClient';
-import { Command                     } from './discord/bot/structures/command/Command';
-import { CommandCFGTableInsertObject } from './discord/bot/structures/command/CommandCFGTableInsertObject';
-import { CommandConstructor          } from './discord/bot/structures/command/CommandConstructor';
-import { CommandHelp                 } from './discord/bot/structures/command/CommandHelp';
-import { CommandOptions              } from './discord/bot/structures/command/CommandOptions';
-import { CommandRequirements         } from './discord/bot/structures/command/CommandRequirements';
-import { ICommand                    } from './discord/bot/structures/command/ICommand';
-import { CommandHandler              } from './discord/bot/structures/command/handler/CommandHandler';
-import { DiscordController           } from './discord/controller/DiscordController';
-import { IManager                    } from './discord/managers/IManager';
-import { BaseManager                 } from './discord/managers/BaseManager';
-import { ManagerTypes                } from './discord/managers/ManagerTypes';
-import { IOAuthEndpoints             } from './discord/oauth2/IOAuthEndpoints';
-import { OAuth2                      } from './discord/oauth2/OAuth2';
-import { OAuth2Constructor           } from './discord/oauth2/OAuth2Constructor';
-import { DiscordRouter               } from './discord/router/DiscordRouter';
-import { DiscordRouterConstructor    } from './discord/router/DiscordRouterConstructor';
-import { EvilInsultWrapper           } from './evilinsult';
-import { Leetifier                   } from './leetifier';
-import { InternalMath                } from './math';
-import { MemeManager                 } from './memes/MemesManager';
-import { IDadJokeResponse            } from './memes/dadJoke/IDadJokeResponse';
-import { IRandomAPIMeme              } from './memes/randomAPI/IRandomAPIMeme';
-import { IRedditMemeData             } from './memes/reddit/IRedditMemeData';
-import { IRedditResponse             } from './memes/reddit/IRedditResponse';
-import { owoify                      } from './owo';
-import { IAuthorResponse             } from './quote/IAuthorResponse';
-import { IListAuthorResponse         } from './quote/IListAuthorResponse';
-import { IQuoteResponse              } from './quote/IQuoteResponse';
-import { QuoteManager                } from './quote';
-import { IUser                       } from './server/auth/user/IUser';
-import { IUserBody                   } from './server/auth/user/IUserBody';
-import { User                        } from './server/auth/user/User';
-import { Controller                  } from './server/controller/Controller';
-import { IRateLimit                  } from './server/ratelimit/IRateLimit';
-import { RateLimit                   } from './server/ratelimit/RateLimit';
-import { RateLimitConstructor        } from './server/ratelimit/RateLimitConstructor';
-import { IRouter                     } from './server/router/IRouter';
-import { Router                      } from './server/router/Router';
-import { RouterConstructor           } from './server/router/RouterConstructor';
-import { 
+export * as AnimalPayloads from './animal/payloads';
+export { Base                        } from './Base';
+export { AnimalManager               } from './animal/AnimalManager';
+export { ASCII                       } from './ascii';
+export { IWebSiteBan                 } from './ban/IWebSiteBan';
+export { WebSiteBan                  } from './ban/WebSiteBan';
+export { WebSiteBanConstructor       } from './ban/WebSiteBanConstructor';
+export { ICoinflipUser               } from './games/coinflip/ICoinflipUser';
+export { CoinflipUser                } from './games/coinflip/CoinflipUser';
+export { Coinflip                    } from './games/coinflip';
+export { TicTacToeManager            } from './games/ticTacToe/index';
+export { SuperArray                  } from './dataStructures/superArray';
+export { SuperMap                    } from './dataStructures/superMap';
+export { CozyClient                  } from './discord/bot/client/CozyClient';
+export { Command                     } from './discord/bot/structures/command/Command';
+export { CommandCFGTableInsertObject } from './discord/bot/structures/command/CommandCFGTableInsertObject';
+export { CommandConstructor          } from './discord/bot/structures/command/CommandConstructor';
+export { CommandHelp                 } from './discord/bot/structures/command/CommandHelp';
+export { CommandOptions              } from './discord/bot/structures/command/CommandOptions';
+export { CommandRequirements         } from './discord/bot/structures/command/CommandRequirements';
+export { ICommand                    } from './discord/bot/structures/command/ICommand';
+export { CommandHandler              } from './discord/bot/structures/command/handler/CommandHandler';
+export { DiscordController           } from './discord/controller/DiscordController';
+export { IManager                    } from './discord/managers/IManager';
+export { BaseManager                 } from './discord/managers/BaseManager';
+export { ManagerTypes                } from './discord/managers/ManagerTypes';
+export { IOAuthEndpoints             } from './discord/oauth2/IOAuthEndpoints';
+export { OAuth2                      } from './discord/oauth2/OAuth2';
+export { OAuth2Constructor           } from './discord/oauth2/OAuth2Constructor';
+export { DiscordRouter               } from './discord/router/DiscordRouter';
+export { DiscordRouterConstructor    } from './discord/router/DiscordRouterConstructor';
+export { EvilInsultWrapper           } from './evilinsult';
+export { Leetifier                   } from './leetifier';
+export { InternalMath                } from './math';
+export { MemeManager                 } from './memes/MemesManager';
+export { IDadJokeResponse            } from './memes/dadJoke/IDadJokeResponse';
+export { IRandomAPIMeme              } from './memes/randomAPI/IRandomAPIMeme';
+export { IRedditMemeData             } from './memes/reddit/IRedditMemeData';
+export { IRedditResponse             } from './memes/reddit/IRedditResponse';
+export { owoify                      } from './owo';
+export { IAuthorResponse             } from './quote/IAuthorResponse';
+export { IListAuthorResponse         } from './quote/IListAuthorResponse';
+export { IQuoteResponse              } from './quote/IQuoteResponse';
+export { QuoteManager                } from './quote';
+export { IUser                       } from './server/auth/user/IUser';
+export { IUserBody                   } from './server/auth/user/IUserBody';
+export { User                        } from './server/auth/user/User';
+export { Controller                  } from './server/controller/Controller';
+export { IRateLimit                  } from './server/ratelimit/IRateLimit';
+export { RateLimit                   } from './server/ratelimit/RateLimit';
+export { RateLimitConstructor        } from './server/ratelimit/RateLimitConstructor';
+export { IRouter                     } from './server/router/IRouter';
+export { Router                      } from './server/router/Router';
+export { RouterConstructor           } from './server/router/RouterConstructor';
+export { 
   SortBy, 
   SortOrder           
 } from './quote/SortOrder';
 
-import { 
+export { 
   MusicQueue, 
   BaseQueue       
 } from './dataStructures/queue';
 
-import {
+export {
   DiscordBanManager,
   DiscordKickManager,
   DiscordMuteManager,
@@ -71,67 +71,8 @@ import {
 } from './discord/managers/index';
 
 export {
-  Base,
-  AnimalManager,
-  ASCII,
-  IWebSiteBan,
-  WebSiteBan,
-  WebSiteBanConstructor,
-  ICoinflipUser,
-  CoinflipUser,
-  Coinflip,
-  TicTacToeManager,
-  MusicQueue,
-  BaseQueue,
-  AnimalPayloads,
-  SuperArray,
-  SuperMap,
-  CozyClient,
-  Command,
-  CommandCFGTableInsertObject,
-  CommandConstructor,
-  CommandHelp,
-  CommandOptions,
-  CommandRequirements,
-  ICommand,
-  CommandHandler,
-  DiscordController,
-  IManager,
-  BaseManager,
-  ManagerTypes,
-  IOAuthEndpoints,
-  OAuth2,
-  OAuth2Constructor,
-  DiscordRouter,
-  DiscordRouterConstructor,
-  EvilInsultWrapper,
-  Leetifier,
-  InternalMath,
-  MemeManager,
-  IDadJokeResponse,
-  IRandomAPIMeme,
-  IRedditMemeData,
-  IRedditResponse,
-  owoify,
-  IAuthorResponse,
-  IListAuthorResponse,
-  IQuoteResponse,
-  SortBy, 
-  SortOrder,
-  QuoteManager,
-  IUser,
-  IUserBody,
-  User,
-  Controller,
-  IRateLimit,
-  RateLimit,
-  RateLimitConstructor,
-  IRouter,
-  Router,
-  RouterConstructor,
-  DiscordBanManager,
-  DiscordKickManager,
-  DiscordMuteManager,
-  DiscordReportManager,
-  DiscordWarningManager
-}
+  TXTParser,
+  CSVParser,
+  DataFileParser,
+  DataHandler,
+} from './data';

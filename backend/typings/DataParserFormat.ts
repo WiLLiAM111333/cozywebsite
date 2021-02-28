@@ -1,0 +1,1 @@
+type DataParserFormat = 'object' | 'array'

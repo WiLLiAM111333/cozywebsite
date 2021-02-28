@@ -38,11 +38,12 @@ if(platform() !== 'linux') {
 const { join               } = require('path');
 const { exec               } = require('child_process');
 const { setupSimulations   } = require('./simulations');
+const { deleteConfigFiles  } = require('./configFiles');
 const { removeResources    } = require('./resources');
 const { deleteData         } = require('./data');
 const { removeAllDocs      } = require('./docs');
 const { setUpLogDirectory  } = require('./logs');
-const { deleteConfigFiles  } = require('./configFiles');
+const { deleteTests        } = require('./tests');
 const {
   unlinkSync,
   writeFileSync
@@ -98,18 +99,19 @@ try {
             console.log('Removing unnecessary files and adding new ones we need...');
 
             try {
-             await Promise.all([
-               removeResources(),
-               deleteData(),
-               deleteConfigFiles(),
-               removeAllDocs(),
-               setupSimulations(),
-               setUpLogDirectory()
-             ]);
+              await Promise.all([
+                removeResources(),
+                deleteTests(),
+                deleteData(),
+                deleteConfigFiles(),
+                removeAllDocs(),
+                setupSimulations(),
+                setUpLogDirectory()
+              ]);
              
-             console.log('Everything has been built and prepared for production, except for environment variables!');
+              console.log('Everything has been built and prepared for production, except for environment variables!');
   
-             process.exit(0);
+              process.exit(0);
             } catch (error) {
               console.error('Failed to build project, aborting script!', error);
               process.exit(1);

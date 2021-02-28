@@ -1,6 +1,6 @@
-import { app } from './app';
+import { app } from '../src/server/app';
 import supertest from 'supertest'
-import { Constants } from '../utils/constants';
+import { Constants } from '../src/utils/constants';
 
 describe('Simple test', () => {
   it('Should respond with a simple message', async (done) => {
