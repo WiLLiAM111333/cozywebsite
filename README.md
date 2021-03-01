@@ -1,5 +1,9 @@
 # Heavily WIP
 
+The index.js script inside `backend/scripts/build` is not complete at all, it might even be broken on linux im not sure.
+
+---
+
 Had a change of mind in `backend/lib/auth`, I'll be using discord to sign in to store as little data about users as possible. It's for everyones sake 🙂
 
 ---
