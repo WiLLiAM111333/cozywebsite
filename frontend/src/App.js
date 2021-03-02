@@ -1,9 +1,11 @@
+import TicTacToeBoard from './components/TicTacToeBoard';
+
+import './styles/styles.css';
+
 const App = () => {
   return (
     <div className="App">
-      <form>
-        <button id="login-btn">Log in</button>
-      </form>
+      <TicTacToeBoard />
     </div>
   );
 }

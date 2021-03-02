@@ -10,5 +10,6 @@ backend/test.js
 backend/assets
 backend/simulations/results
 backend/simulations/dump.log
-backend/docs/dataStructures
+**/*.test.csv
+**/*.test.txt
 **/db.md
