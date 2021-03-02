@@ -22,7 +22,7 @@ The `random` method returns one or more random values from the array, this is ac
 
 **Example**
 ```js
-const array = new SuperArray([1, 2, 3, 4, 5]);
+const array = new SuperArray([1, 2, 3, 4]);
 
 console.log(array.random()) // 2
 console.log(array.random(2)) // [3, 5]
@@ -69,7 +69,7 @@ The `rotateRight` method returns a new `SuperArray` of the same type as the base
 Returns a new `SuperArray` of the same type as the base type of the array calling it. This array is shuffled randomly, example below:
 
 ```js
-const arr = [1, 2, 3, 4];
+const arr = new SuperArray([1, 2, 3, 4]);
 
 console.log(arr.shuffle()); // [2, 4, 1, 3];
 ```
@@ -81,7 +81,7 @@ console.log(arr.shuffle()); // [2, 4, 1, 3];
 Returns an object of the array. This object is modeled to use the index of the value as the key and the value as the key-pair value. Example below:
 
 ```js
-const arr = [1, 2, 3, 4];
+const arr = new SuperArray([1, 2, 3, 4]);
 
 console.log(arr.toObject()); /*
   {
@@ -90,6 +90,24 @@ console.log(arr.toObject()); /*
     '2': 3,
     '3': 4
   }
+*/
+```
+
+## last
+
+The `last` method returns the last value in the array. This can be done with `Array.pop()`, but that removes the element which you dont always want. This is simply a shortcut to `array[array.size - 1]`. Example:
+
+```js
+const arr = new SuperArray([1, 2, 3, 4]);
+
+console.log(arr.last()) // 4
+console.log(arr) // [1, 2, 3, 4]
+
+console.log(arr.pop()) // 4
+console.log(arr) // [1, 2, 3]
+
+/*
+  As you can see `pop()` returns and deletes the last value in the array. This is not always what you want so you can use `last()` to get the last value without deleting it.
 */
 ```
 

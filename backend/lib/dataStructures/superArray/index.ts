@@ -78,7 +78,13 @@ export class SuperArray<T> extends Array<T> {
    * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
    * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
    */
-  public filter<S extends T>(predicate: (value: T, index: number, array: SuperArray<T>) => value is S, thisArg?: any): SuperArray<S> {
+  public filter<S extends T>(predicate: (value: T, index: number, array: SuperArray<T>) => value is S, thisArg?: any): SuperArray<S>;
+  /**
+   * Returns the elements of an array that meet the condition specified in a callback function.
+   * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
+   * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
+   */
+  public filter(predicate: (value: T, index: number, array: SuperArray<T>) => unknown, thisArg?: any): SuperArray<T> {
     return new SuperArray(super.filter(predicate, thisArg));
   }
 
@@ -143,6 +149,16 @@ export class SuperArray<T> extends Array<T> {
    */
   public shuffle(): SuperArray<T> {
     return new SuperArray<T>(this.sort(() => .5 - Math.random()));
+  }
+
+  /**
+   * @description Returns the last value in the array without removing it unlike [Array.pop()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop)
+   * @public
+   * @method
+   * @returns {T}
+   */
+  public last(): T {
+    return this[this.length - 1];
   }
 
   /**

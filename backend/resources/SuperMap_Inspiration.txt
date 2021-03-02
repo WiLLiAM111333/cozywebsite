@@ -1,0 +1,1 @@
+https://github.com/discordjs/collection/blob/master/src/index.ts
