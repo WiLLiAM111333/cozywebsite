@@ -1,8 +1,7 @@
 export interface DiscordKick {
-  websiteUserID: string | null;
-  discordUserID: string;
+  userID: string;
   guildID: string;
   kickID: string;
   reason: string;
-  kickedAt: Date;
+  kickedAt: string;
 }

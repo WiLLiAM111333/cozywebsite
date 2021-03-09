@@ -1,21 +1,30 @@
 import { GuildMember } from "discord.js";
 import { Constants } from '../../../../src/utils/constants';
 import { BaseManager } from "../BaseManager";
+import { IManager } from "../IManager";
 import { DiscordWarning } from './DiscordWarning';
 
 const { DISCORD_WARNS } = Constants.TableNames;
 
 // Might use events
-export class DiscordWarningManager extends BaseManager<DiscordWarning> {
+export class DiscordWarningManager extends BaseManager<DiscordWarning> implements IManager<DiscordWarning> {
   public constructor(member: GuildMember) {
     super(member);
+  }
+
+  public async has(id: string): Promise<boolean> {
+    try {
+      return (await this.db.table(DISCORD_WARNS).where({ userID: id })).length > 0;
+    } catch (err) {
+      super.handleError(err);
+    }
   }
 
   public async getAll(): Promise<Array<DiscordWarning>> {
     try {
       return (
         await this.db.table(DISCORD_WARNS).where({
-          discordUserID: this.member.id,
+          userID: this.member.id,
           guildID: this.member.guild.id,
         })
       );
@@ -28,7 +37,7 @@ export class DiscordWarningManager extends BaseManager<DiscordWarning> {
     try {
       return (
         await this.db.table(DISCORD_WARNS).where({
-          discordUserID: this.member.id,
+          userID: this.member.id,
           guildID: this.member.guild.id,
           banID: id
         })
@@ -41,7 +50,7 @@ export class DiscordWarningManager extends BaseManager<DiscordWarning> {
   public async add(data: DiscordWarning): Promise<boolean> {
     try {
       await this.db.table(DISCORD_WARNS).where({
-        discordUserID: this.member.id,
+        userID: this.member.id,
         guildID: this.member.guild.id
       }).insert(data);
 
@@ -58,7 +67,7 @@ export class DiscordWarningManager extends BaseManager<DiscordWarning> {
 
       await this.db.table(DISCORD_WARNS).where({
         guildID: this.member.guild.id,
-        discordUserID: this.member.id
+        userID: this.member.id
       }).update(data);
 
       return [oldData, await this.get(data.warnID)];

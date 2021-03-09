@@ -1,10 +1,8 @@
 export interface DiscordWarning {
-  websiteUserID: string | null;
-  warnerWebsiteID: string | null;
-  discordUserID: string;
-  warnerDiscordUserID: string;
+  userID: string;
+  warnerID: string;
   guildID: string;
   warnID: string;
   reason: string;
-  warnedAt: Date;
+  warnedAt: string;
 }

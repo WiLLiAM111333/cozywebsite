@@ -1,21 +1,30 @@
 import { GuildMember } from "discord.js";
 import { Constants } from '../../../../src/utils/constants';
 import { BaseManager } from "../BaseManager";
+import { IManager } from "../IManager";
 import { DiscordReport } from './DiscordReport';
 
 const { DISCORD_REPORTS } = Constants.TableNames;
 
 // Might use events
-export class DiscordReportManager extends BaseManager<DiscordReport> {
+export class DiscordReportManager extends BaseManager<DiscordReport> implements IManager<DiscordReport> {
   public constructor(member: GuildMember) {
     super(member);
+  }
+
+  public async has(id: string): Promise<boolean> {
+    try {
+      return (await this.db.table(DISCORD_REPORTS).where({ userID: id })).length > 0;
+    } catch (err) {
+      super.handleError(err);
+    }
   }
 
   public async getAll(): Promise<Array<DiscordReport>> {
     try {
       return (
         await this.db.table(DISCORD_REPORTS).where({
-          discordUserID: this.member.id,
+          userID: this.member.id,
           guildID: this.member.guild.id,
         })
       );
@@ -28,7 +37,7 @@ export class DiscordReportManager extends BaseManager<DiscordReport> {
     try {
       return (
         await this.db.table(DISCORD_REPORTS).where({
-          discordUserID: this.member.id,
+          userID: this.member.id,
           guildID: this.member.guild.id,
           banID: id
         })
@@ -41,7 +50,7 @@ export class DiscordReportManager extends BaseManager<DiscordReport> {
   public async add(data: DiscordReport): Promise<boolean> {
     try {
       await this.db.table(DISCORD_REPORTS).where({
-        discordUserID: this.member.id,
+        userID: this.member.id,
         guildID: this.member.guild.id
       }).insert(data);
 
@@ -58,7 +67,7 @@ export class DiscordReportManager extends BaseManager<DiscordReport> {
 
       await this.db.table(DISCORD_REPORTS).where({
         guildID: this.member.guild.id,
-        discordUserID: this.member.id
+        userID: this.member.id
       }).update(data);
 
       return [oldData, await this.get(data.reportID)];

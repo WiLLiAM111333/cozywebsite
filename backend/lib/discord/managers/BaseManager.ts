@@ -16,6 +16,7 @@ export abstract class BaseManager<T extends ManagerTypes> implements IManager<T>
   public abstract add(data: T): Promise<boolean>;
   public abstract update(data: T): Promise<[T, T]>;
   public abstract delete(id: string): Promise<boolean>;
+  public abstract has(id: string): Promise<boolean>;
 
   protected handleError(err: unknown): void {
     console.log(err); // TODO: Error handling

@@ -1,10 +1,8 @@
 export interface DiscordReport {
-  websiteUserID: string | null;
-  reporterWbesiteUserID: string | null;
-  discordUserID: string | null;
-  reporterDiscordUserID: string;
+  userID: string;
+  reporterID: string;
   reportID: string;
   guildID: string;
   reason: string;
-  reportedAt: Date;
+  reportedAt: string;
 }

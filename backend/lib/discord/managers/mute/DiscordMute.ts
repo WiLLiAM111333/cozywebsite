@@ -1,10 +1,8 @@
 export interface DiscordMute {
-  websiteUserID: string | null;
-  discordUserID: string;
-  muterDiscordID: string;
-  muterWebsiteID: string;
+  userID: string;
+  muterID: string;
   guildID: string;
   muteID: string;
   reason: string;
-  mutedAt: Date;
+  mutedAt: string;
 }

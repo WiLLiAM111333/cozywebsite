@@ -1,7 +1,8 @@
 export interface DiscordBan {
   banID: string;
-  websiteUserID: string | null;
-  discordUserID: string;
+  userID: string;
+  guildID: string;
+  unbanned: string;
   reason: string;
   bannedAt: Date;
 }
