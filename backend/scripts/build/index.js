@@ -56,7 +56,7 @@ delete packageJSON.devDependencies;
     console.log('Deleted tests');
     console.log('Removed dev dependencies');
     console.log('Installing production dependencies...');
-    
+
     exec('npm install', (err, npmout, npmerr) => {
       if(err) {
         console.error(err);
@@ -84,19 +84,21 @@ delete packageJSON.devDependencies;
         if(tscout) {
           console.log(tscout);
         }
-        
+
         console.log('Removing unnecessary files and adding new ones we need...');
         
-        await Promise.all([
-          removeResources(),
-          deleteTests(),
-          deleteData(),
-          deleteConfigFiles(),
-          removeAllDocs(),
-          setupSimulations(),
-          setUpLogDirectory()
-        ]);
-
+        (async () => {
+          await Promise.all([
+            removeResources(),
+            deleteTests(),
+            deleteData(),
+            deleteConfigFiles(),
+            removeAllDocs(),
+            setupSimulations(),
+            setUpLogDirectory()
+          ]);
+        })();
+        
         console.log('Everything has been built and prepared for production, except for environment variables and the database (WIP)');
       })
     });
