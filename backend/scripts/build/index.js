@@ -39,6 +39,7 @@ if(platform() !== 'linux') {
 const { exec } = require('child_process');
 const { join } = require('path');
 const { setupSimulations, setupLogs } = require('./create');
+const { rmdir } = require('fs/promises');
 const {
   unlinkSync,
   writeFileSync
@@ -110,6 +111,8 @@ writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
             setupSimulations(),
             setupLogs()
           ]);
+
+          await rmdir(join(__dirname, '..', '..', 'typings'), { recursive: true })
         })();
         
         console.log('Everything has been built and prepared for production, except for environment variables and the database (WIP)');
