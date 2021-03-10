@@ -39,11 +39,19 @@ if(platform() !== 'linux') {
 const { exec } = require('child_process');
 const { join } = require('path');
 const { setupSimulations, setupLogs } = require('./create');
-const { deleteData, deleteDocs, deleteResources, deleteTests } = require('./delete');
 const {
   unlinkSync,
   writeFileSync
 } = require('fs');
+
+const { 
+  deleteData, 
+  deleteDocs, 
+  deleteResources, 
+  deleteTests, 
+  deleteConfigFiles 
+} = require('./delete');
+
 
 const packageJSONPath = join(__dirname, '..', '..', 'package.json');
 const packageJSON = require('../../package.json');
@@ -98,6 +106,7 @@ writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
             deleteTests(),
             deleteData(),
             deleteDocs(),
+            deleteConfigFiles(),
             setupSimulations(),
             setupLogs()
           ]);
