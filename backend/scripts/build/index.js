@@ -51,6 +51,9 @@ const packageJSON = require('../../package.json');
 // Remove the devDependencies for the production environment
 delete packageJSON.devDependencies;
 
+unlinkSync(packageJSONPath);
+writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
+
 (async () => {
   try {
     await deleteTests();
