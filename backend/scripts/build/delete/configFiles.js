@@ -32,7 +32,7 @@ module.exports = async () => {
 
     for(const file of backendDir) {
       if(file[0] === '.') {
-        await unlink(filePath);
+        await unlink(join(backend, file));
       }
     }
 
