@@ -37,6 +37,7 @@ if(platform() !== 'linux') {
 }
 
 const { exec } = require('child_process');
+const { join } = require('path');
 const { setupSimulations, setupLogs } = require('./create');
 const { deleteData, deleteDocs, deleteResources, deleteTests } = require('./delete');
 const {
