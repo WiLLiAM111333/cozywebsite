@@ -1,4 +1,4 @@
-const { readdir, unlink } = require('fs/promises');
+const { readdir, unlink, rmdir, lstat } = require('fs/promises');
 const { join } = require('path');
 
 module.exports = async () => {
@@ -25,7 +25,12 @@ module.exports = async () => {
 
     for(const file of backendDir) {
       if(file[0] === '.') {
-        await unlink(join(backend, file));
+        const filePath = join(backend, file);
+        if((await lstat(file)).isDirectory()) {
+          await rmdir(filePath, { recursive: true });
+        } else {
+          await unlink(filePath);
+        }
       }
     }
 
