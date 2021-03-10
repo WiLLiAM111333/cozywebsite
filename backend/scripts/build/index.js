@@ -30,12 +30,13 @@ THIS WILL BE ENFORCED BY AN OS CHECK AND WILL NOT WORK ON WINDOWS               
 +=====================================================================================================+  
 */
 
+const { platform } = require('os');
+
 if(platform() !== 'linux') {
   process.exit(0);
 }
 
 const { exec } = require('child_process');
-const { platform } = require('os');
 const { setupSimulations, setupLogs } = require('./create');
 const { deleteData, deleteDocs, deleteResources, deleteTests } = require('./delete');
 const {
