@@ -5,29 +5,17 @@ module.exports = async () => {
   const root = join(__dirname, '..', '..', '..', '..');
   const backend = join(root, 'backend');
 
-  try {
-    const rootDir = await readdir(root);
-
-    for(const file of rootDir) {
-      if(file[0] === '.') {
-        const filePath = join(backend, file);
-        const fileStats = await lstat(filePath);
-
-        if(fileStats.isDirectory()) {
-          await rmdir(filePath, { recursive: true });
-        } else {
-          await unlink(filePath);
-        }
-      }
-    }
-
+  try { 
     await Promise.all([
       unlink(join(root, 'Contributing.md')),
       unlink(join(root, 'REAMDE.md')),
-      unlink(join(root, 'LICENSE'))
+      unlink(join(root, 'LICENSE')),
+      unlink(join(root, '.editorconfig')),
+      unlink(join(root, '.gitignore')),
+      rmdir(join(root, '.git'), { recursive: true}),
+      rmdir(join(root, '.github'), { recursive: true })
     ]);
 
-    
     const backendDir = await readdir(backend);
 
     for(const file of backendDir) {
