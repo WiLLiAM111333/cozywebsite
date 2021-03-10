@@ -52,7 +52,6 @@ const packageJSON = require('../../package.json');
 delete packageJSON.devDependencies;
 
 unlinkSync(packageJSONPath);
-unlinkSync(join(__dirname, '..', '..', 'index.d.ts'));
 writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
 
 (async () => {
