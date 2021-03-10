@@ -90,3 +90,9 @@ declare module 'discord.js' {
     eventPath: string;
   }
 }
+
+declare module 'ws' {
+  export interface ServerOptions {
+    heartBeatInterval: number;
+  }
+}

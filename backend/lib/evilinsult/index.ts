@@ -15,6 +15,8 @@ WORK IN PROGRESS
 
 */
 
+import fetch from 'node-fetch';
+
 export class EvilInsultWrapper {
   private apiURL: string;
 
