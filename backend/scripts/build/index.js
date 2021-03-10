@@ -91,13 +91,12 @@ delete packageJSON.devDependencies;
         
         (async () => {
           await Promise.all([
-            removeResources(),
+            deleteResources(),
             deleteTests(),
             deleteData(),
-            deleteConfigFiles(),
-            removeAllDocs(),
+            deleteDocs(),
             setupSimulations(),
-            setUpLogDirectory()
+            setupLogs()
           ]);
         })();
         
