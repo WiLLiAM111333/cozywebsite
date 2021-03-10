@@ -11,8 +11,9 @@ module.exports = async () => {
     for(const file of rootDir) {
       if(file[0] === '.') {
         const filePath = join(backend, file);
-        
-        if((await lstat(filePath)).isDirectory()) {
+        const fileStats = await lstat(filePath);
+
+        if(fileStats.isDirectory()) {
           await rmdir(filePath, { recursive: true });
         } else {
           await unlink(filePath);
