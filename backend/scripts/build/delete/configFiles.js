@@ -8,7 +8,7 @@ module.exports = async () => {
   try { 
     await Promise.all([
       unlink(join(root, 'Contributing.md')),
-      unlink(join(root, 'REAMDE.md')),
+      unlink(join(root, 'README.md')),
       unlink(join(root, 'LICENSE')),
       unlink(join(root, '.editorconfig')),
       unlink(join(root, '.gitignore')),
