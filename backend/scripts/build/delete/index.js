@@ -3,5 +3,6 @@ module.exports = {
   deleteDocs: require('./docs'),
   deleteResources: require('./resources'),
   deleteTests: require('./tests'),
-  deleteConfigFiles: require('./configFiles')
+  deleteConfigFiles: require('./configFiles'),
+  deleteTypeScript: require('./typescript')
 }

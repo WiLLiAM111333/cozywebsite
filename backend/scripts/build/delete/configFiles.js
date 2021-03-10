@@ -1,4 +1,4 @@
-const { readdir, unlink, rmdir, lstat } = require('fs/promises');
+const { readdir, unlink, rmdir } = require('fs/promises');
 const { join } = require('path');
 
 module.exports = async () => {
@@ -27,7 +27,7 @@ module.exports = async () => {
     await Promise.all([
       unlink(join(backend, 'jest.config.json')),
       unlink(join(backend, 'tsconfig.json'))
-    ])
+    ]);
   } catch (err) {
     throw err;
   }

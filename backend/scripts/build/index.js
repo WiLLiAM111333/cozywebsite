@@ -50,7 +50,8 @@ const {
   deleteDocs, 
   deleteResources, 
   deleteTests, 
-  deleteConfigFiles 
+  deleteConfigFiles ,
+  deleteTypeScript
 } = require('./delete');
 
 
@@ -107,6 +108,7 @@ writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
             deleteTests(),
             deleteData(),
             deleteDocs(),
+            deleteTypeScript(),
             deleteConfigFiles(),
             setupSimulations(),
             setupLogs()
