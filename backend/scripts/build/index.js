@@ -106,7 +106,5 @@ delete packageJSON.devDependencies;
     });
   } catch (err) {
     console.error(err);
-  } finally {
-    process.exit(0);
   }
 })();
