@@ -1,46 +1,41 @@
-import { GuildMember } from "discord.js";
 import { Constants } from '../../../../src/utils/constants';
 import { BaseManager } from "../BaseManager";
 import { IManager } from "../IManager";
+import { ManagerParams } from '../ManagerParams';
 import { DiscordMute } from './DiscordMute';
 
 const { DISCORD_MUTES } = Constants.TableNames;
 
 // Might use events
 export class DiscordMuteManager extends BaseManager<DiscordMute> implements IManager<DiscordMute> {
-  public constructor(member: GuildMember) {
-    super(member);
+  public constructor() {
+    super();
   }
 
-  public async has(id: string): Promise<boolean> {
+  public async has(whereObj: ManagerParams<DiscordMute>): Promise<boolean> {
     try {
-      return (await this.db.table(DISCORD_MUTES).where({ userID: id })).length > 0;
+      return (
+        await this.db.table(DISCORD_MUTES).where(whereObj)
+      ).length > 0;
     } catch (err) {
       super.handleError(err);
     }
   }
 
-  public async getAll(): Promise<Array<DiscordMute>> {
+  public async getAll(whereObj: ManagerParams<DiscordMute>): Promise<Array<DiscordMute>> {
     try {
       return (
-        await this.db.table(DISCORD_MUTES).where({
-          userID: this.member.id,
-          guildID: this.member.guild.id,
-        })
+        await this.db.table(DISCORD_MUTES).where(whereObj)
       );
     } catch (err) {
       super.handleError(err);
     }
   }
 
-  public async get(id: string): Promise<DiscordMute> {
+  public async getOne(whereObj: ManagerParams<DiscordMute>): Promise<DiscordMute> {
     try {
       return (
-        await this.db.table(DISCORD_MUTES).where({
-          userID: this.member.id,
-          guildID: this.member.guild.id,
-          banID: id
-        })
+        await this.db.table(DISCORD_MUTES).where(whereObj)
       )[0];
     } catch (err) {
       super.handleError(err);
@@ -49,10 +44,7 @@ export class DiscordMuteManager extends BaseManager<DiscordMute> implements IMan
 
   public async add(data: DiscordMute): Promise<boolean> {
     try {
-      await this.db.table(DISCORD_MUTES).where({
-        userID: this.member.id,
-        guildID: this.member.guild.id
-      }).insert(data);
+      await this.db.table(DISCORD_MUTES).insert(data);
 
       return true;
     } catch (err) {
@@ -61,26 +53,25 @@ export class DiscordMuteManager extends BaseManager<DiscordMute> implements IMan
     }
   }
 
-  public async update(data: DiscordMute): Promise<[DiscordMute, DiscordMute]> {
+  public async update(whereObj: ManagerParams<DiscordMute>, data: ManagerParams<DiscordMute>): Promise<[DiscordMute, DiscordMute]> {
     try {
-      const oldData = await this.get(data.muteID);
+      const oldData = await this.getOne(whereObj);
 
-      await this.db.table(DISCORD_MUTES).where({
-        guildID: this.member.guild.id,
-        userID: this.member.id
-      }).update(data);
+      await this.db.table(DISCORD_MUTES)
+        .where(whereObj)
+        .update(data);
 
-      return [oldData, await this.get(data.muteID)];
+      return [oldData, await this.getOne(data)];
     } catch (err) {
       super.handleError(err);
     }
   }
 
-  public async delete(id: string): Promise<boolean> {
+  public async delete(whereObj: ManagerParams<DiscordMute>): Promise<boolean> {
     try {
-      await this.db.table(DISCORD_MUTES).where({
-        banID: id
-      }).delete();
+      await this.db.table(DISCORD_MUTES)
+        .where(whereObj)
+        .delete();
       
       return true;
     } catch (err) {

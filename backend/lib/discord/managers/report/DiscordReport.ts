@@ -4,5 +4,5 @@ export interface DiscordReport {
   reportID: string;
   guildID: string;
   reason: string;
-  reportedAt: string;
+  reportedAt: number;
 }

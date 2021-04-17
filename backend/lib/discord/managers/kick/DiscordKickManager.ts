@@ -1,46 +1,39 @@
-import { GuildMember } from "discord.js";
 import { Constants } from '../../../../src/utils/constants';
 import { BaseManager } from "../BaseManager";
 import { IManager } from "../IManager";
+import { ManagerParams } from '../ManagerParams';
 import { DiscordKick } from "./DiscordKick";
 
 const { DISCORD_KICKS } = Constants.TableNames;
 
 // Might use events
 export class DiscordKickManager extends BaseManager<DiscordKick> implements IManager<DiscordKick> {
-  public constructor(member: GuildMember) {
-    super(member);
+  public constructor() {
+    super();
   }
 
-  public async has(id: string): Promise<boolean> {
+  public async has(whereObj: ManagerParams<DiscordKick>): Promise<boolean> {
     try {
-      return (await this.db.table(DISCORD_KICKS).where({ userID: id })).length > 0;
+      return (await this.db.table(DISCORD_KICKS).where(whereObj)).length > 0;
     } catch (err) {
       super.handleError(err);
     }
   }
 
-  public async getAll(): Promise<Array<DiscordKick>> {
+  public async getAll(whereObj: ManagerParams<DiscordKick>): Promise<Array<DiscordKick>> {
     try {
       return (
-        await this.db.table(DISCORD_KICKS).where({
-          userID: this.member.id,
-          guildID: this.member.guild.id,
-        })
+        await this.db.table(DISCORD_KICKS).where(whereObj)
       );
     } catch (err) {
       super.handleError(err);
     }
   }
 
-  public async get(id: string): Promise<DiscordKick> {
+  public async getOne(whereObj: ManagerParams<DiscordKick>): Promise<DiscordKick> {
     try {
       return (
-        await this.db.table(DISCORD_KICKS).where({
-          userID: this.member.id,
-          guildID: this.member.guild.id,
-          banID: id
-        })
+        await this.db.table(DISCORD_KICKS).where(whereObj)
       )[0];
     } catch (err) {
       super.handleError(err);
@@ -49,10 +42,7 @@ export class DiscordKickManager extends BaseManager<DiscordKick> implements IMan
 
   public async add(data: DiscordKick): Promise<boolean> {
     try {
-      await this.db.table(DISCORD_KICKS).where({
-        userID: this.member.id,
-        guildID: this.member.guild.id
-      }).insert(data);
+      await this.db.table(DISCORD_KICKS).insert(data);
 
       return true;
     } catch (err) {
@@ -61,26 +51,25 @@ export class DiscordKickManager extends BaseManager<DiscordKick> implements IMan
     }
   }
 
-  public async update(data: DiscordKick): Promise<[DiscordKick, DiscordKick]> {
+  public async update(whereObj: ManagerParams<DiscordKick>, data: ManagerParams<DiscordKick>): Promise<[DiscordKick, DiscordKick]> {
     try {
-      const oldData = await this.get(data.kickID);
+      const oldData = await this.getOne(whereObj);
 
-      await this.db.table(DISCORD_KICKS).where({
-        guildID: this.member.guild.id,
-        userID: this.member.id
-      }).update(data);
+      await this.db.table(DISCORD_KICKS)
+        .where(whereObj)
+        .update(data);
 
-      return [oldData, await this.get(data.kickID)];
+      return [oldData, await this.getOne(data)];
     } catch (err) {
       super.handleError(err);
     }
   }
 
-  public async delete(id: string): Promise<boolean> {
+  public async delete(whereObj: ManagerParams<DiscordKick>): Promise<boolean> {
     try {
-      await this.db.table(DISCORD_KICKS).where({
-        banID: id
-      }).delete();
+      await this.db.table(DISCORD_KICKS)
+        .where(whereObj)
+        .delete();
       
       return true;
     } catch (err) {

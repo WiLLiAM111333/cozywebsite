@@ -3,5 +3,5 @@ export interface DiscordKick {
   guildID: string;
   kickID: string;
   reason: string;
-  kickedAt: string;
+  kickedAt: number;
 }

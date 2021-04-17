@@ -1,46 +1,41 @@
-import { GuildMember } from "discord.js";
 import { Constants } from '../../../../src/utils/constants';
 import { BaseManager } from "../BaseManager";
 import { IManager } from "../IManager";
+import { ManagerParams } from "../ManagerParams";
 import { DiscordWarning } from './DiscordWarning';
 
 const { DISCORD_WARNS } = Constants.TableNames;
 
 // Might use events
 export class DiscordWarningManager extends BaseManager<DiscordWarning> implements IManager<DiscordWarning> {
-  public constructor(member: GuildMember) {
-    super(member);
+  public constructor() {
+    super();
   }
 
-  public async has(id: string): Promise<boolean> {
+  public async has(whereObj: ManagerParams<DiscordWarning>): Promise<boolean> {
     try {
-      return (await this.db.table(DISCORD_WARNS).where({ userID: id })).length > 0;
+      return (
+        await this.db.table(DISCORD_WARNS).where(whereObj)
+      ).length > 0;
     } catch (err) {
       super.handleError(err);
     }
   }
 
-  public async getAll(): Promise<Array<DiscordWarning>> {
+  public async getAll(whereObj: ManagerParams<DiscordWarning>): Promise<Array<DiscordWarning>> {
     try {
       return (
-        await this.db.table(DISCORD_WARNS).where({
-          userID: this.member.id,
-          guildID: this.member.guild.id,
-        })
+        await this.db.table(DISCORD_WARNS).where(whereObj)
       );
     } catch (err) {
       super.handleError(err);
     }
   }
 
-  public async get(id: string): Promise<DiscordWarning> {
+  public async getOne(whereObj: ManagerParams<DiscordWarning>): Promise<DiscordWarning> {
     try {
       return (
-        await this.db.table(DISCORD_WARNS).where({
-          userID: this.member.id,
-          guildID: this.member.guild.id,
-          banID: id
-        })
+        await this.db.table(DISCORD_WARNS).where(whereObj)
       )[0];
     } catch (err) {
       super.handleError(err);
@@ -49,10 +44,7 @@ export class DiscordWarningManager extends BaseManager<DiscordWarning> implement
 
   public async add(data: DiscordWarning): Promise<boolean> {
     try {
-      await this.db.table(DISCORD_WARNS).where({
-        userID: this.member.id,
-        guildID: this.member.guild.id
-      }).insert(data);
+      await this.db.table(DISCORD_WARNS).insert(data);
 
       return true;
     } catch (err) {
@@ -61,26 +53,25 @@ export class DiscordWarningManager extends BaseManager<DiscordWarning> implement
     }
   }
 
-  public async update(data: DiscordWarning): Promise<[DiscordWarning, DiscordWarning]> {
+  public async update(whereObj: ManagerParams<DiscordWarning>, data: ManagerParams<DiscordWarning>): Promise<[DiscordWarning, DiscordWarning]> {
     try {
-      const oldData = await this.get(data.warnID);
+      const oldData = await this.getOne(whereObj);
 
-      await this.db.table(DISCORD_WARNS).where({
-        guildID: this.member.guild.id,
-        userID: this.member.id
-      }).update(data);
+      await this.db.table(DISCORD_WARNS)
+        .where(whereObj)
+        .update(data);
 
-      return [oldData, await this.get(data.warnID)];
+      return [oldData, await this.getOne(data)];
     } catch (err) {
       super.handleError(err);
     }
   }
 
-  public async delete(id: string): Promise<boolean> {
+  public async delete(whereObj: ManagerParams<DiscordWarning>): Promise<boolean> {
     try {
-      await this.db.table(DISCORD_WARNS).where({
-        banID: id
-      }).delete();
+      await this.db.table(DISCORD_WARNS)
+        .where(whereObj)
+        .delete();
       
       return true;
     } catch (err) {
