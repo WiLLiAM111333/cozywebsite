@@ -16,15 +16,15 @@ Below you will see a list of types and their descriptions. The table below uses 
   - `[K, V][]`, an array of tuples of both generic types in SuperMap.
   - `[]`, an empty SuperArray.
 
-| method        | default       | empty map     |
+| Method        | Default       | Empty map     |
 |:--------------|:-------------:|:-------------:|
 | delete        | boolean       | false         |
 | first         | V             | undefined     |
 | firstKey      | K             | undefined     |
 | firstEntry    | [K, V]        | undefined     |
-| toArray       | `V[]`         | `[]`          |
-| toKeyArray    | `K[]`         | `[]`          |
-| toEntryArray  | `[K, V][]`    | `[]`          |
+| toArray       | V[ ]          | [ ]           |
+| toKeyArray    | K[ ]          | [ ]           |
+| toEntryArray  | [K, V][ ]     | [ ]           |
 | last          | V             | undefined     |
 | lastKey       | K             | undefined     |
 | lastEntry     | [K, V]        | undefined     |
