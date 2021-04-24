@@ -60,7 +60,7 @@ This method is identical to [Map.delete()](https://developer.mozilla.org/en-US/d
 
 ## first
 
-The `first` method returns the first value of the map. Example:
+The `first` method returns the first value of the map. 
 
 ```js
 const map = new SuperMap();
@@ -75,7 +75,7 @@ console.log(map.first()); // 2
 
 ## firstKey
 
-The `firstKey` method returns the first key of the map. Example:
+The `firstKey` method returns the first key of the map. 
 
 ```js
 const map = new SuperMap();
@@ -90,7 +90,7 @@ console.log(map.firstKey()); // '1'
 
 ## firstEntry
 
-The `firstEntry` method returns the first entry in the map. Example:
+The `firstEntry` method returns the first entry in the map. 
 
 ```js
 const map = new SuperMap();
@@ -105,7 +105,7 @@ console.log(map.firstEntry()); // ['1', 2]
 
 ## toArray
 
-The `toArray` method returns an array of the values in the map sorted by original insertion order. This array is cached internally in the SuperMap in a property called `SuperMap._array`. The internally cached array gets set to `null` if you call the method `set()` or `delete()` since the array is no longer valid. Example:
+The `toArray` method returns an array of the values in the map sorted by original insertion order. This array is cached internally in the SuperMap in a property called `SuperMap._array`. The internally cached array gets set to `null` if you call the method `set()` or `delete()` since the array is no longer valid. 
 
 ```js
 const map = new SuperMap();
@@ -120,7 +120,7 @@ console.log(map.toArray()); // [2, 4, 6]
 
 ## toKeyArray
 
-The `toKeyArray` method returns an array of the keys in the map sorted by original insertion order. This array is cached internally in the SuperMap in a property called `SuperMap._keyArray`. The internally cached array gets set to `null` if you call the method `set()` or `delete()` since the array is no longer valid. Example:
+The `toKeyArray` method returns an array of the keys in the map sorted by original insertion order. This array is cached internally in the SuperMap in a property called `SuperMap._keyArray`. The internally cached array gets set to `null` if you call the method `set()` or `delete()` since the array is no longer valid. 
 
 ```js
 const map = new SuperMap();
@@ -135,7 +135,7 @@ console.log(map.toKeyArray()); // ['1', '3', '5']
 
 ## toEntryArray
 
-The `toEntryArray` method returns an array of the entries in the map in a 2d array with the inner array being a tuple of key-value pairs. This array is sorted by original insertion order. This array is cached internally in the SuperMap in a property called `SuperMap._keyArray`. The internally cached array gets set to `null` if you call the method `set()` or `delete()` since the array is no longer valid. Example:
+The `toEntryArray` method returns an array of the entries in the map in a 2d array with the inner array being a tuple of key-value pairs. This array is sorted by original insertion order. This array is cached internally in the SuperMap in a property called `SuperMap._keyArray`. The internally cached array gets set to `null` if you call the method `set()` or `delete()` since the array is no longer valid. 
 
 ```js
 const map = new SuperMap();
@@ -150,7 +150,7 @@ console.log(map.toKeyArray()); // ['1', '3', '5']
 
 ## last
 
-The `last` method returns the last value of the map. Example:
+The `last` method returns the last value of the map. 
 
 ```js
 const map = new SuperMap();
@@ -165,7 +165,7 @@ console.log(map.last()); // 6
 
 ## lastKey
 
-The `lastKey` method returns the last key in the map. Example:
+The `lastKey` method returns the last key in the map. 
 
 ```js
 const map = new SuperMap();
@@ -180,7 +180,7 @@ console.log(map.lastKey()); // '5'
 
 ## lastEntry
 
-The `lastEntry` method returns the last key-value pair as an entry tuple in the map. Example:
+The `lastEntry` method returns the last key-value pair as an entry tuple in the map. 
 
 ```js
 const map = new SuperMap();
@@ -195,7 +195,7 @@ console.log(map.lastEntry()); // ['5', 6]
 
 ## random
 
-The `random` method returns a random value of the map. Example: 
+The `random` method returns a random value of the map.  
 
 ```js
 const map = new SuperMap();
@@ -214,7 +214,7 @@ console.log(map.random()); // 6
 
 ## randomKey
 
-The `randomKey` method returns a key value of the map. Example: 
+The `randomKey` method returns a key value of the map.  
 
 ```js
 const map = new SuperMap();
@@ -233,7 +233,7 @@ console.log(map.randomKey()); // '1'
 
 ## randomEntry
 
-The `randomEntry` method returns a random key-value pair tuple of the map. Example: 
+The `randomEntry` method returns a random key-value pair tuple of the map.  
 
 ```js
 const map = new SuperMap();
@@ -252,7 +252,7 @@ console.log(map.randomEntry()); // ['5', 6]
 
 ## shift
 
-Identical to [Array.shift()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift). Example:
+Identical to [Array.shift()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift). 
 
 ```js
 const map = new SuperMap();
@@ -278,7 +278,7 @@ by the console.log comment.
 
 ## shiftKey
 
-Identical to [Array.shift()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift) except it returns the key of the shifted entry rather than the value. Example:
+Identical to [Array.shift()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift) except it returns the key of the shifted entry rather than the value. 
 
 ```js
 const map = new SuperMap();
@@ -304,7 +304,7 @@ by the console.log comment.
 
 ## shiftEntry
 
-Identical to [Array.shift()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift) except it returns the entry of the shifted entry rather than the value. Example:
+Identical to [Array.shift()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift) except it returns the entry of the shifted entry rather than the value. 
 
 ```js
 const map = new SuperMap();
@@ -330,7 +330,7 @@ by the console.log comment.
 
 ## pop
 
-Identical to [Array.pop()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop). Example:
+Identical to [Array.pop()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop). 
 
 ```js
 const map = new SuperMap();
@@ -356,7 +356,7 @@ by the console.log comment.
 
 ## popKey
 
-Identical to [Array.pop()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop) except it returns the key of the popped entry rather than the value. Example:
+Identical to [Array.pop()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop) except it returns the key of the popped entry rather than the value. 
 
 ```js
 const map = new SuperMap();
@@ -382,7 +382,7 @@ by the console.log comment.
 
 ## popEntry
 
-Identical to [Array.pop()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop) except it returns the entry of the popped entry rather than the value. Example:
+Identical to [Array.pop()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop) except it returns the entry of the popped entry rather than the value. 
 
 ```js
 const map = new SuperMap();
@@ -432,6 +432,8 @@ const map3 = new Map();
 
 map3.set('9', 10);
 
+map.concat(map2, map3, ['11', 12]);
+
 console.log(map); /*
 SuperMap(3) [Map] {
   '1' => 2,
@@ -460,11 +462,163 @@ entry tuple and puts it in the new map.
 ```
 ---
 
-## The following methods will get their documentation shortly
-  - `every()`
-  - `filter()`
-  - `find()`
-  - `findKey()`
-  - `findEntry()`
-  - `some()`
-  - `reduce()`
+## every
+
+Identical to [Array.every()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)
+
+This example tests if every value is a number lesser than 11 and if 
+every key is a string and checks if the number equivallent value is between 1 and 9.
+
+```js
+const map = new SuperMap();
+
+map.set('1', 2);
+map.set('3', 4);
+map.set('5', 6);
+map.set('7', 8);
+map.set('9', 10);
+
+console.log(map.every((value, key) => {
+  const keyNum = Number(key);
+  
+  return Number.isInteger(value) && value < 11 
+    && typeof key === 'string' && keyNum > 0 && keyNum < 10;
+})); // true
+```
+---
+
+## filter
+
+Identical to [Array.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
+
+```js
+const map = new SuperMap();
+
+map.set('1', 2);
+map.set('3', 4);
+map.set('5', 6);
+map.set('7', 8);
+map.set('9', 10);
+
+console.log(map.filter(value => value < 8)); /* 
+SuperMap(3) [Map] {
+  '1' => 2,
+  '3' => 4,
+  '5' => 6
+}
+*/
+```
+---
+
+## find
+
+Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
+
+```js
+const map = new SuperMap();
+
+map.set('1', 2);
+map.set('3', 4);
+map.set('5', 6);
+map.set('7', 8);
+map.set('9', 10);
+
+console.log(map.find(value => value < 8)); // 2
+console.log(map.find(value => value > 8)); // 6
+console.log(map.find(value => value > 10)); // undefined
+```
+---
+
+## findKey
+
+Identical to `SuperMap.find()` but it returns the key instead of the value.
+
+```js
+const map = new SuperMap();
+
+map.set('1', 2);
+map.set('3', 4);
+map.set('5', 6);
+map.set('7', 8);
+map.set('9', 10);
+
+console.log(map.findKey(value => value < 8)); // '1'
+console.log(map.findKey(value => value > 8)); // '5'
+console.log(map.findKey(value => value > 10)); // undefined
+```
+---
+
+## findEntry
+
+Identical to `SuperMap.find()` but it returns the entry instead of the value.
+
+```js
+const map = new SuperMap();
+
+map.set('1', 2);
+map.set('3', 4);
+map.set('5', 6);
+map.set('7', 8);
+map.set('9', 10);
+
+console.log(map.findEntry(value => value < 8)); // ['1', 2]
+console.log(map.findEntry(value => value > 8)); // ['5', 6]
+console.log(map.findEntry(value => value > 10)); // undefined
+```
+---
+
+## some
+
+Identical to [Array.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
+
+```js
+const map = new SuperMap();
+
+map.set('1', 2);
+map.set('3', 4);
+map.set('5', 6);
+map.set('7', 8);
+map.set('9', 10);
+
+console.log(map.some((value, key) => value + Number(key) === 15)); /*
+  1 + 2 = 3 = false
+  3 + 4 = 7 = false 
+  5 + 6 = 11 = false
+  7 + 8 = 15 = true
+  returns after the first truthy calback return value
+*/
+```
+---
+
+## reduce
+
+Identical to [Array.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)
+
+```js
+const map = new SuperMap();
+
+map.set('1', 2);
+map.set('3', 4);
+map.set('5', 6);
+map.set('7', 8);
+map.set('9', 10);
+
+const value = map.reduce((accumulator, value, key) => 
+  accumulator += (value + Number(key))
+, 0);
+
+console.log(value); /*
+  1 + 2 = 3
+  3 + 4 = 7
+  5 + 6 = 11
+  7 + 8 = 15
+  9 + 10 = 19
+
+  3 + 7 = 10
+  10 + 11 = 21
+  21 + 15 = 36
+  36 + 19 = 55
+
+  The reduced value of the SuperMap is 55
+*/
+```
