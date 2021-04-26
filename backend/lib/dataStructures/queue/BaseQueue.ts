@@ -1,25 +1,52 @@
-/*
+import { SuperArray } from "../superArray";
 
-
-
-
-
-
-WORK IN PROGRESS
-
-
-
-
-
-
-
-*/
-
+/**
+ * Abstract base-class for queues
+ * @exports
+ * @abstract
+ * @class
+ */
 export abstract class BaseQueue<T> {
-  protected abstract items: Array<T>;
+  /**
+   * Internal array to store items
+   * @protected
+   * @abstract
+   * @type {SuperArray<T>}
+   */
+  protected abstract items: SuperArray<T>;
+  /**
+   * Size of the queue. This is here because `items` is protected so you cant access it after instantiation
+   * @public
+   * @abstract
+   * @type {Number}
+   */
   public abstract size: number;
 
+  /**
+   * @public
+   * @abstract
+   * @method
+   * @param {T} val
+   * @returns {void} 
+   */
   public abstract enqueue(val: T): void;
+  /**
+   * @public  
+   * @abstract
+   * @method
+   * @returns {void}
+   */
   public abstract dequeue(): T;
+  /**
+   * @public
+   * @abstract
+   * @method
+   * @param {Number} amount 
+   * @returns {void}
+   */
   public abstract skip(amount: number): void;
+
+  public get [Symbol.toStringTag](): string {
+    return 'Queue'
+  }
 }

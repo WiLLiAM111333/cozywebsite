@@ -27,7 +27,6 @@ const array = new SuperArray([1, 2, 3, 4]);
 console.log(array.random()) // 2
 console.log(array.random(2)) // [3, 5]
 ```
-
 ---
 
 ## rotateLeft
@@ -73,7 +72,6 @@ const arr = new SuperArray([1, 2, 3, 4]);
 
 console.log(arr.shuffle()); // [2, 4, 1, 3];
 ```
-
 ---
 
 ## toObject
@@ -92,6 +90,7 @@ console.log(arr.toObject()); /*
   }
 */
 ```
+---
 
 ## last
 
@@ -110,5 +109,3 @@ console.log(arr) // [1, 2, 3]
   As you can see `pop()` returns and deletes the last value in the array. This is not always what you want so you can use `last()` to get the last value without deleting it.
 */
 ```
-
----

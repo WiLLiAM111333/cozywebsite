@@ -1,5 +1,6 @@
-import { SuperArray } from "../superArray";
+import { SuperArray } from "../SuperArray";
 import { BaseQueue } from "./BaseQueue";
+import { inspect, InspectOptionsStylized } from 'util';
 
 /**
  * A queue designed to handle common music operations.
@@ -9,15 +10,15 @@ import { BaseQueue } from "./BaseQueue";
  */
 export class MusicQueue<T> extends BaseQueue<T> {
   /**
-   * The internal array of values in the queue. I went with array because I feel like anything 
-   * else is just overkill for something this simple, I really dont need a doubly linked list 
-   * to get and remove the first element of the queue.
+   * The internal array of values in the queue. I went with array because I feel 
+   * like anything  else is just overkill for something this simple, I really dont need a doubly 
+   * linked list to get and remove the first element of the queue.
    * @protected
    * @type {SuperArray<T>}
    */
   protected items: SuperArray<T>;
   /**
-   * The amount of items in the queue
+   * The amount of items in the queue.
    * @public
    * @type {number}
    */
@@ -27,7 +28,7 @@ export class MusicQueue<T> extends BaseQueue<T> {
    * @private
    * @type {boolean}
    */
-  private _isLooped: boolean;
+  private isLooped: boolean;
   /**
    * The max amount of items that can exist at once in the queue
    * @private
@@ -41,39 +42,44 @@ export class MusicQueue<T> extends BaseQueue<T> {
     }
   }
 
-  public get [Symbol.toStringTag]() {
-    return 'MusicQueue'
-  }
+  public [inspect.custom](depth: number, options: InspectOptionsStylized) {
+    if(this.size === 0) {
+      return 'MusicQueue(0)';
+    }
 
-  /**
-   * The internal boolean to check if it should loop.
-   * @public
-   * @type {boolean}
-   */
-  public get isLooped(): boolean {
-    return this._isLooped;
-  }
+    let str = `MusicQueue(${this.size}) [\n`
+    options.colors = true;
+    
+    for(let i = 0; i < this.size; i++) {
+      str += `  ${inspect(this.items[i], options)}${i < this.size - 1 ? ',' : ''}\n`
+    }
 
-  /**
-   * The internal boolean to check if it should loop.
-   * @public
-   * @type {boolean}
-   */
-  public set isLooped(isLooped: boolean) {
-    this._isLooped = isLooped;
+    str += ']'
+
+    return str;
   }
   
   /**
    * @public
    * @constructor
-   * @param {SuperArray<T>} items 
+   * @param {?SuperArray<T>} items 
    */
-  public constructor(items?: SuperArray<T>) {
+  public constructor(items?: Array<T>) {
     super();
 
     this.size = items?.length || 0;
     this.maxSize = 100; // Might change later
     this.items = new SuperArray<T>(items);
+  }
+
+  public toggleLoop(): void {
+    const looped = this.isLooped;
+
+    if(typeof looped === "undefined" || looped === null) {
+      this.isLooped = false;
+    }
+
+    this.isLooped = !looped;
   }
 
   /**
@@ -119,7 +125,7 @@ export class MusicQueue<T> extends BaseQueue<T> {
   }
 
   /**
-   * Clears the queue of all data
+   * Clears the queue of all data.
    * @public
    * @ethod
    * @returns {void}
