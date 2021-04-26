@@ -43,19 +43,16 @@ export class MusicQueue<T> extends BaseQueue<T> {
   }
 
   public [inspect.custom](depth: number, options: InspectOptionsStylized) {
+    options.colors = true;
+    options.depth = depth;
+    options.compact = this.size < 15;
+    
     if(this.size === 0) {
       return 'MusicQueue(0)';
     }
 
-    let str = `MusicQueue(${this.size}) [\n`
-    options.colors = true;
+    let str = `MusicQueue(${this.size})${inspect(this.items, options).replace(/SuperArray\(\d+\)/, '')}`
     
-    for(let i = 0; i < this.size; i++) {
-      str += `  ${inspect(this.items[i], options)}${i < this.size - 1 ? ',' : ''}\n`
-    }
-
-    str += ']'
-
     return str;
   }
   

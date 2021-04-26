@@ -1,4 +1,5 @@
 import { SuperArray } from "../superArray";
+import { inspect, InspectOptionsStylized } from 'util';
 
 /**
  * Simple class exntension of `Map` with extra methods. 
@@ -36,6 +37,20 @@ export class SuperMap<K, V> extends Map<K, V> {
    */
   public constructor(entries?: readonly (readonly [K, V])[] | Iterable<readonly [K, V]>) {
     super(entries);
+  }
+
+  public [inspect.custom](depth: number, options: InspectOptionsStylized) {
+    let str = `SuperMap(${this.size}) {\n`;
+    let counter = 0;
+
+    for(const [key, value] of this.entries()) {
+      str += `  ${inspect(key, options)} => ${inspect(value, options)}${counter < this.size - 1 ? ',' : ''}\n`
+      counter++;
+    }
+
+    str += '}';
+
+    return str
   }
 
   /**

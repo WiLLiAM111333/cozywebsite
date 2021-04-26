@@ -1,3 +1,5 @@
+import { inspect, InspectOptionsStylized } from 'util';
+
 /**
  * @description A class to handle custom array methods directly on the class itself
  * @exports
@@ -30,6 +32,10 @@ export class SuperArray<T> extends Array<T> {
         this[i] = values[i]
       }
     }
+  }
+
+  public [inspect.custom](depth: number, options: InspectOptionsStylized) {
+    return inspect([...this.values()], options);
   }
 
   /**
