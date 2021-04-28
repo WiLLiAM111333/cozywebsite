@@ -15,7 +15,7 @@ Table of contents
 
 Sends a `MessageEmbed` including an image of a cat and a fact. Note that the fact may not match the image since they come from 2 seperate sources.
 
-![Example Cat Image](.../images/images/example_cat.jpg)
+![Example Cat Image](.../images/example_cat.jpg)
 
 Example cat fact: *"Cats have a lower social IQ than dogs but can solve more difficult cognitive problems when they feel like it."*
 
