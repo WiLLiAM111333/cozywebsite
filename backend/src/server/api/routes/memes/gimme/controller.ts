@@ -13,7 +13,7 @@ export class GimmeController extends Controller {
   
   public getRedditMeme(): (req: Request, res: Response) => Promise<void> {
     return async (req, res) => {
-      const subreddit: SubredditStrings = req.query.sub as SubredditStrings;
+      const subreddit = req.query.sub as SubredditStrings;
       const meme = await this.memeManager.getRedditMeme(subreddit);
 
       if(meme) {
