@@ -9,18 +9,23 @@ describe('Tests the SuperMap shift methods', () => {
 
   it('Should return the first value in the SuperMap and delete the entry using shift()', done => {  
     expect(map.shift()).toEqual(2);
+    expect(map.first()).toEqual(4);
+    expect(map.size).toEqual(2);
 
     done();
   });
 
   it('Should return the first key in the SuperMap and delete the entry using shiftKey()', done => {
     expect(map.shiftKey()).toEqual('3');
-
+    expect(map.firstKey()).toEqual('5');
+    expect(map.size).toEqual(1);
+    
     done();
   });
 
   it('Should return the first entry in the SuperMap and delete the entry using shiftEntry()', done => {
     expect(map.shiftEntry()).toEqual(['5', 6]);
+    expect(map.firstEntry()).toEqual(undefined);
     expect(map.size).toEqual(0);
 
     done();
