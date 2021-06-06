@@ -2,6 +2,8 @@
 
 The table of contents links in `docs/tests/SuperMap.md` wont work for some reason, low priority issue so I will fix that when I'm done with the todo-list at the bottom of the file and cleaned up inevitable mistakes.
 
+---
+
 Had a change of mind in `backend/lib/auth`, I'll be using discord to sign in to store as little data about users as possible. It's for everyones sake 🙂
 
 ---
