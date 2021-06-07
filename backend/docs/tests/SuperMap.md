@@ -320,9 +320,96 @@ it('Should return the last entry in the SuperMap and delete the entry using pop(
 });
 ```
 
+---
+
+## SuperMap Constructor
+
+The SuperMap constructor is simply using `super()` and thats it. But you can use a couple other data structures to create new elements from the constructor. The test-suite starts off by initializing a new array of key-value tuples to be used 
+for creating `SuperMap`s and testing:
+
+```js
+const values = [
+  ['1', 2],
+  ['3', 4],
+  ['5', 6]
+]
+```
+### **Key-Value Tuples**
+
+It creates a new `SuperMap` from the key-value tuples and checks that it indexes it in the proper placement order.
+
+```js
+it('Should instantiate a new SuperMap from an array of key-value tuples', done => {
+  const map = new SuperMap(values); // Creates a new SuperMap with the array of key-value tuples
+
+  expect(map.size).toEqual(3); // Checks that the map size is the same as the amount of key-value tuples in the array "values"
+  expect(map.toEntryArray()).toEqual(values); // Checks that it got put in properly in placement order
+  expect(map.toArray()).toEqual(values.map(arr => arr[1])); // Checks that it got put in properly in placement order
+  expect(map.toKeyArray()).toEqual(values.map(arr => arr[0])); // Checks that it got put in properly in placement order
+
+  done();
+});
+```
+
+### **Map**
+
+Creates a new `SuperMap` from an existing `Map` which is intantiated with the key-value tuple `values` from the top-level scope of the jest describe function.
+
+```js
+it('Should instantiate a new SuperMap from an existing Map', done => {
+  const map = new Map(values); // Intantiates a new Map from the key-value tuple "values"
+  const superMap = new SuperMap(map); // Instantiates a new SuperMap from the Map "map"
+
+  expect(superMap.size).toEqual(3); // Checks that the size is valid
+  expect(superMap.size).toEqual(map.size); // Checks that the size is valid
+
+  expect(superMap.toEntryArray()).toEqual(values); // Checks that the placement order is right
+  expect(superMap.toArray()).toEqual(values.map(arr => arr[1])); // Checks that the placement order is right
+  expect(superMap.toKeyArray()).toEqual(values.map(arr => arr[0])); // Checks that the placement order is right
+
+  expect(superMap.get('1')).toEqual(map.get('1')); // Checks that all key-value pairs are the same
+  expect(superMap.get('3')).toEqual(map.get('3')); // Checks that all key-value pairs are the same
+  expect(superMap.get('5')).toEqual(map.get('5')); // Checks that all key-value pairs are the same
+
+  // Polyfill for Map
+  expect(superMap.toArray()).toEqual([...map.values()]); // Checks the iterator's placement order
+  expect(superMap.toKeyArray()).toEqual([...map.keys()]); // Checks the iterator's placement order
+  expect(superMap.toEntryArray()).toEqual([...map.entries()]); // Checks the iterator's placement order
+
+  done();
+});
+```
+
+## **SuperMap**
+
+Creates a new `SuperMap` from an existing `SuperMap` which is intantiated with the key-value tuple `values` from the top-level scope of the jest describe function.
+
+```js
+it('Should instantiate a new SuperMap from an existing SuperMap', done => {
+  const map1 = new SuperMap(values); // Intantiates a new SuperMap from the key-value tuple "values"
+  const map2 = new SuperMap(map1); // Instantiates a new SuperMap from the SuperMap "map1"
+
+  expect(map2.size).toEqual(3); // Checks that the size is valid
+  expect(map2.size).toEqual(map1.size); // Checks that the size is valid
+  
+  expect(map2.toEntryArray()).toEqual(values); // Checks that the placement order is right
+  expect(map2.toArray()).toEqual(values.map(arr => arr[1])); // Checks that the placement order is right
+  expect(map2.toKeyArray()).toEqual(values.map(arr => arr[0])); // Checks that the placement order is right
+
+  expect(map2.get('1')).toEqual(map1.get('1')); // Checks that all key-value pairs are the same
+  expect(map2.get('3')).toEqual(map1.get('3')); // Checks that all key-value pairs are the same
+  expect(map2.get('5')).toEqual(map1.get('5')); // Checks that all key-value pairs are the same
+
+  expect(map2.toArray()).toEqual(map1.toArray()); // Checks the iterator's placement order
+  expect(map2.toKeyArray()).toEqual(map1.toKeyArray()); // Checks the iterator's placement order
+  expect(map2.toEntryArray()).toEqual(map1.toEntryArray()); // Checks the iterator's placement order
+
+  done();
+})
+```
+
 TODO:
 
-* Write and document test for the `SuperMap` constructor
 * `SuperMap.concat()`
 * `SuperMap.every()`
 * `SuperMap.filter()`
