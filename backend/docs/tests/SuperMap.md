@@ -3,32 +3,33 @@
 ## Table of contents
 
 * **Array Methods**
-  - [SuperMap#toArray()](#SuperMap#toArray) 
-  - [SuperMap#toKeyArray()](#SuperMap#toKeyArray)
-  - [SuperMap#toEntryArray()](#SuperMap#toEntryArray)
+  - [toArray()](#toArray) 
+  - [toKeyArray()](#toKeyArray)
+  - [toEntryArray()](#toEntryArray)
 * **First Methods**
-  - [first()](#SuperMap#first)
-  - [firstKey()](#SuperMap#firstKey)
-  - [firstEntry()](#SuperMap#firstEntry)
+  - [first()](#first)
+  - [firstKey()](#firstKey)
+  - [firstEntry()](#firstEntry)
 * **Last Methods**
-  - [last()](#SuperMap#last)
-  - [lastKey()](#SuperMap#lastKey)
-  - [lastEntry()](#SuperMap#lastEntry)
+  - [last()](#last)
+  - [lastKey()](#lastKey)
+  - [lastEntry()](#lastEntry)
 * **Shift Methods**
-  - [shift()](#SuperMap#shift)
-  - [shiftKey()](#SuperMap#shiftKey)
-  - [shiftEntry()](#SuperMap#shiftEntry)
+  - [shift()](#shift)
+  - [shiftKey()](#shiftKey)
+  - [shiftEntry()](#shiftEntry)
 * **Pop Methods**
-  - [pop()](#SuperMap#pop)
-  - [popKey()](#SuperMap#popKey)
-  - [popEntry()](#SuperMap#popEntry)
+  - [pop()](#pop)
+  - [popKey()](#popKey)
+  - [popEntry()](#popEntry)
+  
 ## Array methods
 
-The array methods are tested to ensure that everything is indexed to the array in the `SuperMap`'s placement order. It tests `SuperMap#toArray()`, `SuperMap#toKeyArray()` and `SuperMap#toEntryArray()`. 
+The array methods are tested to ensure that everything is indexed to the array in the `SuperMap`'s placement order. It tests `toArray()`, `toKeyArray()` and `toEntryArray()`. 
 
 ### **Root of the test in the top-level scope of the describe function**
 
-First in the test suite it creates a new `SuperMap` as `map` and places the entries where the first index is the key and the second is the value using `SuperMap#set(key, value): this`:
+First in the test suite it creates a new `SuperMap` as `map` and places the entries where the first index is the key and the second is the value using `set(key, value): this`:
 ```js
 const map = new SuperMap()
 
@@ -39,7 +40,7 @@ map.set('5', 6);
 
 ---
 
-### **SuperMap#toArray**
+### **toArray**
 
 It initalizes a variable called `arr = map.toArray()` which is now expected to be an array of values in the `SuperMap` in placement order of the map which would be `[2, 4, 6]`. It then passes if `arr` is indeed `[2, 4, 6]` and `arr.length` is equal to `map.size`.
 
@@ -55,7 +56,7 @@ it('Should return an array of values in the SuperMap using toArray()', done => {
 });
 ```
 
-### **SuperMap#toKeyArray**
+### **toKeyArray**
 
 It initalizes a variable called `arr = map.toKeyArray()` which is now expected to be an array of keys in the `SuperMap` in placement order of the map which would be `['1', '3', '5']`. It then passes if `arr` is indeed `['1', '3', '5']` and `arr.length` is equal to `map.size`.
 
@@ -71,7 +72,7 @@ it('Should return an array of keys in the SuperMap using toKeyArray()', done => 
 });
 ```
 
-### **SuperMap#toEntryArray**
+### **toEntryArray**
 
 It initalizes a variable called `arr = map.toEntryArray()` which is now expected to be an array of tuples by the length of 2 with the type of `[K, V]` with **K** being the type of the `key` in the map and **V** being in the type of the `value` in the map. These are put in placement order of the map which would be `[ ['1', 2], ['3', 4], ['5', 6] ]`. It then passes if `arr` is indeed `[ ['1', 2], ['3', 4], ['5', 6] ]` and `arr.length` is equal to `map.size`.
 
@@ -103,7 +104,7 @@ map.set('3', 4);
 map.set('5', 6);
 ```
 
-### **SuperMap#first**
+### **first**
 
 The test passes if `map.first()` is the first value in the `SuperMap` in placement order.
 
@@ -117,7 +118,7 @@ it('Should return the first value in the SuperMap using first()', done => {
 });
 ```
 
-### **SuperMap#firstKey**
+### **firstKey**
 
 The test passes if `map.firstKey()` is the first key in the `SuperMap` in placement order.
 
@@ -131,7 +132,7 @@ it('Should return the first key in the SuperMap using firstKey()', done => {
 });
 ```
 
-### **SuperMap#firstEntry**
+### **firstEntry**
 
 The test passes if the `map.firstEntry()` tuple is equal to the first key-value tuple in the `SuperMap` in placement order.
 
@@ -161,7 +162,7 @@ map.set('3', 4);
 map.set('5', 6);
 ```
 
-### **SuperMap#last**
+### **last**
 
 The test passses if `map.last()` is the last value in the `SuperMap` in placement order.
 
@@ -175,7 +176,7 @@ it('Should return the last value in the SuperMap using last()', done => {
 });
 ```
 
-### **SuperMap#lastKey**
+### **lastKey**
 
 The test passses if `map.lastKey()` is the last key in the `SuperMap` in placement order.
 
@@ -188,7 +189,7 @@ it('Should return the last key in the SuperMap using lastKey()', done => {
   done();
 });
 ```
-### **SuperMap#lastEntry**
+### **lastEntry**
 
 The test passses if `map.lastEntry()` is the last key-value tuple in the `SuperMap` in placement order.
 
@@ -220,7 +221,7 @@ map.set('5', 6);
 
 *The same map is used for all 3 tests so it gets reduced an index every time the next jest `it` function runs.*
 
-### **SuperMap#shift**
+### **shift**
 
 The test passes if `map.shift()` is equal to `2`, `map.first()` is equal to `4` and `map.size` is equal to `2`. Explanation through comments in the test:
 
@@ -234,7 +235,7 @@ it('Should return the first value in the SuperMap and delete the entry using shi
 });
 ```
 
-### **SuperMap#shiftKey**
+### **shiftKey**
 
 The test passes if `map.shiftKey()` is equal to `'3'`, `map.firstKey()` is equal to `'5'` and `map.size` is equal to `1`. Explanation through comments in the test:
 
@@ -248,7 +249,7 @@ it('Should return the first key in the SuperMap and delete the entry using shift
 });
 ```
 
-### **SuperMap#shiftEntry**
+### **shiftEntry**
 
 The test passes if `map.shiftEntry()` is equal to `['5', 6]`, `map.firstEntry()` is equal to `undefined` and `map.size` is equal to `0`. Explanation through comments in the test:
 
@@ -278,7 +279,7 @@ map.set('3', 4);
 map.set('5', 6);
 ```
 
-### **SuperMap#pop**
+### **pop**
 
 The test passes if `map.pop()` is equal to `6`, `map.last()` is equal to `4` and `map.size` is equal to `2`. Explanation through comments in the test:
 
@@ -292,7 +293,7 @@ it('Should return the last value in the SuperMap and delete the entry using pop(
 });
 ```
 
-### **SuperMap#popKey**
+### **popKey**
 
 The test passes if `map.popKey()` is equal to `'3'`, `map.lastKey()` is equal to `'1'` and `map.size` is equal to `1`. Explanation through comments in the test:
 
@@ -306,7 +307,7 @@ it('Should return the last key in the SuperMap and delete the entry using pop()'
 });
 ```
 
-### **SuperMap#popEntry**
+### **popEntry**
 
 The test passes if `map.popEntry()` is equal to `['1', 2]`, `map.lastEntry()` is equal to `undefined` and `map.size` is equal to `0`. Explanation through comments in the test:
 
