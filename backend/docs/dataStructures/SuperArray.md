@@ -13,7 +13,7 @@ The following methods are custom made with documentation in the code itself aswe
 
 ## random
 
-The `random` method returns one or more random values from the array, this is achieved by using a TypeScript feature: [function overloading](https://www.typescriptlang.org/docs/handbook/functions.html#overloads).
+The `random` method returns one or more random values from the array, this is achieved by using a TypeScript feature: [function overloading](https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads).
 
 | Called Method | Return Type   |
 |---------------|---------------|
