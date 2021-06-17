@@ -1,7 +1,0 @@
-{
-  "coverageDirectory": "../jest/coverage",
-  "cacheDirectory": "../jest/cache",
-  "collectCoverage": true,
-  "rootDir": "./dist",
-  "testEnvironment": "node"
-}

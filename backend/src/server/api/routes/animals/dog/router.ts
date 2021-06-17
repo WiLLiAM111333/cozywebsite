@@ -3,7 +3,7 @@ import { DogController } from './controller';
 import { Router } from '../../../../../../lib/server/router/Router';
 
 export class DogRouter extends Router {
-  protected controller: DogController;
+  declare protected controller: DogController;
 
   public constructor(app: Application) {
     super({

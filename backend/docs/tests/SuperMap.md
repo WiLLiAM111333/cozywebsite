@@ -22,6 +22,11 @@
   - [pop()](#pop)
   - [popKey()](#popKey)
   - [popEntry()](#popEntry)
+* **Constructor**
+  - [Key-Value Tuples](#Key-Value-Tuples)
+  - [Map](#Map)
+  - [SuperMap](#SuperMap)
+* **[concat()](#Concat)**
   
 ## Array methods
 
@@ -30,6 +35,7 @@ The array methods are tested to ensure that everything is indexed to the array i
 ### **Root of the test in the top-level scope of the describe function**
 
 First in the test suite it creates a new `SuperMap` as `map` and places the entries where the first index is the key and the second is the value using `set(key, value): this`:
+
 ```js
 const map = new SuperMap()
 
@@ -45,6 +51,7 @@ map.set('5', 6);
 It initalizes a variable called `arr = map.toArray()` which is now expected to be an array of values in the `SuperMap` in placement order of the map which would be `[2, 4, 6]`. It then passes if `arr` is indeed `[2, 4, 6]` and `arr.length` is equal to `map.size`.
 
 Test with comments line by line:
+
 ```js
 it('Should return an array of values in the SuperMap using toArray()', done => {  
   const arr = map.toArray(); // Initializes new array including the values of the map in placement order [2, 4, 6]
@@ -61,6 +68,7 @@ it('Should return an array of values in the SuperMap using toArray()', done => {
 It initalizes a variable called `arr = map.toKeyArray()` which is now expected to be an array of keys in the `SuperMap` in placement order of the map which would be `['1', '3', '5']`. It then passes if `arr` is indeed `['1', '3', '5']` and `arr.length` is equal to `map.size`.
 
 Test with comments line by line:
+
 ```js
 it('Should return an array of keys in the SuperMap using toKeyArray()', done => {
   const arr = map.toKeyArray(); // Initializes new array including the values of the map in placement order ['1', '3', '5']
@@ -77,6 +85,7 @@ it('Should return an array of keys in the SuperMap using toKeyArray()', done => 
 It initalizes a variable called `arr = map.toEntryArray()` which is now expected to be an array of tuples by the length of 2 with the type of `[K, V]` with **K** being the type of the `key` in the map and **V** being in the type of the `value` in the map. These are put in placement order of the map which would be `[ ['1', 2], ['3', 4], ['5', 6] ]`. It then passes if `arr` is indeed `[ ['1', 2], ['3', 4], ['5', 6] ]` and `arr.length` is equal to `map.size`.
 
 Test with comments line by line:
+
 ```js
 it('Should return an array-nested tuple of entries in the SuperMap using toEntryArray()', done => {
   const arr = map.toEntryArray(); // Initializes new array including the entry tuples of the map in placement order [ ['1', 2], ['3', 4], ['5', 6] ]
@@ -335,7 +344,7 @@ const values = [
   ['5', 6]
 ]
 ```
-### **Key-Value Tuples**
+### **Key-Value-Tuples**
 
 It creates a new `SuperMap` from the key-value tuples and checks that it indexes it in the proper placement order.
 
@@ -381,7 +390,7 @@ it('Should instantiate a new SuperMap from an existing Map', done => {
 });
 ```
 
-## **SuperMap**
+### **SuperMap**
 
 Creates a new `SuperMap` from an existing `SuperMap` which is intantiated with the key-value tuple `values` from the top-level scope of the jest describe function.
 
@@ -409,9 +418,16 @@ it('Should instantiate a new SuperMap from an existing SuperMap', done => {
 })
 ```
 
+## Concat 
+
+The concat method is tested to make sure that placement order is maintained aswell as all values transferring properly.
+
+```js
+
+```
+
 TODO:
 
-* `SuperMap.concat()`
 * `SuperMap.every()`
 * `SuperMap.filter()`
 * `SuperMap.find()`

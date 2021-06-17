@@ -3,7 +3,7 @@ import { QuotableController } from './controller';
 import { Application, Router as expressRouter } from "express";
 
 export class QuotableRouter extends Router {
-  protected controller: QuotableController;
+  declare protected controller: QuotableController;
 
   public constructor(app: Application) {
     super({

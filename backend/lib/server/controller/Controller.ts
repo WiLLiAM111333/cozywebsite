@@ -9,10 +9,6 @@ import { Base } from '../../Base';
  * @extends {Base}
  */
 export abstract class Controller extends Base {
-  /**
-   * @public
-   * @constructor
-   */
   public constructor() {
     super();
   }

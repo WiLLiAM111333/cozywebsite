@@ -38,7 +38,7 @@ if(platform() !== 'linux') {
 
 const { exec } = require('child_process');
 const { join } = require('path');
-const { setupSimulations, setupLogs } = require('./create');
+const { setupSimulations } = require('./create');
 const { rmdir } = require('fs/promises');
 const {
   unlinkSync,
@@ -110,8 +110,7 @@ writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
             deleteDocs(),
             deleteTypeScript(),
             deleteConfigFiles(),
-            setupSimulations(),
-            setupLogs()
+            setupSimulations()
           ]);
 
           await rmdir(join(__dirname, '..', '..', 'typings'), { recursive: true })

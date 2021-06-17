@@ -43,7 +43,7 @@ export class MemeManager {
     }
   }
 
-  public async getDadJoke() {
+  public async getDadJoke(): Promise<IDadJokeResponse> {
     try {
       const res = await fetch(this.dadJokeURL);
       const json: IDadJokeResponse = await res.json();

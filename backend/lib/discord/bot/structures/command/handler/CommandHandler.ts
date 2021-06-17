@@ -1,5 +1,4 @@
 import { Message, PermissionString, MessageEmbed, GuildMember } from "discord.js";
-import { db } from '../../../../../../src/db/index';
 import { CozyClient } from "../../../client/CozyClient";
 import { Command } from "../Command";
 import { join } from 'path';

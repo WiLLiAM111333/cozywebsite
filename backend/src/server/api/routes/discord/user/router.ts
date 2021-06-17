@@ -4,7 +4,7 @@ import { Application, Router as expressRouter } from 'express';
 import { UserController } from './controller';
 
 export class UserRouter extends DiscordRouter {
-  protected controller: UserController;
+  declare protected controller: UserController;
 
   public constructor(app: Application, client: Client) {
     super({

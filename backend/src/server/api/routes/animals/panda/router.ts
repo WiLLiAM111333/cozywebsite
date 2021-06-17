@@ -3,7 +3,7 @@ import { PandaController } from './controller';
 import { Router } from '../../../../../../lib/server/router/Router';
 
 export class PandaRouter extends Router {
-  protected controller: PandaController;
+  declare protected controller: PandaController;
 
   public constructor(app: Application) {
     super({

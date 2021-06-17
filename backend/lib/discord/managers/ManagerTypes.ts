@@ -12,4 +12,4 @@ export type ManagerTypes = DiscordBan
   | DiscordReport
   | DiscordWarning
   | DiscordGifBan
-  | DiscordEmoteBan
+  | DiscordEmoteBan;

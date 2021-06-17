@@ -1,10 +1,11 @@
 require('dotenv').config();
+
 const Database = require('../dist/src/db/index');
 /**
  * Temporary for development so I can get type casting and autocomplete
  * @type {import('knex')}
  */
-const db = Database.db
+const { db } = Database;
 const { Constants } = require('../dist/src/utils/constants');
 const { cyan } = require('chalk');
 
@@ -35,11 +36,18 @@ const {
   DISCORD_MUTES,
   DISCORD_REPORTS,
   DISCORD_WARNS,
+  DISCORD_GIF_BANS,
+  DISCORD_EMOTE_BANS,
   USERS,
   DISCORD_PROFILES,
   LEVEL_REWARDS,
   MODMAIL_CONFIG,
-  MODMAIL_INDIVIDUAL_CONFIG
+  MODMAIL_INDIVIDUAL_CONFIG,
+  CARS,
+  STARBOARD,
+  STARBOARD_CONFIG,
+  ONE_WORD_STORIES,
+  COUNTING_CHANNEL_DATA
 } = TableNames;
 
 (async () => {
@@ -63,6 +71,15 @@ const {
     }
 
     await Promise.all([
+      createTable(ONE_WORD_STORIES, table => {
+        table.string('userID').notNullable().primary();
+        table.integer('amount').notNullable().defaultTo(0);
+        table.string('lastWord').notNullable().defaultTo(0);
+      }),
+      createTable(COUNTING_CHANNEL_DATA, table => {
+        table.string('userID').notNullable().primary();
+        table.integer('amount').notNullable().primary();
+      }),
       createTable(MODERATION_CONFIG, table => {
         table.string('guildID').notNullable();
         table.string('staffRole').notNullable();
@@ -76,22 +93,21 @@ const {
         table.string('banID').notNullable();
         table.text('reason').notNullable();
         table.boolean('unbanned').notNullable();
-        table.date('bannedAt').notNullable();
+        table.string('bannedAt').notNullable();
       }),
       createTable(DISCORD_KICKS, table => {
         table.string('userID').notNullable();
         table.string('guildID').notNullable();
         table.string('kickID').notNullable();
         table.text('reason').notNullable();
-        table.date('kickedAt').notNullable();
+        table.string('kickedAt').notNullable();
       }),
       createTable(DISCORD_MUTES, table => {
         table.string('guildID').notNullable();
         table.string('userID').notNullable();
-        table.string('muterUserID').notNullable();
         table.string('muteID').notNullable();
         table.text('reason').notNullable();
-        table.date('mutedAt').notNullable();
+        table.string('mutedAt').notNullable();
       }),
       createTable(DISCORD_REPORTS, table => {
         table.string('userID').notNullable();
@@ -99,15 +115,28 @@ const {
         table.string('reportID').notNullable();
         table.string('guildID').notNullable();
         table.text('reason').notNullable();
-        table.date('reportedAt').notNullable();
+        table.string('reportedAt').notNullable();
       }),
       createTable(DISCORD_WARNS, table => {
         table.string('userID').notNullable();
-        table.string('warnerUserID').notNullable();
         table.string('guildID').notNullable();
         table.string('warnID').notNullable();
         table.text('reason').notNullable();
-        table.date('warnedAt').notNullable();
+        table.string('warnedAt').notNullable();
+      }),
+      createTable(DISCORD_GIF_BANS, table => {
+        table.string('userID').notNullable();
+        table.string('guildID').notNullable();
+        table.string('gifBanID').notNullable();
+        table.string('reason').notNullable();
+        table.string('gifBannedAt').notNullable();
+      }),
+      createTable(DISCORD_EMOTE_BANS, table => {
+        table.string('userID').notNullable();
+        table.string('guildID').notNullable();
+        table.string('emoteBanID').notNullable();
+        table.string('reason').notNullable();
+        table.string('gifBannedAt').notNullable();
       }),
       createTable(USERS, table => {
         // Keep working on this
@@ -259,6 +288,8 @@ const {
         table.integer('coins').notNullable().defaultTo(0);
         table.integer('xp').notNullable().defaultTo(0);
         table.integer('level').notNullable().defaultTo(1);
+        table.integer('totalStories').notNullable().defaultTo(0);
+        table.integer('totalFacts').notNullable().defaultTo(0); 
       }),
       createTable(LEVEL_REWARDS, table => {
         table.string('memberID').primary();
@@ -268,15 +299,31 @@ const {
       }),
       createTable(MODMAIL_CONFIG, table => {
         table.string('guildID').notNullable();
-        table.boolean('dm').notNullable();
-        table.boolean('smtp').notNullable();
+        table.boolean('dm').notNullable().defaultTo(0);
+        table.boolean('smtp').notNullable().defaultTo(0);
         table.string('channel');
       }),
       createTable(MODMAIL_INDIVIDUAL_CONFIG, table => {
         table.string('userID').notNullable();
-        table.boolean('dm').notNullable();
-        table.boolean('shouldEmail').notNullable();
+        table.boolean('dm').notNullable().defaultTo(0);
+        table.boolean('shouldEmail').notNullable().defaultTo(0);
         table.string('email');
+      }),
+      createTable(CARS, table => {
+        table.string('make').notNullable();
+        table.string('model').notNullable();
+        table.string('specificModel').notNullable();
+      }),
+      createTable(STARBOARD, table => {
+        table.string('messageID').notNullable();
+        table.string('starBoardMessageID').notNullable();
+        table.string('messageContent').notNullable();
+        table.string('authorID').notNullable();
+      }),
+      createTable(STARBOARD_CONFIG, table => {
+        table.string('guildID').notNullable();
+        table.boolean('enabled').notNullable().defaultTo(1);
+        table.string('channelID');
       })
     ]);
   } catch (err) {

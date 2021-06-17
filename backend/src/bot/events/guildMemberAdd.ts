@@ -1,4 +1,4 @@
-import { GuildMember, MessageEmbed, DMChannel, TextChannel } from "discord.js";
+import { GuildMember } from "discord.js";
 import { CozyClient } from "../../../lib/discord/bot/client/CozyClient";
 
 export const event = (client: CozyClient, member: GuildMember): void => {

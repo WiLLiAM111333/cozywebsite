@@ -1,7 +1,7 @@
 export interface IQuoteResponse {
   _id: string;
   tags: Array<string>;
-  contents: string;
+  content: string;
   author: string;
   length: number;
 }

@@ -1,13 +1,17 @@
+import { IModMailConfig } from "lib/discord/modmail/config/IModMailConfig";
 import { IOAuthEndpoints } from "../../lib/discord/oauth2/IOAuthEndpoints";
 
 export namespace Constants {
   export enum TableNames {
+    MODERATION_CONFIG = 'moderation_config',
     RATELIMITS = 'ratelimits',
     DISCORD_REPORTS = 'discord_reports',
     DISCORD_BANS = 'discord_bans',
     DISCORD_KICKS = 'discord_kicks',
     DISCORD_MUTES = 'discord_mutes',
     DISCORD_WARNS = 'discord_warns',
+    DISCORD_GIF_BANS = 'discord_gif_bans',
+    DISCORD_EMOTE_BANS = 'discord_emote_bans',
     WEBSITE_BANS = 'website_bans',
     SHARED_MOD_LOG = 'shared_mod_log',
     USERS = 'users',
@@ -31,7 +35,14 @@ export namespace Constants {
     AUTOMOD_ACTION_ZALGO_USERNAME = 'automod_action_zalgo_username',
     AUTOMOD_ACTION_ZALGO_NICKNAME = 'automod_action_zalgo_nickname',
     DISCORD_PROFILES = 'discord_profiles',
-    LEVEL_REWARDS = 'level_rewards'
+    LEVEL_REWARDS = 'level_rewards',
+    MODMAIL_CONFIG = 'modmail_config',
+    MODMAIL_INDIVIDUAL_CONFIG = 'modmail_individual_config',
+    CARS = 'cars',
+    STARBOARD = 'starboard',
+    STARBOARD_CONFIG = 'starboard_config',
+    ONE_WORD_STORIES = 'one_word_stories',
+    COUNTING_CHANNEL_DATA = 'counting_channel_data'
   }
 
   export enum EmbedColors {
@@ -82,8 +93,12 @@ export namespace Constants {
     token: 'https://discord.com/api/oauth2/token',
     token_revoke: 'https://discord.com/api/oauth2/token/revoke'
   }
+
+  export const DEFAULT_MODMAIL_CFG: Optional<IModMailConfig> = {
+    channel: false,
+    smtp: false
+  }
   
-  export const OAUTH_REDIRECT = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000';
   export const DEFAULT_ZALGO_THRESHOLD = 0.55;
   export const TOKEN = process.env.TOKEN;
   export const CLIENT_ID = process.env.CLIENT_ID;
@@ -93,5 +108,13 @@ export namespace Constants {
   export const KNEX_PASSWORD = process.env.KNEX_PASSWORD;
   export const KNEX_DB = process.env.KNEX_DB;
   export const KNEX_TEST_DB = process.env.KNEX_TEST_DB;
+  export const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+  export const SMTP_HOST = process.env.SMTP_HOST;
+  export const SMTP_PORT = parseInt(process.env.SMTP_PORT);
+  export const SMTP_ENCRYPTION_METHOD = process.env.SMTP_ENCRYPTION_METHOD;
+  export const SMTP_AUTH_USER = process.env.SMTP_AUTH_USER;
+  export const SMTP_AUTH_PASSWORD = process.env.SMTP_AUTH_PASSWORD;
+  export const SMTP_SECURE = process.env.SMTP_SECURE === 'true'; // Handles the string interpretation of false in the .env file
+
   export const API_MESSAGE = '❤️ The Cozy Hangout REST API ❤️';
 }

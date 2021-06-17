@@ -1,33 +1,35 @@
-import { Zalgo } from "../zalgo";
+import { Zalgo } from "../../../../../zalgo";
 import { AutoModActionsManager } from "./actions/AutoModActionsManager";
 import { AutoModConfig } from "./config/AutoModConfig";
 import { AutoModConfigManager } from "./config/AutoModConfigManager";
 import { AutoModEventHandler } from "./AutoModEventHandler";
-import { BoxDrawing } from "../boxDrawing";
+import { BoxDrawing } from "../../../../../boxDrawing";
 import { Channel, GuildMember, Message } from "discord.js";
 import { CozyClient } from "../../../client/CozyClient";
 
 // Very basic, will keep working on this
 // configManager is only for internal use and communicates with this class through 2 events
-// I keep all the methods other than the handleSomething methods private to keep it abstracted away from the dashboard itself
+// I keep all the methods other than the handleSomething methods private to keep it abstracted away from the client class
 
 export class AutoMod extends AutoModEventHandler {
   private config: AutoModConfig;
   private hoistRegex: RegExp;
+  private client: CozyClient;
   
   public constructor(client: CozyClient) {
     super();
 
+    this.client = client;
     this.hoistRegex = /\?|!|#|%|&|\/|\(|\)|=|`|`|@|\[|\]|\\|<|>|,|\.|-|_|'|\*|\^/
     
     new AutoModConfigManager(this);
-    new AutoModActionsManager(this, client);
+    new AutoModActionsManager(this, this.client);
 
     this.on('configCreate', config => this.config = config);
     this.on('configUpdate', config => this.config = config);
   }
 
-  private verify(member: GuildMember, channel?: Channel): boolean {
+  private verify({ member, channel }: { member: GuildMember, channel: Channel }): boolean {
     if(!this.config.enabled) {
       return false;
     }
@@ -46,7 +48,7 @@ export class AutoMod extends AutoModEventHandler {
   }
 
   private isProfanity(message: Message) {
-    if(this.verify(message.member, message.channel) && this.config.useProfanityFilter) {
+    if(this.verify(message) && this.config.useProfanityFilter) {
       for(const profanity of this.config.profanities) {
         if(message.content.toLowerCase().match(profanity)) {
           return true;
@@ -58,46 +60,31 @@ export class AutoMod extends AutoModEventHandler {
   }
 
   private isZalgo(message: Message): boolean {
-    if(this.verify(message.member, message.channel) && this.config.useZalgoFilter) {
-      const content = message.content;
-      return new Zalgo(content).isZalgo()
+    if(this.verify(message) && this.config.useZalgoFilter) {
+      return new Zalgo(message.content).isZalgo()
     }
 
     return false;
   }
 
   private isCapsSpam(message: Message): boolean {
-    if(this.verify(message.member, message.channel) && this.config.useCapsSpamFilter) {
+    if(this.verify(message) && this.config.useCapsSpamFilter) {
       if(message.content.length < 10) {
         return false;
       }
-  
-      const upperCaseMatch = message.content.match(/[A-Z]+/g) || [];
-      const lowerCaseMatch = message.content.match(/[a-z]+/g) || [];
-  
+
+      const upperCaseMatch = (message.content.match(/[A-Z]+/g) ?? []).join('');
+      const lowerCaseMatch = (message.content.match(/[a-z]+/g) ?? []).join('');
+
       if(!upperCaseMatch.length) {
         return false;
       }
-  
-      let upperCaseStr = '';
-      for(const match of upperCaseMatch) {
-        for(const char of match) {
-          upperCaseStr += char;
-        }
-      }
-  
-      let lowerCaseStr = '';
-      for(const match of lowerCaseMatch) {
-        for(const char of match) {
-          lowerCaseStr += char;
-        }
-      }
-  
-      if(upperCaseStr.length > lowerCaseStr.length) {
+
+      if(upperCaseMatch.length > lowerCaseMatch.length) {
         return true;
       }
-  
-      if(upperCaseStr.length >= message.content.length / 3) {
+
+      if(upperCaseMatch.length >= message.content.length / 3) {
         return true;
       }
     }
@@ -106,7 +93,7 @@ export class AutoMod extends AutoModEventHandler {
   }
 
   private isExternalLink(message: Message): boolean {
-    if(this.verify(message.member, message.channel) && this.config.useLinkFilter) {
+    if(this.verify(message) && this.config.useLinkFilter) {
       const link = message.content.match(/https:\/\//);
       
       if(link && link.input) {
@@ -120,7 +107,7 @@ export class AutoMod extends AutoModEventHandler {
   }
 
   private isSpoilerSpam(message: Message) {
-    if(this.verify(message.member, message.channel) && this.config.useSpoilerSpamFilter) {
+    if(this.verify(message) && this.config.useSpoilerSpamFilter) {
       const spoilerMatch = message.content
         .replace(/\s+/, ' ')
         .match(/\|\|\s?.+\s?\|\|/);
@@ -134,13 +121,13 @@ export class AutoMod extends AutoModEventHandler {
   }
 
   private isMassPing(message: Message): boolean {
-    if(this.verify(message.member, message.channel) && this.config.useMassPingFilter) {
+    if(this.verify(message) && this.config.useMassPingFilter) {
       const limit = 4;
-  
+
       return (
-        (message.mentions.members && message.mentions.members.size > limit) 
-          || (message.mentions.roles && message.mentions.roles.size > limit) 
-          || (message.mentions.users && message.mentions.users.size > limit)
+        message.mentions.members?.size > limit 
+          || message.mentions.roles?.size > limit 
+          || message.mentions.users?.size > limit
       );
     }
 
@@ -148,8 +135,9 @@ export class AutoMod extends AutoModEventHandler {
   }
 
   private isEmoteSpam(message: Message): boolean {
-    if(this.verify(message.member, message.channel) && this.config.useEmoteSpamFilter) {
-      const emoteMatch = message.content.match(/<a?:(\w+):(\d+)>/g);  
+    if(this.verify(message) && this.config.useEmoteSpamFilter) {
+      const emoteMatch = message.content.match(/<a?:(\w+):(\d+)>/g) ?? message.content.match(/\p{Emoji}/ug);  
+
       return (emoteMatch && emoteMatch.length > 4);
     }
 
@@ -157,7 +145,7 @@ export class AutoMod extends AutoModEventHandler {
   }
 
   private isBlacklistedLink(message: Message) {
-    if(this.verify(message.member, message.channel) && this.config.useBlacklistedLinkFilter) {
+    if(this.verify(message) && this.config.useBlacklistedLinkFilter) {
       for(const arg of message.content.split(/ +/)) {
         if(this.config.blacklistedLinks.includes(arg)) {
           return true;
@@ -168,10 +156,9 @@ export class AutoMod extends AutoModEventHandler {
     return false;
   }
 
-  // Enable the commentented out config option once its created
   private isBoxDrawing(message: Message) {
     return (
-      this.verify(message.member, message.channel) 
+      this.verify(message) 
         && this.config.useBoxDrawingFilter
         && new BoxDrawing().isBoxDrawing(message.content)
     )
@@ -240,6 +227,17 @@ export class AutoMod extends AutoModEventHandler {
   
     if(this.isBlacklistedLink(message)) {
       this.emit('blacklistedLink', message.member, message);
+    }
+  }
+
+  public handleMessageUpdate(oldMessage: Message, newMessage: Message): void {
+    this.handleMessage(newMessage);
+    
+    const oldContent = oldMessage.content;
+    const newContent = newMessage.content;
+
+    if(oldContent.toLowerCase() !== newContent.toLowerCase()) {
+      this.client.editSnipes.set(newMessage.id, { oldContent, newContent })
     }
   }
 

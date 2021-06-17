@@ -48,7 +48,7 @@ export class MusicQueue<T> extends BaseQueue<T> {
     options.compact = this.size < 15;
     
     if(this.size === 0) {
-      return 'MusicQueue(0)';
+      return 'MusicQueue(0) {  }';
     }
 
     let str = `MusicQueue(${this.size})${inspect(this.items, options).replace(/SuperArray\(\d+\)/, '')}`

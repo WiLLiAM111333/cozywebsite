@@ -1,15 +1,33 @@
-**/node_modules
-**/package-lock.json
+# Stuff No One Cares About
+
+**/.vscode
 **/.eslintcache
 **/.env
+**/package-lock.json
+**/node_modules
 **/logs
 **/jest
 **/dist
+
+# Backend Garbage / WIP code
+
 backend/bin
 backend/test.js
 backend/assets
 backend/simulations/results
 backend/simulations/dump.log
-**/*.test.csv
-**/*.test.txt
+backend/lib/games/hangman
+backend/lib/games/tetris
+backend/temp.*
+backend/data/*.test.*
+backend/data/dict.txt
+
+# Idk some notes for the DB, kind of
+
 **/db.md
+
+# Test Environment 
+
+test_env/**/*.log
+test_env/**/*.exe
+test_env/**/.vscode

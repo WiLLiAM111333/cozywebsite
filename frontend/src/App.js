@@ -1,11 +1,11 @@
-import TicTacToeBoard from './components/TicTacToeBoard';
+import { HomePage } from './pages/Home';
 
 import './styles/styles.css';
 
 const App = () => {
   return (
     <div className="App">
-      <TicTacToeBoard />
+      <HomePage />
     </div>
   );
 }

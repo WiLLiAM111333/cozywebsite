@@ -93,4 +93,34 @@ export class TicTacToeManager {
 
     return false;
   }
+
+  private getPossibleMoves(): Array<[number, number]> {
+    const { board } = this;
+    
+    const possibleIndexes: Array<[number, number]> = [];
+
+    for(let i = 0; i < board.length; i++) {
+      const column = board[i];
+      
+      for(let k = 0; k < column.length; k++) {
+        const row = column[k];
+
+        if(row === 0) {
+          possibleIndexes.push([i, k]);
+        }
+      }
+    }
+
+    return possibleIndexes;
+  }
+
+  private getBestMove(): [number, number] {
+    let bestMove: [number, number];
+
+    for(const move of this.getPossibleMoves()) {
+      
+    }
+
+    return bestMove;
+  }
 }

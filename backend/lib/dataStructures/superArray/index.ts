@@ -45,7 +45,7 @@ export class SuperArray<T> extends Array<T> {
    * @param {?Number} start The beginning of the specified portion of the array.
    * @param {?Number} end The end of the specified portion of the array. This is exclusive of the element at the index 'end'.
    */
-  public slice(start?: number, end?: number): SuperArray<T> {
+  public override slice(start?: number, end?: number): SuperArray<T> {
     return new SuperArray<T>(super.slice(start, end));
   }
 
@@ -55,14 +55,14 @@ export class SuperArray<T> extends Array<T> {
    * @method
    * @param {...Array<ConcatArray<T>>} items Additional items to add to the end of array1.
   */
-  public concat(...items: Array<ConcatArray<T>>): SuperArray<T>;
+  public override concat(...items: Array<ConcatArray<T>>): SuperArray<T>;
   /**
    * @description Combines two or more arrays.
    * @public
    * @method
    * @param {...Array<(ConcatArray<T> | T)} items Additional items to add to the end of array1.
   */
-  public concat(...items: Array<(ConcatArray<T> | T)>): SuperArray<T> {
+  public override concat(...items: Array<(ConcatArray<T> | T)>): SuperArray<T> {
     return new SuperArray<T>(super.concat(...items));
   }
 
@@ -73,7 +73,7 @@ export class SuperArray<T> extends Array<T> {
    * @param {Number} start The zero-based location in the array from which to start removing elements.
    * @param {Number} deleteCount The number of elements to remove.
    */
-  public splice(start: number, deleteCount?: number): SuperArray<T>;
+  public override splice(start: number, deleteCount?: number): SuperArray<T>;
   /**
    * @description Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
    * @public
@@ -82,7 +82,7 @@ export class SuperArray<T> extends Array<T> {
    * @param {Number} deleteCount The number of elements to remove.
    * @param {Array<T>} items Elements to insert into the array in place of the deleted elements.
    */
-  public splice(start: number, deleteCount: number, ...items: Array<T>): SuperArray<T> {
+  public override splice(start: number, deleteCount: number, ...items: Array<T>): SuperArray<T> {
     return new SuperArray<T>(super.splice(start, deleteCount, ...items));
   }
 
@@ -93,7 +93,7 @@ export class SuperArray<T> extends Array<T> {
    * @param {(value: T, index: Number, array: SuperArray<T>) => U} callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
    * @param {?unknown} thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
    */
-  public map<U>(callbackfn: (value: T, index: number, array: SuperArray<T>) => U, thisArg?: unknown): SuperArray<U> {
+  public override map<U>(callbackfn: (value: T, index: number, array: SuperArray<T>) => U, thisArg?: unknown): SuperArray<U> {
     return new SuperArray<U>(super.map<U>(callbackfn, thisArg));
   }
 
@@ -104,13 +104,13 @@ export class SuperArray<T> extends Array<T> {
    * @param {(value: T, index: number, array: SuperArray<T>) => boolean} predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
    * @param {?unknown} thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
    */
-  public filter<S extends T>(predicate: (value: T, index: number, array: SuperArray<T>) => value is S, thisArg?: unknown): SuperArray<S>;
+  public override filter<S extends T>(predicate: (value: T, index: number, array: SuperArray<T>) => value is S, thisArg?: unknown): SuperArray<S>;
   /**
    * @description Returns the elements of an array that meet the condition specified in a callback function.
    * @param {(value: T, index: number, array: SuperArray<T>) => unknown} predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
    * @param {?unknown} thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
    */
-  public filter(predicate: (value: T, index: number, array: SuperArray<T>) => unknown, thisArg?: unknown): SuperArray<T> {
+  public override filter(predicate: (value: T, index: number, array: SuperArray<T>) => unknown, thisArg?: unknown): SuperArray<T> {
     return new SuperArray(super.filter(predicate, thisArg));
   }
 

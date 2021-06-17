@@ -45,8 +45,18 @@ export abstract class BaseQueue<T> {
    * @returns {void}
    */
   public abstract skip(amount: number): void;
+  /**
+   * Returns a boolean value to show if the queue has the provided item
+   * @public
+   * @method
+   * @param {T} item
+   * @returns {Boolean}
+   */
+  public has(item: T): boolean {
+    return this.items.includes(item);
+  }
 
   public get [Symbol.toStringTag](): string {
-    return 'Queue'
+    return 'Queue';
   }
 }

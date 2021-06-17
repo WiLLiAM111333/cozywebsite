@@ -14,15 +14,17 @@ export class QuoteManager {
   /**
    * @description The base URL to the quotable API
    * @private
+   * @readonly
    * @type {String}
    */
-  private quotableURL: string;
+  private readonly quotableURL: string;
   /**
    * @description The base URL to the kanye quote API 
    * @private
+   * @readonly
    * @type {String}
    */
-  private kanyeQuoteURL: string;
+  private readonly kanyeQuoteURL: string;
 
   /**
    * @public
@@ -40,10 +42,10 @@ export class QuoteManager {
    * @async
    * @returns {Promise<IQuoteResponse>} A random quote response object
    */
-  public async getRandomQuote(): Promise<IQuoteResponse> {
+  public async getRandomQuote(): Promise<Readonly<IQuoteResponse>> {
     try {
       const res = await fetch(`${this.quotableURL}/random`)
-      const json: IQuoteResponse = await res.json();
+      const json: Readonly<IQuoteResponse> = await res.json();
 
       return json;
     } catch (err) {
@@ -59,10 +61,10 @@ export class QuoteManager {
    * @param {String} id
    * @returns {Promise<IQuoteResponse>} A quote response object
    */
-  public async getQuoteByID(id: string): Promise<IQuoteResponse> {
+  public async getQuoteByID(id: string): Promise<Readonly<IQuoteResponse>> {
     try {
       const res = await fetch(`${this.quotableURL}/${id}`);
-      const json: IQuoteResponse = await res.json();
+      const json: Readonly<IQuoteResponse> = await res.json();
 
       return json;
     } catch (err) {
@@ -77,10 +79,10 @@ export class QuoteManager {
    * @async
    * @returns {Promise<Array<IListAuthorResponse>>} An object of partial authors
    */
-  public async listAuthors(): Promise<Array<IListAuthorResponse>> {
+  public async listAuthors(): Promise<ReadonlyArray<IListAuthorResponse>> {
     try {
       const res = await fetch(`${this.quotableURL}/authors`);
-      const json: Array<IListAuthorResponse> = await res.json();
+      const json: ReadonlyArray<IListAuthorResponse> = await res.json();
 
       return json;
     } catch (err) {
@@ -96,7 +98,7 @@ export class QuoteManager {
    * @param {String} id 
    * @returns {Promise<IAuthorResponse>} An author response object
    */
-  public async getAuthorByID(id: string): Promise<IAuthorResponse> {
+  public async getAuthorByID(id: string): Promise<Readonly<IAuthorResponse>> {
     try {
       const res = await fetch(`${this.quotableURL}/authors/${id}`);
       const json: IAuthorResponse = await res.json();
@@ -114,10 +116,10 @@ export class QuoteManager {
    * @async
    * @returns {Promise<{ quote: string }>} A simple quote object
    */
-  public async getKanyeQuote(): Promise<{ quote: string }> {
+  public async getKanyeQuote(): Promise<Readonly<{ quote: string }>> {
     try {
       const res = await fetch(this.kanyeQuoteURL);
-      const json: { quote: string } = await res.json();
+      const json: Readonly<{ quote: string }> = await res.json();
       
       return json;
     } catch (err) {

@@ -1,4 +1,4 @@
-import { SuperArray } from "../superArray";
+import { SuperArray } from '../superArray';
 import { inspect, InspectOptionsStylized } from 'util';
 
 /**
@@ -11,39 +11,35 @@ export class SuperMap<K, V> extends Map<K, V> {
   /**
    * Cache array to hold the values of the map. This gets set to `null` as soon as
    * `set()` or `delete()` gets called
-   * @private
-   * @type {SuperArray<V>}
    */
   private _array: SuperArray<V>;
   /**
    * Cache array to hold the keys of the map. This gets set to `null` as soon as
    * `set()` or `delete()` gets called
-   * @private
-   * @type {SuperArray<V>}
    */
   private _keyArray: SuperArray<K>;
   /**
    * Cache array to hold the key-value pairs of the map. This gets set to `null` as soon as
    * `set()` or `delete()` gets called
-   * @private
-   * @type {SuperArray<V>}
    */
   private _entryArray: SuperArray<[K, V]>;
 
   /**
-   * @public
-   * @constructor
    * @param {readonly (readonly [K, V])[] | Iterable<readonly [K, V]>} entries 
    */
   public constructor(entries?: readonly (readonly [K, V])[] | Iterable<readonly [K, V]>) {
     super(entries);
   }
 
+  public get [Symbol.species](): typeof SuperMap {
+    return SuperMap;
+  }
+
   public [inspect.custom](depth: number, options: InspectOptionsStylized) {
     let str = `SuperMap(${this.size}) {\n`;
     let counter = 0;
 
-    for(const [key, value] of this.entries()) {
+    for(const [key, value] of this) {
       str += `  ${inspect(key, options)} => ${inspect(value, options)}${counter < this.size - 1 ? ',' : ''}\n`
       counter++;
     }
@@ -62,7 +58,7 @@ export class SuperMap<K, V> extends Map<K, V> {
    * @param {V} value 
    * @returns {this}
    */
-  public set(key: K, value: V): this {
+  public override set(key: K, value: V): this {
     this.nullifyCacheArrays();
     return super.set(key, value);
   }
@@ -75,7 +71,7 @@ export class SuperMap<K, V> extends Map<K, V> {
    * @param {K} key 
    * @returns {boolean}
    */
-  public delete(key: K): boolean {
+  public override delete(key: K): boolean {
     this.nullifyCacheArrays();
     return super.delete(key);
   }
@@ -111,7 +107,7 @@ export class SuperMap<K, V> extends Map<K, V> {
   }
 
   /**
-   * Returns a new [SuperArray](../../../docs/dataStructures/superArray.md)
+   * Returns a new [SuperArray](../../../docs/dataStructures/SuperArray.md)
    * containing the values of the map.
    * @public
    * @method
@@ -133,7 +129,7 @@ export class SuperMap<K, V> extends Map<K, V> {
   }
 
   /**
-   * Returns a new [SuperArray](../../../docs/dataStructures/superArray.md)
+   * Returns a new [SuperArray](../../../docs/dataStructures/SuperArray.md)
    * containing the keys of the map.
    * @public
    * @method
@@ -155,7 +151,7 @@ export class SuperMap<K, V> extends Map<K, V> {
   }
 
   /**
-   * Returns a new [SuperArray](../../../docs/dataStructures/superArray.md)
+   * Returns a new [SuperArray](../../../docs/dataStructures/SuperArray.md)
    * containing the key-value pairs of the map.
    * @public
    * @method
@@ -163,10 +159,10 @@ export class SuperMap<K, V> extends Map<K, V> {
    */
   public toEntryArray(): SuperArray<[K, V]> {
     if(!this._entryArray || this._entryArray.length !== this.size) {
-      const arr = new SuperArray<[K, V]>();;
+      const arr = new SuperArray<[K, V]>();
       let count = 0;
 
-      for(const entry of this.entries()) {
+      for(const entry of this) {
         arr[count++] = entry;
       }
 
@@ -331,17 +327,17 @@ export class SuperMap<K, V> extends Map<K, V> {
    * @returns {SuperMap<K, V>}
    */
   public concat(...values: Array<Map<K, V> | SuperMap<K, V> | [K, V]>): SuperMap<K, V> {
-    const newMap = new SuperMap<K, V>(this.entries())
+    const newMap = new this[Symbol.species]<K, V>(this.entries());
 
     for(const value of values) {
       // Works with SuperMap and Map as SuperMap is an instance of Map
       if(value instanceof Map) {
-        for(const [key, val] of value.entries()) {
+        for(const [key, val] of value) {
           newMap.set(key, val);
         }
       } else {
         // value is of type key-value tuple ( [K, V] )
-        newMap.set(value[0], value[1]);
+        newMap.set(...value);
       }
     }
 
@@ -386,7 +382,7 @@ export class SuperMap<K, V> extends Map<K, V> {
       fn = fn.bind(thisArg);
     }
 
-    for(const [k, v] of this.entries()) {
+    for(const [k, v] of this) {
       if(!fn(v, k, this)) {
         return false;
       }
@@ -429,13 +425,13 @@ export class SuperMap<K, V> extends Map<K, V> {
    * @returns {SuperMap<K, V>}
    */
   public filter(fn: (value: V, key?: K, map?: this) => boolean, thisArg?: unknown): SuperMap<K, V> {
-    const newMap = new SuperMap<K, V>()
+    const newMap = new this[Symbol.species]<K, V>()
     
     if(typeof thisArg !== 'undefined') {
       fn = fn.bind(thisArg);
     }
 
-    for(const [k, v] of this.entries()) {
+    for(const [k, v] of this) {
       if(fn(v, k, this)) {
         newMap.set(k, v);
       }
@@ -482,7 +478,7 @@ export class SuperMap<K, V> extends Map<K, V> {
       fn = fn.bind(thisArg);
     }
 
-    for(const [k, v] of this.entries()) {
+    for(const [k, v] of this) {
       if(fn(v, k, this)) {
         return v;
       }
@@ -527,7 +523,7 @@ export class SuperMap<K, V> extends Map<K, V> {
       fn = fn.bind(thisArg);
     }
 
-    for(const [k, v] of this.entries()) {
+    for(const [k, v] of this) {
       if(fn(v, k, this)) {
         return k;
       }
@@ -573,7 +569,7 @@ export class SuperMap<K, V> extends Map<K, V> {
       fn = fn.bind(thisArg);
     }
 
-    for(const [k, v] of this.entries()) {
+    for(const [k, v] of this) {
       if(fn(v, k, this)) {
         return [k, v];
       }
@@ -609,7 +605,7 @@ export class SuperMap<K, V> extends Map<K, V> {
       fn = fn.bind(thisArg);
     }
 
-    for(const [key, value] of this.entries()) {
+    for(const [key, value] of this) {
       if(fn(value, key, this)) {
         return true;
       }
@@ -632,7 +628,7 @@ export class SuperMap<K, V> extends Map<K, V> {
     if(typeof initialValue !== 'undefined') {
       accumulator = initialValue;
       
-      for(const [key, value] of this.entries()) {
+      for(const [key, value] of this) {
         accumulator = fn(accumulator, value, key, this);
       }
 
@@ -641,7 +637,7 @@ export class SuperMap<K, V> extends Map<K, V> {
 
     let first = true;
 
-    for(const [key, value] of this.entries()) {
+    for(const [key, value] of this) {
       if(first) {
         accumulator = (value as unknown) as S;
         first = false;

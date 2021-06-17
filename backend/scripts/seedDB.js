@@ -105,7 +105,7 @@ const {
       banID: uuidv4(),
       reason: DB_SEED,
       unbanned: false,
-      bannedAt: new Date().toLocaleString()
+      bannedAt: Date.now()
     }
 
     const discordKicksObj = {
@@ -113,16 +113,15 @@ const {
       guildID: '340336461243088906',
       kickID: uuidv4(),
       reason: DB_SEED,
-      kickedAt: new Date().toLocaleString()
+      kickedAt: Date.now()
     }
 
     const discordMutesObj = {
       guildID: '340336461243088906',
       userID: '798567911194492950',
-      muterUserID: '107424723050180608',
       muteID: uuidv4(),
       reason: DB_SEED,
-      mutedAt: new Date().toLocaleString()
+      mutedAt: Date.now()
     }
 
     const discordReportsObj = {
@@ -131,16 +130,15 @@ const {
       reporterUserID: '107424723050180608',
       reportID: uuidv4(),
       reason: DB_SEED,
-      reportedAt: new Date().toLocaleString()
+      reportedAt: Date.now()
     }
 
     const discordWarnsObj = {
       guildID: '340336461243088906',
       userID: '798567911194492950',
-      warnerUserID: '107424723050180608',
       warnID: uuidv4(),
       reason: DB_SEED,
-      warnedAt: new Date().toLocaleString()
+      warnedAt: Date.now()
     }
 
     const moderationCFGObj = {
@@ -234,7 +232,7 @@ const {
         enabled: true,
         setNickname: true,
         report: true
-      }),
+      })
     ]);
     
     for(const id of ignoredChannels) {

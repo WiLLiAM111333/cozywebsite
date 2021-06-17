@@ -1,0 +1,4 @@
+MultiMap       : https://en.cppreference.com/w/cpp/container/multimap
+std::less      : https://en.cppreference.com/w/cpp/utility/functional/less
+std::allocator : https://en.cppreference.com/w/cpp/memory/allocator
+std::pair      : https://en.cppreference.com/w/cpp/utility/pair

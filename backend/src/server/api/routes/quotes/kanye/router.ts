@@ -3,7 +3,7 @@ import { KanyeController } from './controller';
 import { Application, Router as expressRouter } from "express";
 
 export class KanyeRouter extends Router {
-  protected controller: KanyeController;
+  declare protected controller: KanyeController;
 
   public constructor(app: Application) {
     super({

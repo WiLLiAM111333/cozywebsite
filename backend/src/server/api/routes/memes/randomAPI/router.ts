@@ -3,7 +3,7 @@ import { Router } from "../../../../../../lib/server/router/Router";
 import { RandomAPIController } from "./controller";
 
 export class RandomAPIRouter extends Router {
-  protected controller: RandomAPIController;
+  declare protected controller: RandomAPIController;
   
   public constructor(app: Application) {
     super({

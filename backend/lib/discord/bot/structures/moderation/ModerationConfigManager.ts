@@ -1,9 +1,0 @@
-/*
-
-
-Create moderation config manager class
-Communicates by events
-
-
-
-*/

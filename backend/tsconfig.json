@@ -15,7 +15,7 @@
     "resolveJsonModule": true,
     "generateCpuProfile": "profile.cpuprofile",
     "extendedDiagnostics": true,
-    "listFiles": true,
+    "noImplicitOverride": true,
     "typeRoots": ["./typings", "./node_modules/@types"],
     "baseUrl": ".",
     "paths": {
@@ -25,8 +25,7 @@
   "include": [
     "./src/**/*", 
     "./lib/**/*", 
-    "./typings/**/*",
-    "./test/**/*", 
+    "./typings/**/*", 
     "index.d.ts",
   ],
   "exclude": [

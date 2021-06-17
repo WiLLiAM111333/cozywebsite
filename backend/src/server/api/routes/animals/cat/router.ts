@@ -3,7 +3,7 @@ import { CatController } from './controller';
 import { Router } from '../../../../../../lib/server/router/Router';
 
 export class CatRouter extends Router {
-  protected controller: CatController;
+  declare protected controller: CatController;
 
   public constructor(app: Application) {
     super({
