@@ -31,6 +31,8 @@ THIS WILL BE ENFORCED BY AN OS CHECK AND WILL NOT WORK ON WINDOWS               
 */
 
 const { platform } = require('os');
+const chalk = require('chalk');
+const { cyan, greenBright } = chalk;
 
 if(platform() !== 'linux') {
   process.exit(0);
@@ -50,10 +52,9 @@ const {
   deleteDocs, 
   deleteResources, 
   deleteTests, 
-  deleteConfigFiles ,
+  deleteConfigFiles,
   deleteTypeScript
 } = require('./delete');
-
 
 const packageJSONPath = join(__dirname, '..', '..', 'package.json');
 const packageJSON = require('../../package.json');
@@ -67,10 +68,10 @@ writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
 (async () => {
   try {
     await deleteTests();
-
-    console.log('Deleted tests');
-    console.log('Removed dev dependencies');
-    console.log('Installing production dependencies...');
+    
+    console.log(cyan('Deleted tests'));
+    console.log(chalk`{cyan Removed} {greenBright dev dependencies}`);
+    console.log(chalk`{cyan Installing {greenBright production dependencies}...}`);
 
     exec('npm install', (err, npmout, npmerr) => {
       if(err) {
@@ -85,7 +86,7 @@ writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
         console.log(npmout);
       }
 
-      console.log('Compiling TypeScript down to JavaScript in ./dist')
+      console.log(chalk`{cyan Compiling {blueBright TypeScript} down to {yellowBright JavaScript} in {greenBright ./dist}}`);
 
       exec('tsc', (compileErr, tscout, tscerr) => {
         if(compileErr) {
@@ -100,7 +101,7 @@ writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
           console.log(tscout);
         }
 
-        console.log('Removing unnecessary files and adding new ones we need...');
+        console.log(cyan('Removing unnecessary files and adding new ones we need...'));
         
         (async () => {
           await Promise.all([
@@ -113,11 +114,12 @@ writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 2));
             setupSimulations()
           ]);
 
-          await rmdir(join(__dirname, '..', '..', 'typings'), { recursive: true })
+          await rmdir(join(__dirname, '..', '..', 'typings'), { recursive: true });
         })();
         
-        console.log('Everything has been built and prepared for production, except for environment variables and the database (WIP)');
-      })
+        console.log(greenBright('Everything has been built and prepared for production, except for the database (WIP)'));
+        console.log(chalk`{cyan You need to {bold manually} provide environment variables in a {yellowBright .env} file!}`);
+      });
     });
   } catch (err) {
     console.error(err);
