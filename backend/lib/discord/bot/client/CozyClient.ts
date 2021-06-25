@@ -9,19 +9,21 @@ import { Modmail } from '../../modmail';
 import { ProfileManager } from '../structures/profile/ProfileManager';
 import { StarBoardManager } from '../structures/starboard/StarBoardManager';
 import { Logger } from '../../../logger/Logger';
+import { WelcomeGoodByeManager } from '../structures/welcome/WelcomeGoodByeManager';
 
 export class CozyClient extends Client {
-  private eventPath: string;
-  public commandHandler: CommandHandler;
-  public animalManager: AnimalManager;
-  public profileManager: ProfileManager;
-  public owners: Array<Snowflake>;
-  public autoMod: AutoMod;
+  private readonly eventPath: Readonly<string>;
+  public readonly commandHandler: Readonly<CommandHandler>;
+  public readonly animalManager: Readonly<AnimalManager>;
+  public readonly profileManager: Readonly<ProfileManager>;
+  public readonly owners: ReadonlyArray<Snowflake>;
+  public readonly autoMod: Readonly<AutoMod>;
   public editSnipes: Map<Snowflake, { oldContent: string; newContent: string }>;
   public snipes: Map<Snowflake, { content: string, author: User }>;
-  public starBoardManager: StarBoardManager;
-  public logger: Logger;
-  private modMail: Modmail;
+  public readonly starBoardManager: Readonly<StarBoardManager>;
+  public readonly logger: Readonly<Logger>;
+  public readonly modMail: Readonly<Modmail>;
+  public readonly welcomeGoodByeManager: Readonly<WelcomeGoodByeManager>;
   
   public constructor(options?: ClientOptions) {
     super(options);
@@ -36,6 +38,7 @@ export class CozyClient extends Client {
     this.snipes = new Map();
     this.starBoardManager = new StarBoardManager();
     this.logger = new Logger();
+    this.welcomeGoodByeManager = new WelcomeGoodByeManager();
     // this.modMail = new Modmail(this);
 
     this.loadEvents();

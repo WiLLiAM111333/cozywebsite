@@ -19,7 +19,7 @@ WORK IN PROGRESS
 import fetch from 'node-fetch';
 
 export class EvilInsultWrapper {
-  private apiURL: string;
+  private readonly apiURL: Readonly<string>;
 
   public constructor() {
     this.apiURL = 'https://evilinsult.com/generate_insult.php?lang=en&type=json'

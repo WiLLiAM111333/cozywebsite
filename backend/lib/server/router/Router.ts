@@ -18,22 +18,22 @@ export abstract class Router extends Base implements IRouter {
    * The URL route the router controls.
    * @public
    */
-  public route: string;
+  public readonly route: Readonly<string>;
   /**
    * The express-insantiated router to handle the *router stuff*.
    * @public
    */
-  public router: expressRouter;
+  public readonly router: expressRouter;
   /**
    * The express application the router is supposed to reference.
    * @public
    */
-  public app: Application;
+  public readonly app: Readonly<Application>;
   /**
    * The controller the router can use if it exists
    * @protected
    */
-  protected controller?: Controller;
+  protected readonly controller?: Readonly<Controller>;
 
   /**
    * @public

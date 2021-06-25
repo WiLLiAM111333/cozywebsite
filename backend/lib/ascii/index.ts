@@ -1,14 +1,10 @@
 /**
  * Class to make ASCII actions cleaner and easier in a single container.
  * It is adviced to use the regular string functions for this if you only want to use 1 operation as it would be faster.
- * @exports
- * @class
  */
 export class ASCII {
   /**
    * Converts a number to its corresponding ASCII character using String.fromCharCode(n).
-   * @public
-   * @function
    * @param {Number} value
    * @returns {String} 
    */
@@ -18,8 +14,6 @@ export class ASCII {
 
   /**
    * Converts a character to its corresponding ASCII value using String.prototype.codePointAt(n).
-   * @public
-   * @function
    * @param {String} char
    * @returns {Number}
    */
@@ -29,8 +23,6 @@ export class ASCII {
 
   /**
    * Makes a whole string into a string of ASCII and joins the values together by `-`.
-   * @public
-   * @function
    * @param {String} str 
    * @returns {String}
    */
@@ -47,8 +39,6 @@ export class ASCII {
 
   /**
    * Takes a string of multiple ASCII values joined together by `-` like the function `ASCII.prototype.asciiToStr(ascii)` returns and makes it a regular human readable string`
-   * @public
-   * @function
    * @param {String} ascii 
    * @returns {String}
    */

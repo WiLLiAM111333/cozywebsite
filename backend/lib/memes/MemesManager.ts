@@ -6,9 +6,9 @@ import { IRedditMemeData } from './reddit/IRedditMemeData';
 import { IRedditResponse } from "./reddit/IRedditResponse";
 
 export class MemeManager {
-  private randomAPIMemeURL: string;
-  private gimmeMemeURL: string;
-  private dadJokeURL: string;
+  private readonly randomAPIMemeURL: Readonly<string>;
+  private readonly gimmeMemeURL: Readonly<string>;
+  private readonly dadJokeURL: Readonly<string>;
 
   public constructor() {
     this.randomAPIMemeURL = 'https://some-random-api.ml/meme/';

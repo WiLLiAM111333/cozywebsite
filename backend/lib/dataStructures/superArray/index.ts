@@ -1,26 +1,20 @@
 import { inspect, InspectOptionsStylized } from 'util';
 
 /**
- * @description A class to handle custom array methods directly on the class itself
- * @exports
- * @class
+ * A class to handle custom array methods directly on the class itself
  * @extends [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
  */
 export class SuperArray<T> extends Array<T> {
   /**
-   * @description Checks if the provided array is a `SuperArray`
-   * @public
-   * @method
+   * Checks if the provided array is a `SuperArray`
    * @param {ArrayLike<unknown>} arr 
-   * @returns 
+   * @returns {boolean}
    */
   public static isSuperArray(arr: ArrayLike<unknown>): boolean {
     return arr instanceof SuperArray;
   }
 
   /**
-   * @public
-   * @constructor
    * @param {Array<T>} values 
    */
   public constructor(values?: Array<T>) {
@@ -34,14 +28,12 @@ export class SuperArray<T> extends Array<T> {
     }
   }
 
-  public [inspect.custom](depth: number, options: InspectOptionsStylized) {
+  public [inspect.custom](depth: number, options: InspectOptionsStylized): string {
     return inspect([...this.values()], options);
   }
 
   /**
-   * @description Returns a section of an array.
-   * @public
-   * @method
+   * Returns a section of an array.
    * @param {?Number} start The beginning of the specified portion of the array.
    * @param {?Number} end The end of the specified portion of the array. This is exclusive of the element at the index 'end'.
    */
@@ -50,79 +42,81 @@ export class SuperArray<T> extends Array<T> {
   }
 
   /**
-   * @description Combines two or more arrays.
-   * @public
-   * @method
+   * Combines two or more arrays.
    * @param {...Array<ConcatArray<T>>} items Additional items to add to the end of array1.
+   * @returns {SuperArray<T>}
   */
   public override concat(...items: Array<ConcatArray<T>>): SuperArray<T>;
   /**
-   * @description Combines two or more arrays.
-   * @public
-   * @method
+   * Combines two or more arrays.
    * @param {...Array<(ConcatArray<T> | T)} items Additional items to add to the end of array1.
+   * @returns {SuperArray<T>}
   */
   public override concat(...items: Array<(ConcatArray<T> | T)>): SuperArray<T> {
     return new SuperArray<T>(super.concat(...items));
   }
 
   /**
-   * @description Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
-   * @public
-   * @method
+   * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
    * @param {Number} start The zero-based location in the array from which to start removing elements.
    * @param {Number} deleteCount The number of elements to remove.
+   * @returns {SuperArray<T>}
    */
   public override splice(start: number, deleteCount?: number): SuperArray<T>;
   /**
-   * @description Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
-   * @public
-   * @method
+   * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
    * @param {Number} start The zero-based location in the array from which to start removing elements.
    * @param {Number} deleteCount The number of elements to remove.
    * @param {Array<T>} items Elements to insert into the array in place of the deleted elements.
+   * @returns {SuperArray<T>}
    */
   public override splice(start: number, deleteCount: number, ...items: Array<T>): SuperArray<T> {
     return new SuperArray<T>(super.splice(start, deleteCount, ...items));
   }
 
   /**
-   * @description Calls a defined callback function on each element of an array, and returns an array that contains the results.
-   * @public
-   * @method
+   * Calls a defined callback function on each element of an array, and returns an array that contains the results.
    * @param {(value: T, index: Number, array: SuperArray<T>) => U} callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
    * @param {?unknown} thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+   * @returns {SuperArray<U>}
    */
   public override map<U>(callbackfn: (value: T, index: number, array: SuperArray<T>) => U, thisArg?: unknown): SuperArray<U> {
     return new SuperArray<U>(super.map<U>(callbackfn, thisArg));
   }
 
   /**
-   * @description Returns the elements of an array that meet the condition specified in a callback function.
-   * @public
-   * @method
+   * Returns the elements of an array that meet the condition specified in a callback function.
    * @param {(value: T, index: number, array: SuperArray<T>) => boolean} predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
    * @param {?unknown} thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
+   * @returns {SuperArray<S>}
    */
   public override filter<S extends T>(predicate: (value: T, index: number, array: SuperArray<T>) => value is S, thisArg?: unknown): SuperArray<S>;
   /**
-   * @description Returns the elements of an array that meet the condition specified in a callback function.
+   * Returns the elements of an array that meet the condition specified in a callback function.
    * @param {(value: T, index: number, array: SuperArray<T>) => unknown} predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
    * @param {?unknown} thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
+   * @returns {SuperArray<T>}
    */
   public override filter(predicate: (value: T, index: number, array: SuperArray<T>) => unknown, thisArg?: unknown): SuperArray<T> {
     return new SuperArray(super.filter(predicate, thisArg));
   }
 
   /**
-   * @description Returns a random value of the array
-   * @public
-   * @method
-   * @param {?number} amount
+   * Returns a random value of the array
    * @returns {T | SuperArray<T>}
    */
   public random(): T;
+  /**
+   * Returns a random value of the array
+   * @param {number} amount
+   * @returns {T | SuperArray<T>}
+   */
   public random(amount: number): SuperArray<T>;
+  /**
+   * Returns a random value of the array
+   * @param {?number} amount
+   * @returns {T | SuperArray<T>}
+   */
   public random(amount?: number): T | SuperArray<T> {
     if(amount) {
       const arr = new SuperArray<T>();
@@ -138,9 +132,7 @@ export class SuperArray<T> extends Array<T> {
   }
 
   /**
-   * @description Rotates the array to the left by `n` steps and returns a new `SuperArray`.
-   * @publioc
-   * @method
+   * Rotates the array to the left by `n` steps and returns a new `SuperArray`.
    * @param {Number} n The amount of steps to rotate the array with
    * @returns {SuperArray<T>} 
    */
@@ -153,9 +145,7 @@ export class SuperArray<T> extends Array<T> {
   }
 
   /**
-   * @description Rotates the array to the right by `n` steps and returns a new `SuperArray`
-   * @public
-   * @method
+   * Rotates the array to the right by `n` steps and returns a new `SuperArray`
    * @param {Number} n The amount of steps to rotate the array with 
    * @returns {SuperArray<T>}
    */
@@ -168,9 +158,7 @@ export class SuperArray<T> extends Array<T> {
   }
 
   /**
-   * @description Shuffles and returns a new `SuperArray`
-   * @public
-   * @method
+   * Shuffles and returns a new `SuperArray`
    * @returns {SuperArray<T>}
    */
   public shuffle(): SuperArray<T> {
@@ -178,9 +166,7 @@ export class SuperArray<T> extends Array<T> {
   }
 
   /**
-   * @description Returns the last value in the array without removing it unlike [Array.pop()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop)
-   * @public
-   * @method
+   * Returns the last value in the array without removing it unlike [Array.pop()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop)
    * @returns {T}
    */
   public last(): T {
@@ -188,9 +174,7 @@ export class SuperArray<T> extends Array<T> {
   }
 
   /**
-   * @description Returns a new object of the array. It does not flatten it, so the nesting stays the same. 
-   * @public
-   * @method
+   * Returns a new object of the array. It does not flatten it, so the nesting stays the same. 
    * @returns {{ [key: Number]: T }}
    */
   public toObject(): { [key: number]: T } {

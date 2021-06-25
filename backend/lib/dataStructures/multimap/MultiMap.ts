@@ -26,7 +26,7 @@ export class MultiMap<K, V> {
     return true;
   }
 
-  public [inspect.custom](depth: number, options: InspectOptionsStylized) {
+  public [inspect.custom](depth: number, options: InspectOptionsStylized): string {
     if(this.size === 0) {
       return 'MultiMap(0) {  }'
     }
@@ -230,7 +230,7 @@ export class MultiMap<K, V> {
    * @param {K} iKey
    * @returns {{ key: K, value: V }}
    */
-  public extract(iKey: K): undefined | { key: K, value: V } {
+  public extract(iKey: K): { key: K, value: V } | undefined {
     for(let i = 0; i < this.items.length; i++) {
       if(this.items[i]) {
         const { key } = this.items[i];
@@ -278,12 +278,14 @@ export class MultiMap<K, V> {
    * @param {K} iKey 
    * @returns {{ key: K, value: V }}
    */
-  public find(iKey: K): { key: K, value: V } {
+  public find(iKey: K): { key: K, value: V } | undefined {
     for(const { key, value } of this) {
       if(iKey === key) {
         return { key, value };
       }
-    }    
+    } 
+    
+    return undefined;
   }
 
   /**

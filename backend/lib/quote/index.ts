@@ -1,4 +1,5 @@
 import fetch from 'node-fetch'
+import { AnimeManager } from '../anime/AnimeManager';
 import { IAuthorResponse } from './IAuthorResponse';
 import { IListAuthorResponse } from './IListAuthorResponse';
 import { IQuoteResponse } from './IQuoteResponse';
@@ -6,40 +7,32 @@ import { IQuoteResponse } from './IQuoteResponse';
 // I dont know what could go wrong with any of the API's im using here, so catch blocks are just gonna log until I figure something out
 
 /**
- * @description A class to handle all quote data
+ * A class to handle all quote data
  * @exports
  * @class
  */
 export class QuoteManager {
   /**
-   * @description The base URL to the quotable API
-   * @private
-   * @readonly
-   * @type {String}
+   * The base URL to the quotable API
    */
   private readonly quotableURL: string;
   /**
-   * @description The base URL to the kanye quote API 
-   * @private
-   * @readonly
-   * @type {String}
+   * The base URL to the kanye quote API 
    */
   private readonly kanyeQuoteURL: string;
-
   /**
-   * @public
-   * @constructor
+   * The internal insantiation of the AnimeManager class to help with anime quotes
    */
+  public readonly animeManager: AnimeManager;
+
   public constructor() {
     this.quotableURL = 'https://api.quotable.io';
     this.kanyeQuoteURL = 'https://api.kanye.rest';
+    this.animeManager = new AnimeManager();
   }
 
   /**
-   * @description Gets a random quote from the [Quotable API](https://github.com/lukePeavey/quotable)
-   * @public
-   * @method
-   * @async
+   * Gets a random quote from the [Quotable API](https://github.com/lukePeavey/quotable)
    * @returns {Promise<IQuoteResponse>} A random quote response object
    */
   public async getRandomQuote(): Promise<Readonly<IQuoteResponse>> {
@@ -54,10 +47,7 @@ export class QuoteManager {
   }
 
   /**
-   * @description Gets a quote by ID from the [Quotable API](https://github.com/lukePeavey/quotable)
-   * @public
-   * @method
-   * @async
+   * Gets a quote by ID from the [Quotable API](https://github.com/lukePeavey/quotable)
    * @param {String} id
    * @returns {Promise<IQuoteResponse>} A quote response object
    */
@@ -73,10 +63,7 @@ export class QuoteManager {
   }
 
   /**
-   * @description Lists partial author objects from the [Quotable API](https://github.com/lukePeavey/quotable) 
-   * @public
-   * @method
-   * @async
+   * Lists partial author objects from the [Quotable API](https://github.com/lukePeavey/quotable) 
    * @returns {Promise<Array<IListAuthorResponse>>} An object of partial authors
    */
   public async listAuthors(): Promise<ReadonlyArray<IListAuthorResponse>> {
@@ -91,10 +78,7 @@ export class QuoteManager {
   }
 
   /**
-   * @description Gets an author by ID from the [Quotable API](https://github.com/lukePeavey/quotable)
-   * @public
-   * @method
-   * @async
+   * Gets an author by ID from the [Quotable API](https://github.com/lukePeavey/quotable)
    * @param {String} id 
    * @returns {Promise<IAuthorResponse>} An author response object
    */
@@ -110,10 +94,7 @@ export class QuoteManager {
   }
 
   /**
-   * @description Gets a kanye quote from the [Kanye West API](https://kanye.rest/)
-   * @public
-   * @method
-   * @async
+   * Gets a kanye quote from the [Kanye West API](https://kanye.rest/)
    * @returns {Promise<{ quote: string }>} A simple quote object
    */
   public async getKanyeQuote(): Promise<Readonly<{ quote: string }>> {

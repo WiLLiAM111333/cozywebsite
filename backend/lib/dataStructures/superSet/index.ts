@@ -1,19 +1,11 @@
 /**
- * @description A class extending the base Set class in JavaScript
- * @exports
- * @class 
+ * A class extending the base Set class in JavaScript
  * @extends {Set}
  */
 export class SuperSet<T> extends Set<T> {
-  /**
-   * @private
-   * @type {this._arrayay<T>}
-   */
   private _array: Array<T>;
 
   /**
-   * @public
-   * @constructor
    * @param {Iterable<T> | Array<T>} values
    */
   public constructor(values?: Iterable<T> | Array<T>) {
@@ -21,8 +13,7 @@ export class SuperSet<T> extends Set<T> {
   }
 
   /**
-   * @description An array of the values stored in the SuperSet
-   * @public
+   * An array of the values stored in the SuperSet
    * @type {Array<T>}
    */
   public get array(): Array<T> {
@@ -34,9 +25,7 @@ export class SuperSet<T> extends Set<T> {
   }
 
   /**
-   * @description Returns a random element in the SuperSet. 
-   * @public
-   * @method
+   * Returns a random element in the SuperSet. 
    * @returns {T} 
    */
   public random(): T | undefined {
@@ -44,9 +33,7 @@ export class SuperSet<T> extends Set<T> {
   }
 
   /**
-   * @description Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
+   * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
    * @param {(value: T, set: this) => boolean} fn 
    * @returns {T}
    */
@@ -61,9 +48,7 @@ export class SuperSet<T> extends Set<T> {
   }
 
   /**
-   * @description Identical to [Array.concat()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)
-   * @public
-   * @method
+   * Identical to [Array.concat()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)
    * @param {...Array<SuperSet<T> | Set<T>>} sets 
    * @returns {SuperSet<T>}
    */
@@ -80,9 +65,7 @@ export class SuperSet<T> extends Set<T> {
   }
 
   /**
-   * @description Identical to [Array.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
-   * @public
-   * @method
+   * Identical to [Array.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
    * @param {(value: T, set: this) => boolean} fn
    * @returns {SuperSet<T>}
    */
@@ -99,9 +82,7 @@ export class SuperSet<T> extends Set<T> {
   }
 
   /**
-   * @description Identical to [Array.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
-   * @public
-   * @method
+   * Identical to [Array.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
    * @param {(accumulator: S, value: V, key?: K, map?: this) => S} fn 
    * @param {?S} initialValue 
    * @returns {S}

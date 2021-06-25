@@ -6,7 +6,7 @@ import { Application, Router } from 'express';
  * @interface
  */
 export interface IRouter {
-  route: string;
+  route: Readonly<string>;
   router: Router;
-  app: Application;
+  app: Readonly<Application>;
 }

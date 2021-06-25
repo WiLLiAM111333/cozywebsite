@@ -3,8 +3,6 @@ import { inspect, InspectOptionsStylized } from 'util';
 
 /**
  * Simple class exntension of `Map` with extra methods. 
- * @exports
- * @class
  * @extends [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
  */
 export class SuperMap<K, V> extends Map<K, V> {
@@ -35,7 +33,7 @@ export class SuperMap<K, V> extends Map<K, V> {
     return SuperMap;
   }
 
-  public [inspect.custom](depth: number, options: InspectOptionsStylized) {
+  public [inspect.custom](depth: number, options: InspectOptionsStylized): string {
     let str = `SuperMap(${this.size}) {\n`;
     let counter = 0;
 
@@ -52,8 +50,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   /**
    * Identical to [Map.set()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/set)
    * other than setting the cache-arrays to null
-   * @public
-   * @method
    * @param {K} key 
    * @param {V} value 
    * @returns {this}
@@ -66,8 +62,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   /**
    * Identical to [Map.delete()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/set)
    * other than setting the cache-arrays to null
-   * @public
-   * @method
    * @param {K} key 
    * @returns {boolean}
    */
@@ -78,8 +72,6 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Returns the first value in the map. It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {V | undefined}
    */
   public first(): V | undefined {
@@ -88,8 +80,6 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Returns the first key in the map. It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {K | undefined}
    */
   public firstKey(): K | undefined {
@@ -98,8 +88,6 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Returns the first key-value pair in the map. It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {[K, V] | undefined}
    */
   public firstEntry(): [K, V] | undefined {
@@ -109,8 +97,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   /**
    * Returns a new [SuperArray](../../../docs/dataStructures/SuperArray.md)
    * containing the values of the map.
-   * @public
-   * @method
    * @returns {SuperArray<V>}
    */
   public toArray(): SuperArray<V> {
@@ -131,8 +117,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   /**
    * Returns a new [SuperArray](../../../docs/dataStructures/SuperArray.md)
    * containing the keys of the map.
-   * @public
-   * @method
    * @returns {SuperArray<K>}
    */
   public toKeyArray(): SuperArray<K> {
@@ -153,8 +137,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   /**
    * Returns a new [SuperArray](../../../docs/dataStructures/SuperArray.md)
    * containing the key-value pairs of the map.
-   * @public
-   * @method
    * @returns {SuperArray<[K, V]>}
    */
   public toEntryArray(): SuperArray<[K, V]> {
@@ -174,8 +156,6 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Returns the last value of the map. It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {V | undefined}
    */
   public last(): V | undefined {
@@ -184,8 +164,6 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Returns the last key of the map. It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {K | undefined}
    */
   public lastKey(): K | undefined {
@@ -194,8 +172,6 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Returns the last key-value pair of the map. It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {[K, V] | undefined}
    */
   public lastEntry(): [K, V] | undefined {
@@ -204,8 +180,6 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Returns a random value of the map. It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {V | undefined}
    */
   public random(): V | undefined {
@@ -214,8 +188,6 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Returns a random key of the map. It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {K | undefined}
    */
   public randomKey(): K | undefined {
@@ -224,8 +196,6 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Returns a random key-value pair of the map. It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {[K, V] | undefined}
    */
   public randomEntry(): [K, V] | undefined {
@@ -235,8 +205,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   /**
    * Deletes the first entry of the map and returns its value. 
    * It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {V | undefined}
    */
   public shift(): V | undefined {
@@ -250,8 +218,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   /**
    * Deletes the first entry of the map and returns its key. 
    * It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {K | undefined}
    */
   public shiftKey(): K | undefined {
@@ -264,8 +230,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   /**
    * Deletes the first entry of the map and returns its key-value pair. 
    * It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {[K, V] | undefined}
    */
   public shiftEntry(): [K, V] | undefined {
@@ -278,8 +242,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   /**
    * Deletes the last entry of the map and returns its value. 
    * It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {V | undefined}
    */
   public pop(): V | undefined {
@@ -294,8 +256,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   /**
    * Deletes the last entry of the map and returns its key. 
    * It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {K | undefined}
    */
   public popKey(): K | undefined {
@@ -308,8 +268,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   /**
    * Deletes the last entry of the map and returns its key-value pair. 
    * It will return undefined if the map is empty.
-   * @public
-   * @method
    * @returns {[K, V] | undefined}
    */
   public popEntry(): [K, V] | undefined {
@@ -346,24 +304,18 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Identical to [Array.every()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)
-   * @public
-   * @method
    * @param {(value: V, key: K) => boolean} fn
    * @returns {boolean} 
    */
   public every(fn: (value: V, key: K) => boolean): boolean;
   /**
    * Identical to [Array.every()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)
-   * @public
-   * @method
    * @param {(value: V, key: K, map: this) => boolean} fn
    * @returns {boolean} 
    */
   public every(fn: (value: V, key: K, map: this) => boolean): boolean;
   /**
    * Identical to [Array.every()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)
-   * @public
-   * @method
    * @param {(value: V, key?: K, map?: this) => boolean} fn
    * @param {?S} thisArg
    * @returns {boolean} 
@@ -371,8 +323,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   public every<S>(fn: (value: V, key?: K, map?: this) => boolean, thisArg: S): boolean;
   /**
    * Identical to [Array.every()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)
-   * @public
-   * @method
    * @param {(value: V, key?: K, map?: this) => boolean} fn
    * @param {?unknown} thisArg
    * @returns {boolean} 
@@ -393,24 +343,18 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /** 
    * Identical to [Array.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) 
-   * @public
-   * @method
    * @param {(value: V, key: K) => boolean}
    * @returns {SuperMap<K, V>}
    */
   public filter(fn: (value: V, key: K) => boolean): SuperMap<K, V>;
   /** 
    * Identical to [Array.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) 
-   * @public
-   * @method
    * @param {(value: V, key: K, map: this) => boolean}
    * @returns {SuperMap<K, V>}
    */
   public filter(fn: (value: V, key: K, map: this) => boolean): SuperMap<K, V>;
   /** 
    * Identical to [Array.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) 
-   * @public
-   * @method
    * @param {fn: (value: V, key?: K, map?: this) => boolean}
    * @param {S} thisArg
    * @returns {SuperMap<K, V>}
@@ -418,8 +362,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   public filter<S>(fn: (value: V, key?: K, map?: this) => boolean, thisArg: S): SuperMap<K, V>;
   /** 
    * Identical to [Array.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) 
-   * @public
-   * @method
    * @param {(value: V, key?: K, map?: this) => boolean}
    * @param {?unknown} thisArg
    * @returns {SuperMap<K, V>}
@@ -442,24 +384,18 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
    * @param {(value: V, key: K) => boolean} fn
    * @returns {V | undefined} 
    */
   public find(fn: (value: V, key: K) => boolean): V | undefined;
   /**
    * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
    * @param {(value: V, key: K, map: this) => boolean} fn
    * @returns {V | undefined} 
    */
   public find(fn: (value: V, key: K, map: this) => boolean): V | undefined;
   /**
    * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
    * @param {(value: V, key?: K, map?: this) => boolean} fn
    * @param {S} thisArg
    * @returns {V | undefined} 
@@ -467,8 +403,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   public find<S>(fn: (value: V, key?: K, map?: this) => boolean, thisArg: S): V | undefined;
   /**
    * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
    * @param {(value: V, key?: K, map?: this) => boolean} fn
    * @param {?unknown} thisArg
    * @returns {V | undefined} 
@@ -487,24 +421,18 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
    * @param {(value: V, key: K) => boolean} fn
    * @returns {V | undefined} 
    */
   public findKey(fn: (value: V, key: K) => boolean): K | undefined;
   /**
    * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
    * @param {(value: V, key: K, map: this) => boolean} fn
    * @returns {K | undefined} 
    */
   public findKey(fn: (value: V, key: K, map: this) => boolean): K | undefined;
   /**
    * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
    * @param {(value: V, key?: K, map?: this) => boolean} fn
    * @param {S} thisArg
    * @returns {K | undefined} 
@@ -512,8 +440,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   public findKey<S>(fn: (value: V, key?: K, map?: this) => boolean, thisArg: S): K | undefined;
   /**
    * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
    * @param {(value: V, key?: K, map?: this) => boolean} fn
    * @param {?unknown} thisArg
    * @returns {K | undefined} 
@@ -533,24 +459,18 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
    * @param {(value: V, key: K) => boolean} fn
    * @returns {[K, V] | undefined} 
    */
   public findEntry(fn: (value: V, key: K) => boolean): [K, V] | undefined;
   /**
    * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
    * @param {(value: V, key: K, map: this) => boolean} fn
    * @returns {[K, V] | undefined} 
    */
   public findEntry(fn: (value: V, key: K, map: this) => boolean): [K, V] | undefined;
   /**
    * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
    * @param {(value: V, key?: K, map?: this) => boolean} fn
    * @param {S} thisArg
    * @returns {[K, V] | undefined} 
@@ -558,8 +478,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   public findEntry<S>(fn: (value: V, key?: K, map?: this) => boolean, thisArg: S): [K, V] | undefined;
   /**
    * Identical to [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-   * @public
-   * @method
    * @param {(value: V, key?: K, map?: this) => boolean} fn
    * @param {?unknown} thisArg
    * @returns {[K, V] | undefined} 
@@ -577,16 +495,12 @@ export class SuperMap<K, V> extends Map<K, V> {
   }
   /**
    * Identical to [Array.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
-   * @public
-   * @method
    * @param {(value: V, key: K) => boolean} fn
    * @returns {boolean}
    */
   public some(fn: (value: V, key: K) => boolean): boolean;
   /**
    * Identical to [Array.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
-   * @public
-   * @method
    * @param {(value: V, key?: K, map?: this) => boolean} fn
    * @param {S} thisArg
    * @returns {boolean}
@@ -594,8 +508,6 @@ export class SuperMap<K, V> extends Map<K, V> {
   public some<S>(fn: (value: V, key?: K, map?: this) => boolean, thisArg: S): boolean;
   /**
    * Identical to [Array.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
-   * @public
-   * @method
    * @param {(value: V, key?: K, map?: this) => boolean} fn
    * @param {?unknown} thisARg
    * @returns {boolean}
@@ -616,8 +528,6 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Identical to [Array.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
-   * @public
-   * @method
    * @param {(accumulator: S, value: V, key?: K, map?: this) => S} fn 
    * @param {?S} initialValue 
    * @returns {S}
@@ -657,8 +567,6 @@ export class SuperMap<K, V> extends Map<K, V> {
 
   /**
    * Internal use only. Nullifies the cache-arrays.
-   * @private
-   * @method
    * @returns {void}
    */
   private nullifyCacheArrays(): void {

@@ -5,8 +5,8 @@ import { Router } from '../../server/router/Router';
 import { DiscordRouterConstructor } from './DiscordRouterConstructor';
 
 export class DiscordRouter extends Router implements IRouter {
-  protected client: Client;
-  declare protected controller?: DiscordController;
+  protected readonly client: Client;
+  declare protected readonly controller?: Readonly<DiscordController>;
   
   public constructor(data: DiscordRouterConstructor) {
     super(data);

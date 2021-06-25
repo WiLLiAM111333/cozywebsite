@@ -4,7 +4,7 @@ import { CozyClient } from "../bot/client/CozyClient";
 import { Snowflake } from "discord.js";
 
 export abstract class DiscordController extends Controller {
-  protected client: CozyClient;
+  protected readonly client: CozyClient;
 
   public constructor() {
     super();

@@ -13,36 +13,32 @@ export class MusicQueue<T> extends BaseQueue<T> {
    * The internal array of values in the queue. I went with array because I feel 
    * like anything  else is just overkill for something this simple, I really dont need a doubly 
    * linked list to get and remove the first element of the queue.
-   * @protected
    * @type {SuperArray<T>}
    */
   protected items: SuperArray<T>;
   /**
    * The amount of items in the queue.
-   * @public
    * @type {number}
    */
   public size: number;
   /**
    * The internal boolean to check if it should loop.
-   * @private
    * @type {boolean}
    */
   private isLooped: boolean;
   /**
    * The max amount of items that can exist at once in the queue
-   * @private
    * @type {number}
    */
   private maxSize: number;
 
-  public *[Symbol.iterator]() {
+  public *[Symbol.iterator](): IterableIterator<T> {
     for(let i = 0; i < this.items.length; i++) {
       yield this.items[i];
     }
   }
 
-  public [inspect.custom](depth: number, options: InspectOptionsStylized) {
+  public [inspect.custom](depth: number, options: InspectOptionsStylized): string {
     options.colors = true;
     options.depth = depth;
     options.compact = this.size < 15;
@@ -57,8 +53,6 @@ export class MusicQueue<T> extends BaseQueue<T> {
   }
   
   /**
-   * @public
-   * @constructor
    * @param {?SuperArray<T>} items 
    */
   public constructor(items?: Array<T>) {
@@ -69,6 +63,9 @@ export class MusicQueue<T> extends BaseQueue<T> {
     this.items = new SuperArray<T>(items);
   }
 
+  /**
+   * Toggles the loop property.
+   */
   public toggleLoop(): void {
     const looped = this.isLooped;
 
@@ -81,8 +78,6 @@ export class MusicQueue<T> extends BaseQueue<T> {
 
   /**
    * Adds an item to the end of the queue.
-   * @public
-   * @method
    * @param {T} val
    * @returns {void} 
    */
@@ -94,8 +89,6 @@ export class MusicQueue<T> extends BaseQueue<T> {
 
   /**
    * Removes the first element of the queue and returns its value (or undefined if the queue is empty).
-   * @public
-   * @method
    * @returns {T | undefined}
    */
   public dequeue(): T | undefined {
@@ -113,8 +106,6 @@ export class MusicQueue<T> extends BaseQueue<T> {
   
   /**
    * Accesses the first element in the queue without removing it unlike `dequeue()`.
-   * @public
-   * @method
    * @returns {T | undefined}
    */
   public first(): T | undefined {
@@ -123,8 +114,6 @@ export class MusicQueue<T> extends BaseQueue<T> {
 
   /**
    * Clears the queue of all data.
-   * @public
-   * @ethod
    * @returns {void}
    */
   public clear(): void {
@@ -134,8 +123,6 @@ export class MusicQueue<T> extends BaseQueue<T> {
 
   /**
    * Skips a given amount of items in the queue.
-   * @public
-   * @method
    * @param {number} amount 
    * @returns {void}
    */
@@ -148,8 +135,6 @@ export class MusicQueue<T> extends BaseQueue<T> {
 
   /**
    * Shuffles the queue.
-   * @public
-   * @method
    * @returns {void}
    */
   public shuffle(): void {
