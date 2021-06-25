@@ -3,7 +3,7 @@ import { GimmeController } from './controller';
 import { Application, Router as expressRouter } from "express";
 
 export class GimmeRouter extends Router {
-  declare protected controller: GimmeController;
+  declare protected readonly controller: Readonly<GimmeController>;
 
   public constructor(app: Application) {
     super({

@@ -11,12 +11,12 @@ import {
 } from 'express';
 
 export class AnimalRouter extends Router {
-  private dogRouter: DogRouter;
-  private catRouter: CatRouter;
-  private foxRouter: FoxRouter;
-  private koalaRouter: KoalaRouter;
-  private birdRouter: BirdRouter;
-  private pandaRouter: PandaRouter;
+  private readonly dogRouter: Readonly<DogRouter>;
+  private readonly catRouter: Readonly<CatRouter>;
+  private readonly foxRouter: Readonly<FoxRouter>;
+  private readonly koalaRouter: Readonly<KoalaRouter>;
+  private readonly birdRouter: Readonly<BirdRouter>;
+  private readonly pandaRouter: Readonly<PandaRouter>;
 
   public constructor(app: Application) {
     super({

@@ -9,18 +9,40 @@
 **/jest
 **/dist
 
-# Backend Garbage / WIP code
+# Backend Garbage
 
-backend/bin
 backend/test.js
 backend/assets
 backend/simulations/results
 backend/simulations/dump.log
-backend/lib/games/hangman
-backend/lib/games/tetris
 backend/temp.*
 backend/data/*.test.*
 backend/data/dict.txt
+
+# Backend WIP Code
+
+backend/bin
+backend/todo
+
+backend/lib/code
+backend/lib/image
+backend/lib/syntax
+
+backend/lib/Backend.ts
+backend/lib/IBackendOptions.ts
+
+backend/lib/server/IRateLimitConfig.ts
+backend/lib/server/IServerOptions.ts
+backend/lib/server/ISessionConfig.ts
+backend/lib/server/ISlowDownConfig.ts
+backend/lib/server/Server.ts
+
+backend/lib/games/hangman
+backend/lib/games/tetris
+
+backend/lib/discord/modmail
+backend/lib/discord/oauth2
+backend/lib/discord/paginationEmbed
 
 # Idk some notes for the DB, kind of
 

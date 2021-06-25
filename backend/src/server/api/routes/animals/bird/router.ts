@@ -3,7 +3,7 @@ import { BirdController } from './controller';
 import { Router } from '../../../../../../lib/server/router/Router';
 
 export class BirdRouter extends Router {
-  declare protected controller: BirdController
+  declare protected readonly controller: Readonly<BirdController>;
 
   public constructor(app: Application) {
     super({

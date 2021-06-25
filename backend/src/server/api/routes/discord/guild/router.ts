@@ -5,8 +5,8 @@ import { GuildController } from './controller';
 import { GuildChannelRouter } from './channels/router';
 
 export class GuildRouter extends DiscordRouter {
-  declare protected controller: GuildController;
-  private channelRouter: GuildChannelRouter;
+  declare protected readonly controller: Readonly<GuildController>;
+  private readonly channelRouter: Readonly<GuildChannelRouter>;
 
   public constructor(app: Application, client: Client) {
     super({

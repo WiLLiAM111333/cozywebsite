@@ -3,7 +3,7 @@ import { KoalaController } from './controller';
 import { Router } from '../../../../../../lib/server/router/Router';
 
 export class KoalaRouter extends Router {
-  declare protected controller: KoalaController;
+  declare protected readonly controller: Readonly<KoalaController>;
 
   public constructor(app: Application) {
     super({

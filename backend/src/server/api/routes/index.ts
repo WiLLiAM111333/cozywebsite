@@ -7,11 +7,11 @@ import { QuoteRouter } from './quotes';
 import { MemeRouter } from './memes';
 
 export class APIRouter extends Router {
-  private discordRouter: DiscordAPIRouter;
-  private authRouter: AuthRouter;
-  private animalRouter: AnimalRouter; 
-  private quoteRouter: QuoteRouter;
-  private memeRouter: MemeRouter;
+  private readonly discordRouter: Readonly<DiscordAPIRouter>;
+  private readonly authRouter: Readonly<AuthRouter>;
+  private readonly animalRouter: Readonly<AnimalRouter>; 
+  private readonly quoteRouter: Readonly<QuoteRouter>;
+  private readonly memeRouter: Readonly<MemeRouter>;
 
   public constructor(app: Application) {
     super({

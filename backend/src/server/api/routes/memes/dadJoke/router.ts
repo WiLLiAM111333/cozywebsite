@@ -3,7 +3,7 @@ import { Router } from "../../../../../../lib/server/router/Router";
 import { DadJokeController } from "./controller";
 
 export class DadJokeRouter extends Router {
-  declare protected controller: DadJokeController
+  declare protected readonly controller: Readonly<DadJokeController>
   
   public constructor(app: Application) {
     super({

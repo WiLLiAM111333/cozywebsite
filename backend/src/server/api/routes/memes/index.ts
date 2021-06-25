@@ -5,9 +5,9 @@ import { DadJokeRouter } from "./dadJoke/router";
 import { RandomAPIRouter } from "./randomAPI/router";
 
 export class MemeRouter extends Router {
-  private dadJokeRouter: DadJokeRouter;
-  private gimmeRouter: GimmeRouter;
-  private randomAPIRouter: RandomAPIRouter;
+  private readonly dadJokeRouter: Readonly<DadJokeRouter>;
+  private readonly gimmeRouter: Readonly<GimmeRouter>;
+  private readonly randomAPIRouter: Readonly<RandomAPIRouter>;
 
   public constructor(app: Application) {
     super({

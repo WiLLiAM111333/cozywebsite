@@ -3,7 +3,7 @@ import { FoxController } from './controller';
 import { Router } from '../../../../../../lib/server/router/Router';
 
 export class FoxRouter extends Router {
-  declare protected controller: FoxController;
+  declare protected readonly controller: Readonly<FoxController>;
 
   public constructor(app: Application) {
     super({
